@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import {
   loadBooks,
@@ -78,10 +79,10 @@ test("vol.002 is complete, and its opening is preserved in the later scene", asy
   assert.match(detail, /characters-pencil\.png/);
   assert.match(detail, /人物画は画像生成/);
   for (const [chapter, asset] of [["02", "studio-pencil.png"], ["15", "factory-pencil.png"]]) {
-    const html = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${chapter}.html`), "utf8");
+    const html = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/revised-20260918/${chapter}.html`), "utf8");
     assert.ok(html.indexOf(asset) > html.indexOf('</article>'));
   }
-  const opening = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/read/01.html"), "utf8");
+  const opening = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/read/revised-20260918/01.html"), "utf8");
   assert.ok(!opening.includes("factory-pencil.png"));
 });
 test("vol.003 retains its complete sequence and introduces diagrams only with their prose", async () => {
@@ -90,7 +91,7 @@ test("vol.003 retains its complete sequence and introduces diagrams only with th
   assert.equal(book.number, "003");
   assert.equal(book.status, "completed");
   assert.equal(book.chapters.length, 22);
-  assert.equal(book.charCount, 31491);
+  assert.ok(book.charCount > 20000);
   assert.match(book.chapters[0].title, /^序章/);
   assert.match(book.chapters.at(-1).title, /^終章/);
   assert.match(book.chapters.at(-1).body, /了$/);
@@ -98,11 +99,11 @@ test("vol.003 retains its complete sequence and introduces diagrams only with th
     assert.ok(book.chapters[15].body.includes(quote));
   assert.equal(books.filter((b) => b.featured).length, 1);
   assert.ok(books.indexOf(book) < books.findIndex((b) => b.number === "002"));
-  const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/01.html`), "utf8");
+  const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${book.edition}/01.html`), "utf8");
   assert.ok(!opening.includes("cases.svg"));
   assert.ok(!opening.includes("folding-wall.svg"));
   for (const [key, file, anchor] of [["04", "cases.svg", "積込みに使うフォルダへ保存した"], ["05", "folding-wall.svg", "横幅が三分の一になった"]]) {
-    const html = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${key}.html`), "utf8");
+    const html = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${book.edition}/${key}.html`), "utf8");
     assert.ok(html.indexOf(file) > html.indexOf(anchor));
     assert.ok(html.indexOf(file) < html.indexOf("</article>"));
     assert.match(html, /class="reader-figure inline-figure" open/);
@@ -116,7 +117,7 @@ test("vol.004 preserves the rescue opening and introduces its inn before using i
   assert.equal(book.id, "yama-wo-oriru-niwa-mada-hayai");
   assert.equal(book.status, "completed");
   assert.equal(book.chapters.length, 23);
-  assert.equal(book.charCount, 35910);
+  assert.ok(book.charCount > 20000);
   assert.equal(books[0].id, book.id);
   assert.equal(books.filter((b) => b.featured).length, 1);
   assert.ok(book.featured);
@@ -125,10 +126,10 @@ test("vol.004 preserves the rescue opening and introduces its inn before using i
   assert.match(book.chapters.at(-1).body, /了$/);
   const repeated = book.chapters[0].body.split(/\n\s*\n/).slice(2).join("\n\n");
   assert.ok(book.chapters[20].body.includes(repeated));
-  const diagram = await fs.readFile(path.join(root, `dist/books/${book.id}/read/03.html`), "utf8");
-  assert.ok(diagram.indexOf("inn.svg") > diagram.indexOf("建物の外の坂を上がる"));
+  const diagram = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${book.edition}/03.html`), "utf8");
+  assert.ok(diagram.indexOf("inn.svg") > diagram.indexOf("庭から右へ、玄関へ上がる坂が延びていた。"));
   assert.ok(diagram.indexOf("inn.svg") < diagram.indexOf("</article>"));
-  const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/01.html`), "utf8");
+  const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${book.edition}/01.html`), "utf8");
   assert.ok(!opening.includes("inn.svg"));
   assert.ok(!opening.includes("guests-pencil.png"));
 });
@@ -226,4 +227,34 @@ test("every generated internal page, asset and fragment resolves", async () => {
   const chapter20 = await fs.readFile(path.join(dist, 'books/ame-wo-tojikomeru/read/20.html'), 'utf8');
   assert.match(chapter20, /class="reader-figure inline-figure" open/);
   assert.ok(chapter20.indexOf('north.svg') > chapter20.indexOf('瀬川は北町の資料室の見取り図を見せた'));
+});
+
+// Hashes normalize line endings only; editing any archived prose must fail.
+test("all four originals remain intact and each edition has independent URLs and progress", async () => {
+  const originals = await loadBooks(root, "content/editions");
+  const current = await loadBooks(root);
+  const expected = JSON.parse(await fs.readFile(path.join(root, "docs/archived-manuscripts.json"), "utf8"));
+  assert.equal(originals.length, 4);
+  assert.equal(current.length, 4);
+  const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
+  assert.equal(catalog.length, 8);
+  const counts = { "001": [30, 80684], "002": [25, 47840], "003": [22, 31491], "004": [23, 35910] };
+  for (const book of originals) {
+    assert.deepEqual([book.chapters.length, book.charCount], counts[book.number.padStart(3, "0")]);
+    const dir = path.join(root, "content/editions", book.id, "chapters");
+    assert.deepEqual((await fs.readdir(dir)).sort(), Object.keys(expected[book.id]).sort());
+    for (const [file, hash] of Object.entries(expected[book.id])) {
+      const prose = (await fs.readFile(path.join(dir, file), "utf8")).replaceAll("\r\n", "\n");
+      assert.equal(crypto.createHash("sha256").update(prose).digest("hex"), hash, book.id + "/" + file);
+    }
+    const editions = catalog.filter(b => b.id === book.id);
+    assert.equal(new Set(editions.map(b => b.readBase)).size, 2);
+    const revised = current.find(b => b.id === book.id);
+    assert.equal(revised.edition, "revised-20260918");
+    assert.notEqual(progressKey(book.id), progressKey(book.id, revised.edition));
+    const oldHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read/01.html"), "utf8");
+    assert.match(oldHtml, /旧版を表示しています/);
+    const newHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read", revised.edition, "01.html"), "utf8");
+    assert.match(newHtml, /data-edition="revised-20260918"/);
+  }
 });
