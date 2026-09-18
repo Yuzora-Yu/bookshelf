@@ -107,10 +107,16 @@ for (const b of books) {
     const next = b.chapters[c.number],
       prev = b.chapters[c.number - 2];
     let paragraph = 0;
-    const body = renderMarkdown(c.body).replace(
+    let body = renderMarkdown(c.body).replace(
       /<p>/g,
       () => `<p id="p${String(paragraph++).padStart(3, "0")}">`,
     );
+    for (const f of (b.illustrations || []).filter((f) => f.chapter === c.number && f.position === "inline")) {
+      const paragraphs = [...body.matchAll(/<p id="p\d+">[\s\S]*?<\/p>/g)].filter((m) => m[0].includes(e(f.afterParagraph)));
+      if (!f.afterParagraph || paragraphs.length !== 1) throw new Error(`${b.id}: illustration anchor must match one paragraph`);
+      const markup = `<details class="reader-figure inline-figure" open><summary>${e(f.alt)} <span aria-hidden="true">（開く／閉じる）</span></summary><figure><img src="${asset(b, f.file)}" alt="${e(f.alt)}" loading="lazy"><figcaption>${e(f.caption)} <a href="${asset(b, f.file)}" target="_blank" rel="noopener">大きな画像を開く ↗</a></figcaption></figure></details>`;
+      body = body.replace(paragraphs[0][0], paragraphs[0][0] + markup);
+    }
     const images = (position) => (b.illustrations || [])
       .filter((f) => f.chapter === c.number && (f.position || "before") === position)
       .map(

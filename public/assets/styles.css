@@ -900,6 +900,9 @@ html[data-theme="night"] {
 .reader-figure img {
   background: #fff;
 }
+.prose .inline-figure { margin: 2em 0; font-family: var(--sans, sans-serif); }
+.prose .inline-figure summary { font-size: 16px; line-height: 1.7; }
+.prose .inline-figure figcaption { font-size: 13px; line-height: 1.8; }
 .reader-next {
   border-top: 1px solid var(--line);
   margin-top: 65px;

@@ -146,4 +146,10 @@ test("every generated internal page, asset and fragment resolves", async () => {
   );
   assert.match(chapter2, /campus\.svg/);
   assert.ok(!chapter2.includes("north.svg"));
+  assert.match(chapter2, /class="reader-figure inline-figure" open/);
+  assert.ok(chapter2.indexOf('campus.svg') > chapter2.indexOf('保管室は廊下より一段高く'));
+  assert.ok(chapter2.indexOf('campus.svg') < chapter2.indexOf('航がよく座るのは'));
+  const chapter20 = await fs.readFile(path.join(dist, 'books/ame-wo-tojikomeru/read/20.html'), 'utf8');
+  assert.match(chapter20, /class="reader-figure inline-figure" open/);
+  assert.ok(chapter20.indexOf('north.svg') > chapter20.indexOf('瀬川は北町の資料室の見取り図を見せた'));
 });
