@@ -32,18 +32,20 @@ export function renderMarkdown(text) {
     })
     .join("\n");
 }
-export async function loadBooks(root) {
-  const entries = await fs.readdir(path.join(root, "content/books"), {
+export async function loadBooks(root, collection = "content/books") {
+  const entries = await fs.readdir(path.join(root, collection), {
     withFileTypes: true,
   });
   const books = [];
   for (const entry of entries.filter((e) => e.isDirectory())) {
-    const directory = path.join(root, "content/books", entry.name);
+    const directory = path.join(root, collection, entry.name);
     const book = JSON.parse(
       await fs.readFile(path.join(directory, "book.json"), "utf8"),
     );
     if (book.id !== entry.name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(book.id))
       throw new Error(`Invalid book id: ${book.id}`);
+    if (book.edition !== undefined && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(book.edition))
+      throw new Error(`${book.id}: invalid edition`);
     for (const key of [
       "title",
       "description",

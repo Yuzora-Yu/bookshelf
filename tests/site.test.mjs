@@ -11,12 +11,13 @@ import {
 import {
   preferences,
   progress,
+  progressKey,
   resumeUrl,
   searchable,
 } from "../public/assets/storage.js";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-test("all 30 chapters and the complete manuscript are retained", async () => {
-  const book = (await loadBooks(root)).find(
+test("all 30 original chapters and their manuscript are retained as an edition", async () => {
+  const book = (await loadBooks(root, "content/editions")).find(
     (b) => b.id === "ame-wo-tojikomeru",
   );
   assert.equal(book.chapters.length, 30);
@@ -24,6 +25,31 @@ test("all 30 chapters and the complete manuscript are retained", async () => {
   assert.match(book.chapters[0].title, /箱の底/);
   assert.match(book.chapters[29].title, /返却口/);
   assert.equal(book.status, "completed");
+});
+test("the revised first novel has independent reading progress and correct diagram placement", async () => {
+  const book = (await loadBooks(root)).find((b) => b.id === "ame-wo-tojikomeru");
+  assert.equal(book.edition, "revised-20260918");
+  assert.equal(book.chapters.length, 19);
+  assert.match(book.chapters[0].title, /^序　/);
+  assert.match(book.chapters.at(-1).body, /了$/);
+  assert.equal(progressKey(book.id), `yuzora:bookshelf:progress:v1:${book.id}`);
+  assert.notEqual(progressKey(book.id, book.edition), progressKey(book.id));
+  const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
+  const versions = catalog.filter((b) => b.id === book.id);
+  assert.equal(versions.length, 2);
+  assert.equal(new Set(versions.map((b) => b.readBase)).size, 2);
+  const saved = progress({ chapter: 20, anchor: "p004", updatedAt: 123 }, 30);
+  const legacy = versions.find((b) => !b.edition);
+  assert.equal(resumeUrl(legacy, saved), "/bookshelf/books/ame-wo-tojikomeru/read/20.html#p004");
+  for (const [chapter, asset, anchor] of [["03", "campus.svg", "保管室の床は廊下より一段高い"], ["13", "north.svg", "平屋の一室で、外へ出る戸は一つ"]]) {
+    const html = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${book.edition}/${chapter}.html`), "utf8");
+    assert.ok(html.indexOf(asset) > html.indexOf(anchor));
+    assert.ok(html.indexOf(asset) < html.indexOf("</article>"));
+    assert.match(html, /data-edition="revised-20260918"/);
+  }
+  const oldChapter = await fs.readFile(path.join(root, `dist/books/${book.id}/read/02.html`), "utf8");
+  assert.match(oldChapter, /旧版を表示しています/);
+  assert.match(oldChapter, /data-edition=""/);
 });
 test("mount paths are explicit and cannot escape the site", () => {
   for (const base of ["/", "/bookshelf/", "/stories/books/"])
@@ -163,7 +189,7 @@ test("every generated internal page, asset and fragment resolves", async () => {
   const htmlFiles = all.filter((f) => f.endsWith(".html"));
   assert.equal(
     htmlFiles.length,
-    2 + info.books.reduce((n, b) => n + 1 + b.chapters, 0),
+    2 + [...info.books, ...(info.archives || [])].reduce((n, b) => n + 1 + b.chapters, 0),
   );
   for (const file of htmlFiles) {
     const html = await fs.readFile(file, "utf8");

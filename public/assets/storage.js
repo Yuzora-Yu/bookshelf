@@ -1,5 +1,7 @@
 export const preferencesKey = "yuzora:bookshelf:preferences:v1";
-export const progressKey = (id) => `yuzora:bookshelf:progress:v1:${id}`;
+export const progressKey = (id, edition) => edition
+  ? `yuzora:bookshelf:progress:v2:${id}:${edition}`
+  : `yuzora:bookshelf:progress:v1:${id}`;
 export function preferences(value) {
   return {
     font: [18, 20, 23, 26].includes(value?.font) ? value.font : 20,

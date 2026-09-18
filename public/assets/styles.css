@@ -1447,3 +1447,11 @@ html[data-reader] {
 html[data-reader] {
   scroll-padding-top: 0;
 }
+.edition-notice {
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: #59616b;
+  padding: 0.75rem 0;
+}
+.edition-notice a { text-decoration: underline; text-underline-offset: 0.2em; }
+html[data-theme="night"] .edition-notice { color: #b9c2ce; }

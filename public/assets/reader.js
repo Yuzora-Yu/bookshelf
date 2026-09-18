@@ -58,7 +58,7 @@ document.querySelector("#reset-preferences").addEventListener("click", () => {
 });
 const chapter = Number(document.body.dataset.chapter),
   total = Number(document.body.dataset.total),
-  key = progressKey(document.body.dataset.book);
+  key = progressKey(document.body.dataset.book, document.body.dataset.edition);
 const prose = document.querySelector("#prose"),
   paragraphs = [...prose.querySelectorAll("p[id]")],
   bar = document.querySelector("#progress-bar");

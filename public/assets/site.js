@@ -70,15 +70,15 @@ async function bookmarks() {
     const books = await response.json();
     let latest = null;
     for (const book of books) {
-      const p = progress(read(progressKey(book.id)), book.chapters.length);
+      const p = progress(read(progressKey(book.id, book.edition)), book.chapters.length);
       if (!p) continue;
-      const link = document.querySelector(`[data-resume="${book.id}"]`);
+      const link = document.querySelector(`[data-resume="${book.id}:${book.edition || ""}"]`);
       if (link) {
         link.hidden = false;
         link.href = p.finished ? book.readBase + "01.html" : resumeUrl(book, p);
         link.textContent = p.finished
           ? "読了済み · もう一度読む →"
-          : `第${p.chapter}章の続きから →`;
+          : `${book.chapters[p.chapter - 1].title}の続きから →`;
       }
       if (!p.finished && (!latest || p.updatedAt > latest.p.updatedAt))
         latest = { book, p };
