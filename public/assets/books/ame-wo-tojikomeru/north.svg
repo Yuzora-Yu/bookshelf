@@ -2,14 +2,13 @@
 <title id="title">北町資料室・配置の概略</title><desc id="desc">大学とは別の平屋の一室。出入口は一つ、高い固定窓、小さな流しと便所。便所に外への出口はない。</desc>
 <rect width="760" height="600" fill="white"/>
 <style>text{font-family:'Yu Gothic','Meiryo',sans-serif;fill:#222;font-size:23px;text-anchor:middle}.small{font-size:17px}.wall{fill:none;stroke:#222;stroke-width:3;stroke-linecap:round}.pencil{fill:none;stroke:#777;stroke-width:1}.window{stroke:#222;stroke-width:1.5;fill:white}</style>
-<text x="380" y="42">北町資料室</text><text class="small" x="380" y="74">第２０章で示された、出入口の確認用の概略図</text>
+<text x="380" y="42">北町資料室</text><text class="small" x="380" y="74">見取り図</text>
 <path class="wall" d="M90 135 L666 135 L666 483 L420 483 M330 483 L90 483 L90 135 M530 135 L530 245 M530 295 L666 295"/>
 
 <rect class="window" x="200" y="131" width="104" height="8"/>
-<text class="small" x="330" y="121">高い固定窓（位置・数は模式）</text><text x="597" y="205">便所</text><text class="small" x="597" y="233">外への戸なし</text>
+<text class="small" x="330" y="121">高い固定窓</text><text x="597" y="205">便所</text><text class="small" x="597" y="233">外への戸なし</text>
 
 
 <rect class="pencil" x="105" y="153" width="78" height="45"/><text class="small" x="143" y="181">流し</text>
 <text x="323" y="300">資料を置く一室</text><text class="small" x="374" y="526">出入口は一つ</text>
-<text class="small" x="380" y="565">大学の旧分室とは別の建物。設備の位置・窓の数・縮尺は模式表現。</text>
 </svg>

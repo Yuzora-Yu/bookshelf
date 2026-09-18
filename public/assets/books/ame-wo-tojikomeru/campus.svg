@@ -2,7 +2,7 @@
 <title id="title">汐見大学旧分室・現在の配置</title><desc id="desc">南の玄関から北へ廊下。西側に談話室、閲覧室。東側に実習室、編集室。突き当たりに保管室。編集室と保管室の窓は固定窓。南側の避難口は廊下から出られる。旧裏口は壁。</desc>
 <rect width="760" height="900" fill="white"/>
 <style>text{font-family:'Yu Gothic','Meiryo',sans-serif;fill:#222;font-size:22px;text-anchor:middle}.small{font-size:16px}.wall{fill:none;stroke:#222;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.pencil{fill:none;stroke:#777;stroke-width:.8;stroke-linecap:round}.door{fill:none;stroke:#555;stroke-width:1.4;stroke-dasharray:4 4}.window{stroke:#222;stroke-width:1.4;fill:white}</style>
-<text x="380" y="35">旧分室　配置図</text><text class="small" x="380" y="60">現在の配置／縮尺は概略</text>
+<text x="380" y="35">旧分室　配置図</text><text class="small" x="380" y="60">汐見大学</text>
 <path class="wall" d="M70 260 L240 260 L240 105 L520 105 L520 260 L690 260 L690 785 L660 785 M600 785 L421 785 M341 785 L70 785 L70 260"/>
 
 <path class="wall" d="M240 260 L340 260 M421 260 L520 260 M300 260 L300 337 M300 397 L300 510 L70 510 M300 510 L300 568 M300 628 L300 710 L70 710 M460 260 L460 337 M460 397 L460 510 L690 510 M460 510 L460 568 M460 628 L460 710 L690 710"/>
@@ -25,5 +25,4 @@
 <text x="379" y="823">玄関・南</text>
 <path class="wall" d="M718 170 L718 107 L710 119 M718 107 L726 119"/><text class="small" x="718" y="93">北</text>
 <text class="small" x="380" y="863">壁の切れ目は戸口。白い二重線は固定窓。</text>
-<text class="small" x="380" y="887">家具は省略。事件の情報は記載していない。</text>
 </svg>

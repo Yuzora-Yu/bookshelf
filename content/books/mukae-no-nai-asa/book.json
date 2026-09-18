@@ -28,21 +28,21 @@
   ],
   "cover": "cover.svg",
   "portrait": "characters-pencil.png",
-  "portraitCaption": "上段左から：成瀬千紘・戸崎岳・広瀬修一。下段左から：新見郁子・宇津木健・宇津木恵。人物の姿を想像するための鉛筆画です。",
+  "portraitCaption": "上段左から：成瀬千紘・戸崎岳・広瀬修一。下段左から：新見郁子・宇津木健・宇津木恵。",
   "illustrations": [
     {
       "chapter": 2,
       "position": "after",
       "file": "studio-pencil.png",
       "alt": "旧写真館の現場の鉛筆画",
-      "caption": "第一章の撮影室。丸椅子の脇に座る宇津木を、入口から遠く望むイメージ。血や傷、縫合の細部は描いていません。"
+      "caption": "旧写真館の撮影室。"
     },
     {
       "chapter": 15,
       "position": "after",
       "file": "factory-pencil.png",
-      "alt": "旧工場の各階の接続模式図",
-      "caption": "一階は作業場、二階は休憩室・流し・便所。内階段を上がった人から見て左に流し、右に休憩室があります。各階を別々の向きで描いた接続の模式図です。上下階の位置・向き・縮尺を重ね合わせる図ではありません。"
+      "alt": "旧工場の各階の見取り図",
+      "caption": "一階の作業場と、二階の休憩室。"
     }
   ],
   "characters": [
