@@ -1,0 +1,21 @@
+name: Check bookshelf
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm run check
+      - run: npm run build
+      - run: npm test
+      - name: Verify root deployment
+        run: npm run build && npm test
+        env:
+          BASE_PATH: /

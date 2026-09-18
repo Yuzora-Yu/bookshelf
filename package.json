@@ -1,0 +1,16 @@
+{
+  "name": "yu-zora-bookshelf",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs",
+    "test": "node --test",
+    "check": "node --check scripts/build.mjs && node --check scripts/content.mjs && node --check public/assets/site.js && node --check public/assets/reader.js && node --check public/assets/storage.js && node --check scripts/serve.mjs"
+  }
+}

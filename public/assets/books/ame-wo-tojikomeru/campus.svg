@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 900" role="img" aria-labelledby="title desc">
+<title id="title">汐見大学旧分室・現在の配置</title><desc id="desc">南の玄関から北へ廊下。西側に談話室、閲覧室。東側に実習室、編集室。突き当たりに保管室。編集室と保管室の窓は固定窓。南東の避難口は廊下から出られる。旧裏口は壁。</desc>
+<rect width="760" height="900" fill="white"/>
+<style>text{font-family:'Yu Gothic','Meiryo',sans-serif;fill:#222;font-size:22px;text-anchor:middle}.small{font-size:16px}.wall{fill:none;stroke:#222;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.pencil{fill:none;stroke:#777;stroke-width:.8;stroke-linecap:round}.door{fill:none;stroke:#555;stroke-width:1.4;stroke-dasharray:4 4}.window{stroke:#222;stroke-width:1.4;fill:white}</style>
+<text x="380" y="35">旧分室　配置図</text><text class="small" x="380" y="60">現在の配置／縮尺は概略</text>
+<path class="wall" d="M70 260 L240 260 L240 105 L520 105 L520 260 L690 260 L690 720 M690 775 L690 785 L421 785 M341 785 L70 785 L70 260"/>
+<path class="pencil" d="M73 783 L72 263 L243 262 L242 108 L518 108 L518 263 L687 262 L688 718 M686 777 L687 782 L426 783"/>
+<path class="wall" d="M240 260 L340 260 M421 260 L520 260 M300 260 L300 337 M300 397 L300 510 L70 510 M300 510 L300 568 M300 628 L300 710 L70 710 M460 260 L460 337 M460 397 L460 510 L690 510 M460 510 L460 568 M460 628 L460 710 L690 710"/>
+<path class="pencil" d="M303 268 L302 334 M303 402 L302 568 M303 632 L302 710 M457 266 L458 332 M457 402 L458 568 M458 634 L457 712 M73 513 L299 512 M465 513 L686 512"/>
+<path class="wall" d="M340 260 L340 180 M300 337 L240 337 M300 568 L240 568 M460 337 L400 337 M460 568 L400 568"/>
+<path class="door" d="M340 180 A80 80 0 0 1 421 260 M240 337 A60 60 0 0 0 300 397 M240 568 A60 60 0 0 0 300 628 M400 337 A60 60 0 0 0 460 397 M400 568 A60 60 0 0 0 460 628"/>
+<path class="wall" d="M341 785 L341 710 M690 775 L635 775"/>
+<path class="door" d="M341 710 A77 77 0 0 1 421 785 M635 775 A55 55 0 0 1 690 720"/>
+<rect class="window" x="260" y="101" width="52" height="8"/><rect class="window" x="447" y="101" width="52" height="8"/>
+<rect class="window" x="558" y="256" width="83" height="8"/>
+<text x="380" y="150">保管室</text><text class="small" x="442" y="180">内側に閂</text>
+<text class="small" x="380" y="93">旧裏口は改修済みの壁</text>
+<text class="small" x="588" y="238">高い固定窓</text><text class="small" x="180" y="139">固定窓２枚</text><path class="pencil" d="M215 137 L274 110"/>
+<text x="184" y="435">閲覧室</text><text x="575" y="435">編集室</text>
+<text class="small" x="575" y="465">出入口は廊下の戸のみ</text>
+<text x="184" y="668">談話室</text><text x="575" y="668">実習室</text>
+<text x="380" y="485">廊</text><text x="380" y="523">下</text>
+<rect class="pencil" x="91" y="739" width="183" height="28"/><text class="small" x="180" y="734">管理カウンター</text>
+<text class="small" x="556" y="745">ＡＥＤ</text><text class="small" x="616" y="797">避難口（廊下から出られる）</text>
+<text x="379" y="823">玄関・南</text>
+<path class="wall" d="M718 170 L718 107 L710 119 M718 107 L726 119"/><text class="small" x="718" y="93">北</text>
+<text class="small" x="380" y="863">細い破線は戸の開閉範囲。白い二重線は固定窓。</text>
+<text class="small" x="380" y="887">家具は省略。事件の情報は記載していない。</text>
+</svg>

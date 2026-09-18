@@ -1,0 +1,70 @@
+# 夕空の本棚 / YU-ZORA BOOKSHELF
+
+オリジナル小説のための、スマートフォン・PC対応の静的Web本棚です。第一作『雨を閉じこめる』（全30章・80,684字）を収録しています。
+
+## 起動
+
+Node.js 22以上（推奨24）。外部パッケージのインストールは不要です。
+
+```sh
+npm run dev
+```
+
+表示先：<http://127.0.0.1:8787/bookshelf/>
+
+原稿・CSSなどの変更後は `npm run build` を実行してブラウザを再読み込みします。自動監視はありません。サーバーだけ起動する場合は `npm run preview`。ポートは環境変数 `PORT` で変更できます。
+
+```sh
+npm run check
+npm run build
+npm test
+```
+
+## 収録機能
+
+- 本棚、キーワード・ジャンル検索、作品紹介、登場人物、全章の目次
+- 章ごとの固定URL。JavaScriptなしでも全編を読めます
+- 作品ごとの読書位置保存と「続きから読む」
+- 文字サイズ4段階、背景3種類（生成り・白・夜）
+- 配置図は該当章で展開。人物画は作品紹介で展開
+- 全文テキストのダウンロード
+- キーボード操作、スキップリンク、ダイアログのフォーカス管理、動きを減らす設定への対応
+
+読書位置と表示設定は端末のlocalStorageにのみ保存します。アカウント・解析・外部フォント・外部APIは使いません。別端末への同期はありません。ブラウザのデータを消すと読書位置も消えます。
+
+## 作品を増やす
+
+[原稿の追加方法](content/README.md)を参照。`content/books/<作品ID>/book.json` と `chapters/*.md`、画像を追加してビルドすると、本棚・検索・作品紹介・読書ページ・目次に反映されます。ページの複製作業は不要です。
+
+## 公開とポータルへの組込み
+
+`npm run build` の成果物は `dist/`。通常の静的ホスティングに配置できます。`dist/` は再生成可能なのでGit管理しません。
+
+標準の配置先は `/bookshelf/`。将来の `https://yu-zora.com/bookshelf/` に合わせた設定です。ポータルからこのURLへリンクし、`dist/` の**中身**を公開領域の `bookshelf/` に配置してください。既存サイト全体への上書きやiframe埋込みは不要です。ヘッダーのポータルリンクは `site.config.json` の `portalUrl` で設定します。
+
+PowerShellで本番用に生成する例：
+
+```powershell
+$env:BASE_PATH='/bookshelf/'
+$env:SITE_URL='https://yu-zora.com'
+npm run build
+```
+
+`BASE_PATH` は先頭・末尾の `/` が必須。独立ドメインのルートなら `/`。`SITE_URL` は公開先のオリジン（パスを含めない）で、指定するとcanonical URL・OG URL・sitemap.xmlを生成します。未指定なら誤った公開URLを出しません。配置先を変えたら必ず再ビルドしてください。
+
+GitHub Pages用に手動実行の [Deploy Pages](.github/workflows/pages.yml) も用意しています。リポジトリの Settings → Pages → Source を GitHub Actions に設定し、Actionsから実行します。標準URLは `https://yuzora-yu.github.io/bookshelf/`。カスタムドメインなどで変更する場合は、実行時の入力を変更してください。コミットやpushだけでは公開されません。通常のpush/PRでは検証用CIだけが動きます。
+
+参考：[GitHub公式・カスタムワークフローでのPages公開](https://docs.github.com/ja/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
+
+## 構成
+
+```text
+content/books/       作品情報と章原稿（正本）
+public/assets/       共通CSS/JS、表紙、人物画、配置図
+scripts/             静的生成・ローカルサーバー
+site.config.json     配置先・ポータルURL
+ tests/              原稿・内部リンク・保存値の検証
+ dist/               生成結果（編集しない）
+```
+
+設計理由は [docs/DECISIONS.md](docs/DECISIONS.md)、確認内容は [docs/QA.md](docs/QA.md) に記録しています。原稿や挿絵に再配布ライセンスは付与していません。
