@@ -68,3 +68,19 @@ site.config.json     配置先・ポータルURL
 ```
 
 設計理由は [docs/DECISIONS.md](docs/DECISIONS.md)、確認内容は [docs/QA.md](docs/QA.md) に記録しています。原稿や挿絵に再配布ライセンスは付与していません。
+
+## Cloudflare本番公開（2026-09-18）
+
+本番： https://yu-zora.com/bookshelf/
+
+本棚専用Worker `yu-zora-bookshelf` を使用し、`yu-zora.com/bookshelf` と `yu-zora.com/bookshelf/*` のみを割り当てています。ポータル本体・他コンテンツ・トップのリンクは変更していません。DNS変更も不要でした。
+
+認証済みのローカル環境から更新する場合：
+
+```sh
+npm run deploy:cloudflare
+```
+
+構文確認→本番URLでの生成→テスト→Wrangler 4.120.0でのデプロイを実行します。Cloudflareの認証情報はリポジトリに含めません。現在の本番公開はCLI経由です。GitHubへのpushでは検証CIのみ実行され、Cloudflareへの自動公開は接続していません。Pagesのワークフローは別の公開先を使う場合の予備です。
+
+Workerは公開URLの `/bookshelf` 接頭辞を静的アセット取得時に除きます。章の `.html` URLはそのまま維持し、フォルダーの末尾スラッシュだけを補完します。存在しないページは本棚の404ページを返します。

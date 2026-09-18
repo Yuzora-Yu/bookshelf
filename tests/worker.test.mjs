@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import worker from '../worker/index.js';
+const hits=[];
+const env={ASSETS:{async fetch(request){const path=new URL(request.url).pathname;hits.push(path);return new Response(path,{status:['/index.html','/books/test/index.html','/books/test/read/01.html','/assets/styles.css','/404.html'].includes(path)?200:404});}}};
+test('Cloudflare routes preserve public prefix and explicit chapter URLs',async()=>{for(const [input,path] of [['/bookshelf/','/index.html'],['/bookshelf/books/test/','/books/test/index.html'],['/bookshelf/books/test/read/01.html','/books/test/read/01.html'],['/bookshelf/assets/styles.css','/assets/styles.css']]){const response=await worker.fetch(new Request('https://yu-zora.com'+input),env);assert.equal(response.status,200);assert.equal(await response.text(),path);}});
+test('redirects stay in bookshelf; unrelated paths never fetch assets',async()=>{for(const input of ['/bookshelf','/bookshelf/books/test']){const response=await worker.fetch(new Request('https://yu-zora.com'+input+'?q=1'),env);assert.equal(response.status,308);assert.equal(response.headers.get('location'),'https://yu-zora.com'+input+'/?q=1');}hits.length=0;assert.equal((await worker.fetch(new Request('https://yu-zora.com/business/'),env)).status,404);assert.equal(hits.length,0);assert.equal((await worker.fetch(new Request('https://yu-zora.com/bookshelf/missing.html'),env)).status,404);});
