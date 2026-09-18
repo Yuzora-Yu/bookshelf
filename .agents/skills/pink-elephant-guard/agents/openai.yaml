@@ -1,0 +1,6 @@
+interface:
+  display_name: "ピンクの象ガード"
+  short_description: "制作中の指示や修正の経緯を、本文・コードなどの納品物から分離する"
+  default_prompt: "$pink-elephant-guard を使い、制作上の指示を要件へ変換し、受け手に必要な内容だけで成果物を仕上げてください。"
+policy:
+  allow_implicit_invocation: true
