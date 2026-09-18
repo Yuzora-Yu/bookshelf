@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+<title id="title">窓の壁</title><desc id="desc">上段は同じ幅の三枚の壁板を広げた正面。中央にガラスのない窓。下段は上から見た折り畳み方。左右の板は中央の板を挟んで反対側へ畳む。</desc>
+<rect width="1000" height="720" fill="#f5f2eb"/>
+<g fill="#42433e" font-family="Yu Mincho,serif"><text x="70" y="57" font-size="29">窓の壁</text><text x="70" y="91" font-size="18">正面から</text></g>
+<g stroke="#4b4c46" stroke-width="2.3" stroke-linejoin="round" fill="none"><path d="M140 120 L860 122 L861 377 L140 375 Z M380 122 L380 375 M620 122 L620 376"/><path d="M421 171 L580 171 L581 293 L421 293 Z M430 180 L571 180 L571 284 L430 284 Z M500 180 L500 284 M430 232 L571 232"/></g>
+<g stroke="#88897f" opacity=".32" fill="none" stroke-width="1"><path d="M137 118 L863 120 L864 379 L138 378 Z M378 124 L378 377 M622 124 L622 379 M419 169 L583 170 L583 295 L419 295 Z"/></g>
+<g fill="#55564e" font-size="18" font-family="Yu Mincho,serif" text-anchor="middle"><text x="260" y="415">左の板</text><text x="500" y="415">中央（窓）</text><text x="740" y="415">右の板</text></g>
+<g fill="#42433e" font-family="Yu Mincho,serif"><text x="70" y="473" font-size="18">上から見た折り畳み方</text></g>
+<g stroke="#4c4d46" stroke-width="3" stroke-linecap="round" fill="none"><path d="M140 553 L320 553 L500 553 L680 553"/><circle cx="320" cy="553" r="4" fill="#f5f2eb"/><circle cx="500" cy="553" r="4" fill="#f5f2eb"/><path d="M753 566 L912 566 L913 554 L753 554 L752 542 L912 542"/></g>
+<g stroke="#77786e" fill="none" stroke-width="1.5"><path d="M199 526 Q247 493 315 527 M305 520 L315 527 L303 530 M624 578 Q565 610 510 579 M520 578 L510 579 L516 590 M696 553 L735 553 M725 546 L735 553 L725 560"/></g>
+<g fill="#62635b" font-family="Yu Mincho,serif" font-size="18"><text x="70" y="643">三枚を交互に畳む。横幅は約三分の一になる。</text><text x="70" y="678">支持脚・裏の補強材は省略。寸法や蝶番の詳細を示す施工図ではありません。</text></g>
+</svg>

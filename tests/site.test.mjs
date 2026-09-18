@@ -58,6 +58,32 @@ test("vol.002 is complete, and its opening is preserved in the later scene", asy
   const opening = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/read/01.html"), "utf8");
   assert.ok(!opening.includes("factory-pencil.png"));
 });
+test("vol.003 retains its complete sequence and introduces diagrams only with their prose", async () => {
+  const books = await loadBooks(root);
+  const book = books.find((b) => b.id === "hako-no-soto-de-machiawase");
+  assert.equal(book.number, "003");
+  assert.equal(book.status, "completed");
+  assert.equal(book.chapters.length, 22);
+  assert.equal(book.charCount, 31491);
+  assert.match(book.chapters[0].title, /^序章/);
+  assert.match(book.chapters.at(-1).title, /^終章/);
+  assert.match(book.chapters.at(-1).body, /了$/);
+  for (const quote of ["「僕が運びました」", "「東倉庫まで。頼まれたとおりに」", "「中は見た？」"])
+    assert.ok(book.chapters[15].body.includes(quote));
+  assert.equal(books.filter((b) => b.featured).length, 1);
+  assert.equal(books[0].id, book.id);
+  const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/01.html`), "utf8");
+  assert.ok(!opening.includes("cases.svg"));
+  assert.ok(!opening.includes("folding-wall.svg"));
+  for (const [key, file, anchor] of [["04", "cases.svg", "積込みに使うフォルダへ保存した"], ["05", "folding-wall.svg", "横幅が三分の一になった"]]) {
+    const html = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${key}.html`), "utf8");
+    assert.ok(html.indexOf(file) > html.indexOf(anchor));
+    assert.ok(html.indexOf(file) < html.indexOf("</article>"));
+    assert.match(html, /class="reader-figure inline-figure" open/);
+  }
+  const detail = await fs.readFile(path.join(root, `dist/books/${book.id}/index.html`), "utf8");
+  assert.match(detail, /小劇場に集う八人の鉛筆画/);
+});
 test("prose preserves paragraphs and quotes without allowing HTML injection", () => {
   const html = renderMarkdown(
     "一段目。\n続き。\n\n> **記録**\n\n<script>alert(1)</script>\n\n＊",

@@ -124,6 +124,8 @@ export async function loadBooks(root) {
   }
   return books.sort(
     (a, b) =>
-      b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id),
+      b.publishedAt.localeCompare(a.publishedAt) ||
+      (Number(b.number) || 0) - (Number(a.number) || 0) ||
+      a.id.localeCompare(b.id),
   );
 }
