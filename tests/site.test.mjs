@@ -49,7 +49,14 @@ test("vol.002 is complete, and its opening is preserved in the later scene", asy
   const detail = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/index.html"), "utf8");
   assert.match(detail, /序章から読む/);
   assert.match(detail, /序章・本編23章・終章/);
-  assert.ok(!detail.includes("人物画は画像生成"));
+  assert.match(detail, /characters-pencil\.png/);
+  assert.match(detail, /人物画は画像生成/);
+  for (const [chapter, asset] of [["02", "studio-pencil.png"], ["15", "factory-pencil.png"]]) {
+    const html = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${chapter}.html`), "utf8");
+    assert.ok(html.indexOf(asset) > html.indexOf('</article>'));
+  }
+  const opening = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/read/01.html"), "utf8");
+  assert.ok(!opening.includes("factory-pencil.png"));
 });
 test("prose preserves paragraphs and quotes without allowing HTML injection", () => {
   const html = renderMarkdown(
