@@ -71,7 +71,7 @@ test("vol.003 retains its complete sequence and introduces diagrams only with th
   for (const quote of ["「僕が運びました」", "「東倉庫まで。頼まれたとおりに」", "「中は見た？」"])
     assert.ok(book.chapters[15].body.includes(quote));
   assert.equal(books.filter((b) => b.featured).length, 1);
-  assert.equal(books[0].id, book.id);
+  assert.ok(books.indexOf(book) < books.findIndex((b) => b.number === "002"));
   const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/01.html`), "utf8");
   assert.ok(!opening.includes("cases.svg"));
   assert.ok(!opening.includes("folding-wall.svg"));
@@ -83,6 +83,28 @@ test("vol.003 retains its complete sequence and introduces diagrams only with th
   }
   const detail = await fs.readFile(path.join(root, `dist/books/${book.id}/index.html`), "utf8");
   assert.match(detail, /小劇場に集う八人の鉛筆画/);
+});
+test("vol.004 preserves the rescue opening and introduces its inn before using its layout", async () => {
+  const books = await loadBooks(root);
+  const book = books.find((b) => b.number === "004");
+  assert.equal(book.id, "yama-wo-oriru-niwa-mada-hayai");
+  assert.equal(book.status, "completed");
+  assert.equal(book.chapters.length, 23);
+  assert.equal(book.charCount, 35910);
+  assert.equal(books[0].id, book.id);
+  assert.equal(books.filter((b) => b.featured).length, 1);
+  assert.ok(book.featured);
+  assert.match(book.chapters[0].title, /^序章/);
+  assert.match(book.chapters.at(-1).title, /^終章/);
+  assert.match(book.chapters.at(-1).body, /了$/);
+  const repeated = book.chapters[0].body.split(/\n\s*\n/).slice(2).join("\n\n");
+  assert.ok(book.chapters[20].body.includes(repeated));
+  const diagram = await fs.readFile(path.join(root, `dist/books/${book.id}/read/03.html`), "utf8");
+  assert.ok(diagram.indexOf("inn.svg") > diagram.indexOf("建物の外の坂を上がる"));
+  assert.ok(diagram.indexOf("inn.svg") < diagram.indexOf("</article>"));
+  const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/01.html`), "utf8");
+  assert.ok(!opening.includes("inn.svg"));
+  assert.ok(!opening.includes("guests-pencil.png"));
 });
 test("prose preserves paragraphs and quotes without allowing HTML injection", () => {
   const html = renderMarkdown(

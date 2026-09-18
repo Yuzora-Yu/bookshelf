@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 820" role="img" aria-labelledby="title desc">
+<title id="title">折返し 館内図</title>
+<desc id="desc">斜面の上側に二階建ての本館、下側に三階建ての旧館。本館二階と旧館三階は上の渡り廊下、本館一階と旧館二階は下の渡り廊下でつながる。各棟に内階段がある。旧館一階から下の庭へ出られ、外の坂を上ると本館の玄関へ戻れる。</desc>
+<rect width="1000" height="820" fill="#f7f5ef"/>
+<g font-family="Yu Gothic, Meiryo, sans-serif" fill="#41433c" text-anchor="middle">
+<text x="500" y="52" font-size="29">折返し　館内図</text>
+<text x="239" y="112" font-size="24">本館</text><text x="774" y="112" font-size="24">旧館</text>
+</g>
+<g fill="none" stroke="#4e5048" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M85 140 L388 142 L389 469 L84 468 Z M85 304 L388 305 M620 141 L931 139 L932 630 L621 632 Z M621 304 L931 304 M621 469 L931 469"/>
+<path d="M388 220 L621 220 M388 245 L621 245 M388 381 L621 381 M388 406 L621 406"/>
+<path d="M112 256 L126 256 L126 246 L140 246 L140 236 L154 236 L154 226 L168 226 L168 216"/>
+<path d="M898 260 L884 260 L884 250 L870 250 L870 240 L856 240 L856 230 L842 230 L842 220 M898 423 L884 423 L884 413 L870 413 L870 403 L856 403 L856 393 L842 393 L842 383"/>
+</g>
+<g fill="none" stroke="#84867d" stroke-width=".8" opacity=".42"><path d="M81 139 L391 139 L391 472 L82 471 Z M617 140 L935 137 L935 634 L618 636 Z M391 222 L618 222 M391 383 L618 383"/></g>
+<g font-family="Yu Gothic, Meiryo, sans-serif" fill="#41433c" text-anchor="middle">
+<text x="238" y="184" font-size="25">二階</text><text x="251" y="227" font-size="22">客室</text>
+<text x="238" y="348" font-size="25">一階</text><text x="238" y="392" font-size="19">玄関・帳場・食堂</text><text x="238" y="431" font-size="19">厨房・風呂</text>
+<text x="774" y="184" font-size="25">三階</text><text x="759" y="227" font-size="21">旧客室・物置</text>
+<text x="774" y="348" font-size="25">二階</text><text x="759" y="391" font-size="21">読書室・談話室</text>
+<text x="774" y="512" font-size="25">一階</text><text x="774" y="553" font-size="21">元厨房・資料室</text><text x="774" y="590" font-size="18">下の庭への戸</text>
+<text x="505" y="203" font-size="19">上の渡り廊下</text><text x="505" y="365" font-size="19">下の渡り廊下</text>
+<text x="150" y="281" font-size="16">内階段</text><text x="867" y="281" font-size="16">内階段</text><text x="867" y="446" font-size="16">内階段</text>
+<text x="226" y="520" font-size="21">玄関前・車道へ</text><text x="786" y="695" font-size="23">下の庭</text><text x="390" y="675" font-size="20">外の坂</text>
+<text x="500" y="779" font-size="18">二つの渡り廊下は、それぞれ同じ高さの階をつなぐ。</text>
+</g>
+<g stroke="#6b6e62" stroke-width="2" fill="none" stroke-linecap="round">
+<path d="M774 635 L774 654 M765 646 L774 655 L783 646 M623 688 Q494 698 443 618 Q381 541 326 532 M337 527 L326 532 L334 540"/>
+</g>
+</svg>
