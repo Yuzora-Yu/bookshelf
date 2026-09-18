@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 680" role="img" aria-labelledby="title">
+<title id="title">迎えのない朝・装丁</title>
+<defs><linearGradient id="dawn" x2="0" y2="1"><stop stop-color="#cda993"/><stop offset="1" stop-color="#eee3cc"/></linearGradient></defs>
+<path fill="#3c3039" d="M0 0h480v680H0z"/>
+<path d="M25 0v680" stroke="#231e28" stroke-width="6"/>
+<path d="M34 0v680" stroke="#8a757b" stroke-opacity=".3"/>
+<g fill="#f0e9dc" text-anchor="middle" font-family="'Yu Mincho','Hiragino Mincho ProN',serif">
+<text x="247" y="123" font-size="15" letter-spacing="5">警察ミステリー</text>
+<text x="247" y="206" font-size="44" letter-spacing="4">迎えのない</text>
+<text x="247" y="270" font-size="48" letter-spacing="6">朝</text>
+</g>
+<path d="M141 526V336h200v190" fill="none" stroke="#b7a08f" stroke-width="1"/>
+<path d="M153 526V348h176v178" fill="url(#dawn)"/>
+<path d="M153 348h98v178h-98z" fill="#40313b"/>
+<path d="M251 348v178l-66 37V365z" fill="#302a33"/>
+<path d="M251 348v178l-66 37V365z" fill="none" stroke="#c6ac95" stroke-opacity=".45"/>
+<circle cx="200" cy="463" r="2.5" fill="#c6ac95"/>
+<path d="M252 526l-15 37h142l-50-37" fill="#d8bfa1" opacity=".1"/>
+<path d="M68 530h74m199 0h72" stroke="#b7a08f" stroke-opacity=".35"/>
+<g fill="#e4d6c6" font-family="'Yu Mincho','Hiragino Mincho ProN',serif" text-anchor="middle">
+<text x="247" y="606" font-size="11" letter-spacing="4">YU-ZORA BOOKSHELF</text>
+<text x="247" y="634" font-size="11" letter-spacing="3">VOL. 002</text>
+</g></svg>

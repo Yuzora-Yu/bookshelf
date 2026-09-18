@@ -37,6 +37,20 @@ test("mount paths are explicit and cannot escape the site", () => {
   ])
     assert.throws(() => normalizeBase(invalid));
 });
+test("vol.002 is complete, and its opening is preserved in the later scene", async () => {
+  const book = (await loadBooks(root)).find((b) => b.id === "mukae-no-nai-asa");
+  assert.equal(book.number, "002");
+  assert.equal(book.status, "completed");
+  assert.equal(book.chapters.length, 25);
+  assert.match(book.chapters[0].title, /^序章/);
+  assert.match(book.chapters.at(-1).title, /^終章/);
+  assert.match(book.chapters.at(-1).body, /了$/);
+  assert.ok(book.chapters[18].body.includes(book.chapters[0].body));
+  const detail = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/index.html"), "utf8");
+  assert.match(detail, /序章から読む/);
+  assert.match(detail, /序章・本編23章・終章/);
+  assert.ok(!detail.includes("人物画は画像生成"));
+});
 test("prose preserves paragraphs and quotes without allowing HTML injection", () => {
   const html = renderMarkdown(
     "一段目。\n続き。\n\n> **記録**\n\n<script>alert(1)</script>\n\n＊",
