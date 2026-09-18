@@ -131,3 +131,20 @@ export async function loadBooks(root, collection = "content/books") {
       a.id.localeCompare(b.id),
   );
 }
+
+export async function loadArchivedBooks(root) {
+  const archives = await loadBooks(root, "content/editions");
+  const revisions = path.join(root, "content/revisions");
+  const entries = await fs.readdir(revisions, { withFileTypes: true }).catch((error) => {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  });
+  for (const entry of entries.filter((item) => item.isDirectory())) {
+    const books = await loadBooks(root, `content/revisions/${entry.name}`);
+    for (const book of books) {
+      if (book.edition !== entry.name) throw new Error(`${book.id}: archive edition mismatch`);
+      archives.push(book);
+    }
+  }
+  return archives.map((book) => ({ ...book, archived: true }));
+}

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import {
   escape as e,
   loadBooks,
+  loadArchivedBooks,
   normalizeBase,
   renderMarkdown,
 } from "./content.mjs";
@@ -22,10 +23,12 @@ await fs.rm(dist, { recursive: true, force: true });
 await fs.mkdir(dist, { recursive: true });
 await fs.cp(path.join(root, "public"), dist, { recursive: true });
 const books = await loadBooks(root);
-const archivedBooks = (await loadBooks(root, "content/editions")).map((b) => ({ ...b, archived: true }));
+const archivedBooks = await loadArchivedBooks(root);
 const allEditions = [...books, ...archivedBooks];
+const editionKeys = allEditions.map((b) => `${b.id}:${b.edition || ""}`);
+if (new Set(editionKeys).size !== editionKeys.length) throw new Error("Duplicate book edition");
 const url = (s) => base + s;
-const bookPath = (b) => `books/${b.id}/${b.archived ? "editions/original/" : ""}`;
+const bookPath = (b) => `books/${b.id}/${b.archived ? `editions/${b.edition || "original"}/` : ""}`;
 const bookUrl = (b) => url(bookPath(b));
 const readPath = (b) => `books/${b.id}/read/${b.edition ? b.edition + "/" : ""}`;
 const readUrl = (b, n = 1) =>
@@ -76,9 +79,9 @@ await write(
   }),
 );
 for (const b of allEditions) {
-  const otherEdition = b.archived ? books.find((book) => book.id === b.id) : archivedBooks.find((book) => book.id === b.id);
-  const editionNotice = otherEdition
-    ? `<p class="edition-notice">${b.archived ? "旧版を表示しています。" : `${e(b.editionLabel || "改稿版")}。`} <a href="${bookUrl(otherEdition)}">${b.archived ? "改稿版" : "旧版"}の作品紹介へ →</a></p>`
+  const otherEditions = allEditions.filter((book) => book.id === b.id && book !== b);
+  const editionNotice = otherEditions.length
+    ? `<p class="edition-notice">${b.archived ? `旧版を表示しています（${e(b.editionLabel || "初版")}）。` : `${e(b.editionLabel || "改稿版")}。`} ${otherEditions.map((book) => `<a href="${bookUrl(book)}">${e(book.editionLabel || "初版")}${book.archived ? "" : "（最新版）"} →</a>`).join(" ／ ")}</p>`
     : "";
   const toc = b.chapters
     .map(
@@ -175,7 +178,7 @@ await write(
     allEditions.map((b) => ({
       id: b.id,
       edition: b.edition || "",
-      title: b.title + (b.archived ? "（旧版）" : ""),
+      title: b.title + (b.archived ? `（${b.editionLabel || "初版"}）` : ""),
       chapters: b.chapters.map((c) => ({ key: c.key, title: c.title })),
       href: bookUrl(b),
       readBase: url(readPath(b)),
