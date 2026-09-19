@@ -36,13 +36,17 @@ test("the revised first novel has independent reading progress and correct diagr
   assert.match(book.chapters.at(-1).body, /了$/);
   assert.equal(progressKey(book.id), `yuzora:bookshelf:progress:v1:${book.id}`);
   assert.notEqual(progressKey(book.id, book.edition), progressKey(book.id));
+  const buildInfo = JSON.parse(await fs.readFile(path.join(root, "dist/build-info.json"), "utf8"));
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
   const versions = catalog.filter((b) => b.id === book.id);
   assert.equal(versions.length, 2);
   assert.equal(new Set(versions.map((b) => b.readBase)).size, 2);
   const saved = progress({ chapter: 20, anchor: "p004", updatedAt: 123 }, 30);
   const legacy = versions.find((b) => !b.edition);
-  assert.equal(resumeUrl(legacy, saved), "/bookshelf/books/ame-wo-tojikomeru/read/20.html#p004");
+  assert.equal(
+    resumeUrl(legacy, saved),
+    `${buildInfo.base}books/ame-wo-tojikomeru/read/20.html#p004`,
+  );
   for (const [chapter, asset, anchor] of [["03", "campus.svg", "保管室の床は廊下より一段高い"], ["13", "north.svg", "平屋の一室で、外へ出る戸は一つ"]]) {
     const html = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${book.edition}/${chapter}.html`), "utf8");
     assert.ok(html.indexOf(asset) > html.indexOf(anchor));
@@ -279,13 +283,20 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
   const secondRevision = archives.find(b => b.id === id && b.edition === "revised-20260918-2");
   assert.equal(firstRevision.chapters.length, 25);
   assert.equal(secondRevision.chapters.length, 21);
+  const buildInfo = JSON.parse(await fs.readFile(path.join(root, "dist/build-info.json"), "utf8"));
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
   const versions = catalog.filter(b => b.id === id);
   assert.equal(versions.length, 4);
   assert.equal(new Set(versions.map(b => progressKey(id, b.edition))).size, 4);
   const old = versions.find(b => b.edition === firstRevision.edition);
-  assert.equal(resumeUrl(old, progress({chapter: 25, anchor: "p004", updatedAt: 1}, 25)), "/bookshelf/books/" + id + "/read/revised-20260918/25.html#p004");
-  const detail = await fs.readFile(path.join(root, "dist", old.href.replace(/^\/bookshelf\//, ""), "index.html"), "utf8");
+  assert.equal(
+    resumeUrl(old, progress({ chapter: 25, anchor: "p004", updatedAt: 1 }, 25)),
+    `${buildInfo.base}books/${id}/read/revised-20260918/25.html#p004`,
+  );
+  const detailPath = old.href.startsWith(buildInfo.base)
+    ? old.href.slice(buildInfo.base.length)
+    : old.href.replace(/^\/+/, "");
+  const detail = await fs.readFile(path.join(root, "dist", detailPath, "index.html"), "utf8");
   assert.ok(detail.includes("（最新版）"));
   const firstChapter = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260918/02.html"), "utf8");
   assert.ok(firstChapter.includes("studio-pencil.png"));
