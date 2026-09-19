@@ -54,7 +54,7 @@ test("the revised first novel has independent reading progress and correct diagr
     assert.match(html, /data-edition="revised-20260918"/);
   }
   const oldChapter = await fs.readFile(path.join(root, `dist/books/${book.id}/read/02.html`), "utf8");
-  assert.match(oldChapter, /旧版を表示しています/);
+  assert.match(oldChapter, /edition-chip archive">旧版/);
   assert.match(oldChapter, /data-edition=""/);
 });
 test("mount paths are explicit and cannot escape the site", () => {
@@ -85,6 +85,13 @@ test("vol.002 third revision is complete, preserves the prologue scene later, an
   assert.match(detail, /序章から読む/);
   assert.match(detail, /序章・本編20章・終章/);
   assert.match(detail, /第三改稿版/);
+  assert.match(detail, /最新版/);
+  assert.match(detail, /第一改稿版/);
+  assert.match(detail, /第二改稿版/);
+  assert.match(detail, /最終更新/);
+  assert.match(detail, /2026\.09\.19/);
+  assert.match(detail, /迎えに行く。店で待っていろ/);
+  assert.match(detail, /二日前に死んだ女性/);
   assert.match(detail, /characters-pencil\.png/);
   assert.match(detail, /人物画は画像生成/);
   for (const [chapter, asset] of [["02", "studio-interior-revised2-pencil.png"], ["06", "factory-pencil.png"]]) {
@@ -262,7 +269,7 @@ test("all four originals remain intact and each edition has independent URLs and
     assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260919-3" : "revised-20260918");
     assert.notEqual(progressKey(book.id), progressKey(book.id, revised.edition));
     const oldHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read/01.html"), "utf8");
-    assert.match(oldHtml, /旧版を表示しています/);
+    assert.match(oldHtml, /edition-chip archive">旧版/);
     const newHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read", revised.edition, "01.html"), "utf8");
     assert.ok(newHtml.includes(`data-edition="${revised.edition}"`));
   }
@@ -297,7 +304,8 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
     ? old.href.slice(buildInfo.base.length)
     : old.href.replace(/^\/+/, "");
   const detail = await fs.readFile(path.join(root, "dist", detailPath, "index.html"), "utf8");
-  assert.ok(detail.includes("（最新版）"));
+  assert.ok(detail.includes("最新版へ戻る"));
+  assert.ok(detail.includes("第三改稿版（最新版）"));
   const firstChapter = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260918/02.html"), "utf8");
   assert.ok(firstChapter.includes("studio-pencil.png"));
   assert.ok(!firstChapter.includes("studio-interior-revised2-pencil.png"));

@@ -40,6 +40,42 @@ const icon =
   '<svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 6q6-2 12 2 6-4 12-2v20q-6-2-12 2-6-4-12-2zM16 8v20" stroke="currentColor" stroke-width="1.5"/></svg>';
 const tags = (b) =>
   `<span class="status-tag">${status(b)}</span>${b.genres.map((g) => `<span class="genre-tag">${e(g)}</span>`).join("")}`;
+const dateLabel = (date) => date.replaceAll("-", ".");
+const editionOrder = (id) =>
+  allEditions
+    .filter((book) => book.id === id)
+    .sort((a, b) => {
+      if (!a.edition) return -1;
+      if (!b.edition) return 1;
+      return a.edition.localeCompare(b.edition);
+    });
+const revisionName = (book, versions = editionOrder(book.id)) => {
+  if (!book.edition) return "初版";
+  const revisions = versions.filter((version) => version.edition);
+  const index = revisions.findIndex((version) => version.edition === book.edition);
+  const labels = ["第一", "第二", "第三", "第四", "第五", "第六", "第七", "第八", "第九", "第十"];
+  return index >= 0 && index < labels.length
+    ? `${labels[index]}改稿版`
+    : book.editionLabel || "改稿版";
+};
+const editionSwitcher = (book, compact = false) => {
+  const versions = editionOrder(book.id);
+  if (versions.length < 2) return "";
+  const latest = versions.find((version) => !version.archived) || versions.at(-1);
+  const name = revisionName(book, versions);
+  if (compact) {
+    return `<p class="reader-edition"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><strong>${e(name)}</strong><a href="${bookUrl(book)}#editions">版を確認する →</a></p>`;
+  }
+  const links = versions
+    .filter((version) => version !== book)
+    .map((version) => {
+      const targetName = revisionName(version, versions);
+      const suffix = version === latest ? "（最新版）" : "";
+      return `<a href="${bookUrl(version)}"><span>${e(targetName)}${suffix}</span><small>${e(dateLabel(version.updatedAt || version.publishedAt))}</small></a>`;
+    })
+    .join("");
+  return `<nav class="edition-switcher" id="editions" aria-label="版を選ぶ"><div class="edition-current"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><div><strong>${e(name)}</strong><small>${e(dateLabel(book.updatedAt || book.publishedAt))}</small></div>${book.archived && latest ? `<a class="edition-latest-link" href="${bookUrl(latest)}">最新版へ戻る →</a>` : ""}</div><div class="edition-links"><span>別の版を読む</span>${links}</div></nav>`;
+};
 const footer = () =>
   `<footer class="site-footer wrap"><a class="footer-brand" href="${url("")}">${icon}<span>夕空の本棚<small>YU-ZORA BOOKSHELF</small></span></a><p>日常を少し離れて、物語の中へ。</p><a href="${e(config.portalUrl)}">YU-ZORA PORTAL <span aria-hidden="true">↗</span></a><small>© YU-ZORA · 作品の無断転載はご遠慮ください。</small></footer>`;
 const header = () =>
@@ -79,17 +115,15 @@ await write(
   }),
 );
 for (const b of allEditions) {
-  const otherEditions = allEditions.filter((book) => book.id === b.id && book !== b);
-  const editionNotice = otherEditions.length
-    ? `<p class="edition-notice">${b.archived ? `旧版を表示しています（${e(b.editionLabel || "初版")}）。` : `${e(b.editionLabel || "改稿版")}。`} ${otherEditions.map((book) => `<a href="${bookUrl(book)}">${e(book.editionLabel || "初版")}${book.archived ? "" : "（最新版）"} →</a>`).join(" ／ ")}</p>`
-    : "";
+  const editionNotice = editionSwitcher(b);
+  const readerEditionNotice = editionSwitcher(b, true);
   const toc = b.chapters
     .map(
       (c) =>
         `<li><a href="${readUrl(b, c.number)}"><span class="toc-number">${c.key}</span><span>${e(c.title.replace(/^第.+?章　/, ""))}</span><span aria-hidden="true">→</span></a></li>`,
     )
     .join("");
-  const detail = `${header()}<main id="main" class="wrap detail-main"><nav class="breadcrumb" aria-label="パンくず"><a href="${url("")}">本棚</a><span aria-hidden="true">／</span><span>${e(b.title)}</span></nav><section class="detail-hero"><div class="detail-cover"><img src="${asset(b, b.cover)}" width="480" height="680" alt="${e(b.title)}の表紙"></div><div class="detail-copy"><p class="eyebrow">VOLUME ${e(b.number || "")} · YU-ZORA ORIGINAL</p><div class="tags">${tags(b)}</div><h1>${e(b.title)}</h1><p class="subtitle">${e(b.subtitle || "")}</p>${editionNotice}<p>${e(b.description)}</p><dl class="book-facts"><div><dt>長さ</dt><dd>${b.charCount.toLocaleString("ja-JP")}字</dd></div><div><dt>収録</dt><dd>${contentsLabel(b)}</dd></div><div><dt>掲載日</dt><dd><time datetime="${b.publishedAt}">${b.publishedAt.replaceAll("-", ".")}</time></dd></div></dl><a class="button button-dark" href="${readUrl(b)}">${e(b.startLabel || "はじめから読む")} <span aria-hidden="true">→</span></a><a class="button button-outline detail-resume" data-resume="${b.id}:${b.edition || ""}" href="${readUrl(b)}" hidden>続きから読む →</a><div class="book-keywords">${b.tags.map((t) => `<span>#${e(t)}</span>`).join("")}</div></div></section><div class="detail-columns"><div><section class="synopsis"><p class="eyebrow">STORY</p><h2>この物語について</h2>${b.intro.map((p) => `<p>${e(p)}</p>`).join("")}</section><section class="cast-section"><details><summary>登場人物を見る<span>ネタバレなし ＋</span></summary>${b.portrait ? `<figure><img src="${asset(b, b.portrait)}" width="1536" height="1024" alt="${e(b.portraitAlt || "登場人物六人のモノクロ線画")}" loading="lazy"><figcaption>${e(b.portraitCaption)} <a href="${asset(b, b.portrait)}" target="_blank" rel="noopener">大きな画像を開く ↗</a></figcaption></figure>` : ""}<dl class="cast-list">${b.characters.map((c) => `<div><dt>${e(c.name)}<small>${e(c.reading)}</small></dt><dd>${e(c.description)}</dd></div>`).join("")}</dl></details></section><p class="fiction-note">本作はフィクションです。人物・団体・事件は架空です。${b.portrait ? "<br>人物画は画像生成を使用しています。" : ""}</p><a class="download-link" href="${bookUrl(b)}full.txt" download>全文をテキストで保存 ↓</a></div><section class="detail-toc" aria-labelledby="toc-title"><div class="section-heading"><h2 id="toc-title">目次</h2><span>${contentsLabel(b)}</span></div><ol class="toc-list">${toc}</ol></section></div></main>${footer()}`;
+  const detail = `${header()}<main id="main" class="wrap detail-main"><nav class="breadcrumb" aria-label="パンくず"><a href="${url("")}">本棚</a><span aria-hidden="true">／</span><span>${e(b.title)}</span></nav><section class="detail-hero"><div class="detail-cover"><img src="${asset(b, b.cover)}" width="480" height="680" alt="${e(b.title)}の表紙"></div><div class="detail-copy"><p class="eyebrow">VOLUME ${e(b.number || "")} · YU-ZORA ORIGINAL</p><div class="tags">${tags(b)}</div><h1>${e(b.title)}</h1><p class="subtitle">${e(b.subtitle || "")}</p>${editionNotice}<p>${e(b.description)}</p><dl class="book-facts"><div><dt>長さ</dt><dd>${b.charCount.toLocaleString("ja-JP")}字</dd></div><div><dt>収録</dt><dd>${contentsLabel(b)}</dd></div><div><dt>初回掲載</dt><dd><time datetime="${b.publishedAt}">${dateLabel(b.publishedAt)}</time></dd></div>${b.updatedAt !== b.publishedAt ? `<div><dt>最終更新</dt><dd><time datetime="${b.updatedAt}">${dateLabel(b.updatedAt)}</time></dd></div>` : ""}</dl><a class="button button-dark" href="${readUrl(b)}">${e(b.startLabel || "はじめから読む")} <span aria-hidden="true">→</span></a><a class="button button-outline detail-resume" data-resume="${b.id}:${b.edition || ""}" href="${readUrl(b)}" hidden>続きから読む →</a><div class="book-keywords">${b.tags.map((t) => `<span>#${e(t)}</span>`).join("")}</div></div></section><div class="detail-columns"><div><section class="synopsis"><p class="eyebrow">STORY</p><h2>この物語について</h2>${b.intro.map((p) => `<p>${e(p)}</p>`).join("")}</section><section class="cast-section"><details><summary>登場人物を見る<span>ネタバレなし ＋</span></summary>${b.portrait ? `<figure><img src="${asset(b, b.portrait)}" width="1536" height="1024" alt="${e(b.portraitAlt || "登場人物六人のモノクロ線画")}" loading="lazy"><figcaption>${e(b.portraitCaption)} <a href="${asset(b, b.portrait)}" target="_blank" rel="noopener">大きな画像を開く ↗</a></figcaption></figure>` : ""}<dl class="cast-list">${b.characters.map((c) => `<div><dt>${e(c.name)}<small>${e(c.reading)}</small></dt><dd>${e(c.description)}</dd></div>`).join("")}</dl></details></section><p class="fiction-note">本作はフィクションです。人物・団体・事件は架空です。${b.portrait ? "<br>人物画は画像生成を使用しています。" : ""}</p><a class="download-link" href="${bookUrl(b)}full.txt" download>全文をテキストで保存 ↓</a></div><section class="detail-toc" aria-labelledby="toc-title"><div class="section-heading"><h2 id="toc-title">目次</h2><span>${contentsLabel(b)}</span></div><ol class="toc-list">${toc}</ol></section></div></main>${footer()}`;
   await write(
     `${bookPath(b)}index.html`,
     page({
@@ -135,7 +169,7 @@ for (const b of allEditions) {
           `<details class="reader-figure"><summary>${e(f.alt)}を見る <span aria-hidden="true">＋</span></summary><figure><img src="${asset(b, f.file)}" alt="${e(f.alt)}" loading="lazy"><figcaption>${e(f.caption)} <a href="${asset(b, f.file)}" target="_blank" rel="noopener">大きな画像を開く ↗</a></figcaption></figure></details>`,
       )
       .join("");
-    const content = `<header class="reader-header"><a class="reader-back" href="${bookUrl(b)}"><span aria-hidden="true">←</span><span>${e(b.title)}</span></a><div class="reader-tools"><button data-dialog="contents" type="button">目次</button><button data-dialog="preferences" type="button" aria-label="文字サイズと配色の設定"><span aria-hidden="true">Aa</span><span class="tool-label">表示設定</span></button></div></header><div class="reading-progress" aria-hidden="true"><span id="progress-bar"></span></div><main id="main" class="reading-main"><div class="chapter-heading">${editionNotice}<p class="eyebrow">CHAPTER ${c.key} <span>／ ${b.chapters.length}</span></p><h1>${e(c.title)}</h1></div>${images("before")}<article class="prose" id="prose">${body}</article>${images("after")}<nav class="reader-next" aria-label="前後の章">${next ? `<span class="eyebrow">NEXT CHAPTER</span><a class="next-chapter" href="${readUrl(b, next.number)}"><span>${e(next.title)}</span><span aria-hidden="true">→</span></a>` : `<p class="finished-message">${b.status === "completed" ? `『${e(b.title)}』を、最後まで。<br>お読みいただき、ありがとうございました。` : "公開中の章はここまでです。<br>次の更新をお待ちください。"}</p><a class="button button-dark" href="${url("")}">本棚に戻る →</a>`}<div class="reader-secondary">${prev ? `<a href="${readUrl(b, prev.number)}">← 前の章</a>` : "<span></span>"}<a href="${bookUrl(b)}">作品紹介に戻る</a><span>${c.number} / ${b.chapters.length}</span></div></nav><p class="reading-notice" id="save-notice" aria-live="polite">読んだ位置は、このブラウザに自動で保存されます。</p></main><dialog id="contents" aria-labelledby="contents-title"><div class="dialog-heading"><h2 id="contents-title">目次</h2><button data-close type="button" aria-label="目次を閉じる">×</button></div><p class="dialog-book">${e(b.title)}</p><ol class="toc-list">${b.chapters.map((ch) => `<li><a ${ch.number === c.number ? 'aria-current="page"' : ""} href="${readUrl(b, ch.number)}"><span class="toc-number">${ch.key}</span><span>${e(ch.title.replace(/^第.+?章　/, ""))}</span>${ch.number === c.number ? '<span class="current-label">読書中</span>' : '<span aria-hidden="true">→</span>'}</a></li>`).join("")}</ol></dialog><dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-heading"><h2 id="preferences-title">読みやすく整える</h2><button data-close type="button" aria-label="表示設定を閉じる">×</button></div><fieldset><legend>文字の大きさ</legend><div class="setting-options">${[
+    const content = `<header class="reader-header"><a class="reader-back" href="${bookUrl(b)}"><span aria-hidden="true">←</span><span>${e(b.title)}</span></a><div class="reader-tools"><button data-dialog="contents" type="button">目次</button><button data-dialog="preferences" type="button" aria-label="文字サイズと配色の設定"><span aria-hidden="true">Aa</span><span class="tool-label">表示設定</span></button></div></header><div class="reading-progress" aria-hidden="true"><span id="progress-bar"></span></div><main id="main" class="reading-main"><div class="chapter-heading">${readerEditionNotice}<p class="eyebrow">CHAPTER ${c.key} <span>／ ${b.chapters.length}</span></p><h1>${e(c.title)}</h1></div>${images("before")}<article class="prose" id="prose">${body}</article>${images("after")}<nav class="reader-next" aria-label="前後の章">${next ? `<span class="eyebrow">NEXT CHAPTER</span><a class="next-chapter" href="${readUrl(b, next.number)}"><span>${e(next.title)}</span><span aria-hidden="true">→</span></a>` : `<p class="finished-message">${b.status === "completed" ? `『${e(b.title)}』を、最後まで。<br>お読みいただき、ありがとうございました。` : "公開中の章はここまでです。<br>次の更新をお待ちください。"}</p><a class="button button-dark" href="${url("")}">本棚に戻る →</a>`}<div class="reader-secondary">${prev ? `<a href="${readUrl(b, prev.number)}">← 前の章</a>` : "<span></span>"}<a href="${bookUrl(b)}">作品紹介に戻る</a><span>${c.number} / ${b.chapters.length}</span></div></nav><p class="reading-notice" id="save-notice" aria-live="polite">読んだ位置は、このブラウザに自動で保存されます。</p></main><dialog id="contents" aria-labelledby="contents-title"><div class="dialog-heading"><h2 id="contents-title">目次</h2><button data-close type="button" aria-label="目次を閉じる">×</button></div><p class="dialog-book">${e(b.title)}</p><ol class="toc-list">${b.chapters.map((ch) => `<li><a ${ch.number === c.number ? 'aria-current="page"' : ""} href="${readUrl(b, ch.number)}"><span class="toc-number">${ch.key}</span><span>${e(ch.title.replace(/^第.+?章　/, ""))}</span>${ch.number === c.number ? '<span class="current-label">読書中</span>' : '<span aria-hidden="true">→</span>'}</a></li>`).join("")}</ol></dialog><dialog id="preferences" aria-labelledby="preferences-title"><div class="dialog-heading"><h2 id="preferences-title">読みやすく整える</h2><button data-close type="button" aria-label="表示設定を閉じる">×</button></div><fieldset><legend>文字の大きさ</legend><div class="setting-options">${[
       [18, "小"],
       [20, "標準"],
       [23, "大"],
