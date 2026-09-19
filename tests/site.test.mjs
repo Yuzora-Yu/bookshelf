@@ -90,7 +90,9 @@ test("vol.002 third revision is complete, preserves the prologue scene later, an
   assert.match(detail, /第二改稿版/);
   assert.match(detail, /最終更新/);
   assert.match(detail, /2026\.09\.19/);
-  assert.match(detail, /県警と所轄。噛み合わない二人の刑事。/);
+  assert.match(detail, /箱二つと、ミシン一台。/);
+  assert.match(detail, /前年十一月に妙に小さな一件/);
+  assert.match(detail, /死者の仕事をたどり始める/);
   assert.ok(!detail.includes("迎えに行く。店で待っていろ"));
   assert.ok(!detail.includes("二日前に死んだ女性"));
   assert.match(detail, /characters-pencil\.png/);
@@ -101,7 +103,7 @@ test("vol.002 third revision is complete, preserves the prologue scene later, an
   }
   const opening = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/01.html`), "utf8");
   assert.match(opening, /迎えに行く。店で待っていろ/);
-  assert.match(opening, /二日前に死亡が確認されていた/);
+  assert.match(opening, /二日前に死亡が確認された人物の番号から届いていた/);
   assert.ok(!opening.includes("川瀬真知は二日前"));
   assert.ok(!opening.includes("factory-pencil.png"));
 });
