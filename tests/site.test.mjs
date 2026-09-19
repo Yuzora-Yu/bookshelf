@@ -69,7 +69,7 @@ test("mount paths are explicit and cannot escape the site", () => {
   ])
     assert.throws(() => normalizeBase(invalid));
 });
-test("vol.002 third revision is complete, preserves the prologue scene later, and keeps prior revisions separate", async () => {
+test("vol.002 third revision is complete, uses the discovery prologue, and keeps prior revisions separate", async () => {
   const book = (await loadBooks(root)).find((b) => b.id === "mukae-no-nai-asa");
   assert.equal(book.number, "002");
   assert.equal(book.status, "completed");
@@ -78,9 +78,9 @@ test("vol.002 third revision is complete, preserves the prologue scene later, an
   assert.match(book.chapters[0].title, /^序章/);
   assert.match(book.chapters.at(-1).title, /^終章/);
   assert.match(book.chapters.at(-1).body, /了$/);
-  const prologueLine = "迎えに行く。店で待っていろ";
-  assert.ok(book.chapters[0].body.includes(prologueLine));
-  assert.ok(book.chapters[14].body.includes(prologueLine));
+  assert.ok(book.chapters[0].body.includes("宮下が最初にしたのは、通報ではなかった"));
+  assert.ok(book.chapters[0].body.includes("静かな撮影室に、通知の音だけが鳴り続けた"));
+  assert.ok(book.chapters[14].body.includes("迎えに行く。店で待っていろ"));
   const detail = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/index.html"), "utf8");
   assert.match(detail, /序章から読む/);
   assert.match(detail, /序章・本編20章・終章/);
@@ -102,9 +102,10 @@ test("vol.002 third revision is complete, preserves the prologue scene later, an
     assert.ok(html.indexOf(asset) > html.indexOf("</article>"));
   }
   const opening = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/01.html`), "utf8");
-  assert.match(opening, /迎えに行く。店で待っていろ/);
-  assert.match(opening, /二日前に死亡が確認された人物の番号から届いていた/);
-  assert.ok(!opening.includes("川瀬真知は二日前"));
+  assert.match(opening, /宮下が最初にしたのは、通報ではなかった/);
+  assert.match(opening, /現場に人。作業入れません。/);
+  assert.match(opening, /静かな撮影室に、通知の音だけが鳴り続けた/);
+  assert.ok(!opening.includes("迎えに行く。店で待っていろ"));
   assert.ok(!opening.includes("factory-pencil.png"));
 });
 test("vol.003 retains its complete sequence and introduces diagrams only with their prose", async () => {
