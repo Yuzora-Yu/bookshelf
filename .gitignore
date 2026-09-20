@@ -4,3 +4,6 @@ node_modules/
 *.log
 
 .wrangler/
+worker/generated/
+.dev.vars*
+.env*

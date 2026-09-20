@@ -25,6 +25,17 @@ await fs.cp(path.join(root, "public"), dist, { recursive: true });
 const books = await loadBooks(root);
 const archivedBooks = await loadArchivedBooks(root);
 const allEditions = [...books, ...archivedBooks];
+const currentImages = new Set(books.flatMap((b) =>
+  [b.cover, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
+    .filter(Boolean).map((name) => `/assets/books/${b.id}/${name}`)));
+const archiveImages = [...new Set(archivedBooks.flatMap((b) =>
+  [b.cover, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
+    .filter(Boolean).map((name) => `/assets/books/${b.id}/${name}`)))];
+await fs.mkdir(path.join(root, "worker/generated"), { recursive: true });
+await fs.writeFile(path.join(root, "worker/generated/edition-policy.json"), JSON.stringify({
+  latestReadPrefixes: books.map((b) => `/books/${b.id}/read/${b.edition ? b.edition + "/" : ""}`),
+  protectedAssets: archiveImages.filter((name) => !currentImages.has(name)),
+}, null, 2) + "\n");
 const editionKeys = allEditions.map((b) => `${b.id}:${b.edition || ""}`);
 if (new Set(editionKeys).size !== editionKeys.length) throw new Error("Duplicate book edition");
 const url = (s) => base + s;
@@ -63,18 +74,19 @@ const editionSwitcher = (book, compact = false) => {
   if (versions.length < 2) return "";
   const latest = versions.find((version) => !version.archived) || versions.at(-1);
   const name = revisionName(book, versions);
+  const lock = book.archived ? `<form class="archive-lock" method="post" action="${url("archive-access/logout")}"><button type="submit">旧版の閲覧を終了する</button></form>` : "";
   if (compact) {
-    return `<p class="reader-edition"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><strong>${e(name)}</strong><a href="${bookUrl(book)}#editions">版を確認する →</a></p>`;
+    return `<p class="reader-edition"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><strong>${e(name)}</strong><a href="${bookUrl(book)}#editions">版を確認する →</a></p>${lock}`;
   }
   const links = versions
     .filter((version) => version !== book)
     .map((version) => {
       const targetName = revisionName(version, versions);
-      const suffix = version === latest ? "（最新版）" : "";
+      const suffix = version === latest ? "（最新版）" : "（要パスワード）";
       return `<a href="${bookUrl(version)}"><span>${e(targetName)}${suffix}</span><small>${e(dateLabel(version.updatedAt || version.publishedAt))}</small></a>`;
     })
     .join("");
-  return `<nav class="edition-switcher" id="editions" aria-label="版を選ぶ"><div class="edition-current"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><div><strong>${e(name)}</strong><small>${e(dateLabel(book.updatedAt || book.publishedAt))}</small></div>${book.archived && latest ? `<a class="edition-latest-link" href="${bookUrl(latest)}">最新版へ戻る →</a>` : ""}</div><div class="edition-links"><span>別の版を読む</span>${links}</div></nav>`;
+  return `<nav class="edition-switcher" id="editions" aria-label="版を選ぶ"><div class="edition-current"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><div><strong>${e(name)}</strong><small>${e(dateLabel(book.updatedAt || book.publishedAt))}</small></div>${book.archived && latest ? `<a class="edition-latest-link" href="${bookUrl(latest)}">最新版へ戻る →</a>` : ""}</div><div class="edition-links"><span>別の版を読む</span>${links}</div>${lock}</nav>`;
 };
 const footer = () =>
   `<footer class="site-footer wrap"><a class="footer-brand" href="${url("")}">${icon}<span>夕空の本棚<small>YU-ZORA BOOKSHELF</small></span></a><p>日常を少し離れて、物語の中へ。</p><a href="${e(config.portalUrl)}">YU-ZORA PORTAL <span aria-hidden="true">↗</span></a><small>© YU-ZORA · 作品の無断転載はご遠慮ください。</small></footer>`;

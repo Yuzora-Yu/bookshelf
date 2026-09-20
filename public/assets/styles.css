@@ -1574,3 +1574,6 @@ html[data-theme="night"] .edition-chip.archive { color: #dec4b3; }
     margin-left: 0;
   }
 }
+
+.archive-lock { margin: 12px 0; }
+.archive-lock button { padding: 6px 0; border: 0; background: transparent; color: var(--muted, #626963); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }

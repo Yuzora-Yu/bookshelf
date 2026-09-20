@@ -40,7 +40,7 @@ npm test
 
 `npm run build` の成果物は `dist/`。通常の静的ホスティングに配置できます。`dist/` は再生成可能なのでGit管理しません。
 
-標準の配置先は `/bookshelf/`。将来の `https://yu-zora.com/bookshelf/` に合わせた設定です。ポータルからこのURLへリンクし、`dist/` の**中身**を公開領域の `bookshelf/` に配置してください。既存サイト全体への上書きやiframe埋込みは不要です。ヘッダーのポータルリンクは `site.config.json` の `portalUrl` で設定します。
+標準の配置先は `https://yu-zora.com/bookshelf/`。旧版の閲覧認証を行うCloudflare Worker経由で公開します。`dist/` 単体の静的ホスティングは認証を実行できないため、公開先には使用しません。ヘッダーのポータルリンクは `site.config.json` の `portalUrl` で設定します。
 
 PowerShellで本番用に生成する例：
 
@@ -52,9 +52,7 @@ npm run build
 
 `BASE_PATH` は先頭・末尾の `/` が必須。独立ドメインのルートなら `/`。`SITE_URL` は公開先のオリジン（パスを含めない）で、指定するとcanonical URL・OG URL・sitemap.xmlを生成します。未指定なら誤った公開URLを出しません。配置先を変えたら必ず再ビルドしてください。
 
-GitHub Pages用に手動実行の [Deploy Pages](.github/workflows/pages.yml) も用意しています。リポジトリの Settings → Pages → Source を GitHub Actions に設定し、Actionsから実行します。標準URLは `https://yuzora-yu.github.io/bookshelf/`。カスタムドメインなどで変更する場合は、実行時の入力を変更してください。このPagesワークフローはpushでは実行されません。本番CloudflareのGit連携は、これとは別の公開経路です。
-
-参考：[GitHub公式・カスタムワークフローでのPages公開](https://docs.github.com/ja/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
+GitHub Pagesへの静的公開ワークフローは使用しません。本番の認証はWorkerの実行が必要です。ローカルの静的プレビューは原稿確認専用です。
 
 ## 構成
 
@@ -81,7 +79,7 @@ site.config.json     配置先・ポータルURL
 npm run deploy:cloudflare
 ```
 
-構文確認→本番URLでの生成→テスト→Wrangler 4.120.0でのデプロイを実行します。Cloudflareの認証情報はリポジトリに含めません。通常の本番公開は、Cloudflare側のGit連携でmainへのpushを起点に実行します。GitHub Actionsの検証CIと、Cloudflare側のビルド・公開は別の処理です。公開完了は本番URLの内容で確認します。Pagesのワークフローは別の公開先を使う場合の予備です。
+構文確認→本番URLでの生成→テスト→Wrangler 4.135.0でのデプロイを実行します。Cloudflareの認証情報はリポジトリに含めません。通常の本番公開は、Cloudflare側のGit連携でmainへのpushを起点に実行します。GitHub Actionsの検証CIと、Cloudflare側のビルド・公開は別の処理です。公開完了は本番URLの内容で確認します。
 
 Workerは公開URLの `/bookshelf` 接頭辞を静的アセット取得時に除きます。章の `.html` URLはそのまま維持し、フォルダーの末尾スラッシュだけを補完します。存在しないページは本棚の404ページを返します。
 
@@ -94,3 +92,14 @@ Workerは公開URLの `/bookshelf` 接頭辞を静的アセット取得時に除
 ## vol.003
 
 『箱の外で待ち合わせ』を収録。序章＋本編20章＋終章、本文31,491字。人物画8人と表紙原画は画像生成、本文の構造図2点はSVGです。図は対応する説明の直後に表示します。任意項目 `portraitAlt` で作品ごとの人物画の代替テキストを指定できます。同じ掲載日の作品は巻番号の新しい順に並びます。
+
+
+## 旧版の閲覧認証
+
+最新版の本文・紹介・全文テキストは公開。旧版の紹介ページ、章ページ、全文テキスト、旧版だけで使用する図版はWorkerで認証する。`worker/generated/edition-policy.json` はビルド時に現行の原稿情報から生成し、改稿時に保護対象が自動で切り替わる。
+
+CloudflareのSecretに `ARCHIVE_PASSWORD` と `ARCHIVE_SESSION_SECRET`（十分に長い乱数）を設定する。値をGit、HTML、JavaScript、設定ファイルへ書かない。パスワード変更時は既存セッションも失効する。8時間有効の署名付きCookieはHttpOnly / Secure / SameSite=Lax、旧版の応答はprivate, no-store。本文や版別の読書位置は変更しない。
+
+ローカル認証確認には `npm ci` 後、Git対象外の `.dev.vars` に二つのSecretを設定し、`npm run dev:worker` を使う。静的プレビューは原稿の確認用であり、公開・認証確認には使わない。認証設定が欠けている場合、旧版は503として閉じ、最新版だけを公開する。
+
+本番のSecret設定は `npx wrangler secret bulk <Git対象外の環境変数ファイル>`。通常のPushによるデプロイは既存Secretを保持する。旧版ページの「旧版の閲覧を終了する」でこのブラウザの認証を解除できる。
