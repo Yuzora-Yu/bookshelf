@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 800" role="img" aria-labelledby="title desc">
+<title id="title">旧分室の見取り図</title><desc id="desc">入口から廊下が延び、西側が作業室。廊下の途中に小部屋、奥の一段高い床が保管室。入口寄りに流しと給湯の場所がある。</desc>
+<rect width="760" height="800" fill="#fffefa"/>
+<style>text{font-family:'Yu Gothic','Meiryo',sans-serif;fill:#333;text-anchor:middle;font-size:24px}.small{font-size:19px}.wall{fill:none;stroke:#3c3b38;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.sketch{fill:none;stroke:#77736c;stroke-width:.8;stroke-linecap:round}.furniture{fill:none;stroke:#77736c;stroke-width:1.4}.window{fill:#fffefa;stroke:#555;stroke-width:1.4}</style>
+<text x="380" y="53">旧分室</text><text x="380" y="83" class="small">見取り図</text>
+<path class="wall" d="M160 280V128H596V280H664V692H410 M334 692H92V280H160 M160 280H334 M410 280H596 M334 280V440 M334 516V692 M410 280V325 M410 391V480H664 M410 480V541 M410 609V692"/>
+<path class="sketch" d="M157 275V125H599V279 M96 283V688H326 M416 697H668V286 M330 285V438 M414 396V477"/>
+<rect x="265" y="124" width="112" height="8" class="window"/>
+<rect x="88" y="368" width="8" height="111" class="window"/>
+<path class="furniture" d="M335 277H409M336 285H408 M341 278L350 284M360 278L369 284M380 278L389 284"/>
+<text x="378" y="192">保管室</text><text x="378" y="225" class="small">廊下より一段高い床</text>
+<text x="242" y="300" class="small">引戸</text><path class="sketch" d="M276 294L331 282"/>
+<text x="215" y="352">作業室</text>
+<rect x="151" y="411" width="111" height="48" class="furniture"/>
+<rect x="151" y="461" width="111" height="48" class="furniture"/>
+<rect x="117" y="578" width="159" height="39" class="furniture"/>
+<text x="214" y="545" class="small">机・返却する箱</text>
+<text x="536" y="369">小部屋</text><text x="536" y="405" class="small">話し合いに使う部屋</text>
+<text x="536" y="563">給湯</text><rect x="438" y="502" width="76" height="30" class="furniture"/><text x="556" y="524" class="small">流し</text>
+<text x="373" y="473">廊</text><text x="373" y="510">下</text>
+<path class="sketch" d="M342 678L342 716 M401 678L401 716"/>
+<text x="373" y="742">入口</text><text class="small" x="65" y="529">西</text>
+</svg>

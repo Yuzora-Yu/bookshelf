@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 620" role="img" aria-labelledby="title desc">
+<title id="title">旧分室と北町資料室の配置</title><desc id="desc">旧分室と元印刷所の北町資料室は道路を挟んだ近い別棟。大学の門を出て角の横断箇所を回ると北町の入口へ着く。</desc>
+<rect width="840" height="620" fill="#fffefa"/>
+<style>text{font-family:'Yu Gothic','Meiryo',sans-serif;fill:#333;text-anchor:middle;font-size:25px}.small{font-size:20px}.wall{fill:none;stroke:#3c3b38;stroke-width:3;stroke-linecap:round}.sketch{fill:none;stroke:#77736c;stroke-width:.8}.route{fill:none;stroke:#666;stroke-width:2;stroke-dasharray:6 8}</style>
+<text x="420" y="50">道路を挟む二つの建物</text>
+<path class="wall" d="M90 211V102H314V333H217 M166 333H90V211 M548 102H755V333H710 M658 333H548V102"/>
+<path class="sketch" d="M86 214V99H317V329 M551 107H751V329"/>
+<text x="202" y="204">旧分室</text><text class="small" x="202" y="238">大学の敷地内</text>
+<text x="652" y="201">北町資料室</text><text class="small" x="652" y="238">元印刷所</text>
+<path class="wall" d="M37 407H166 M217 407H352V87 M500 87V519"/>
+<path class="sketch" d="M357 89V403 M496 88V517"/>
+<text class="small" x="423" y="212">道</text><text class="small" x="423" y="246">路</text>
+<text class="small" x="191" y="441">門</text><text class="small" x="683" y="369">入口</text>
+<path class="route" d="M191 345V487H550V397H683V340"/>
+<path class="sketch" d="M357 451H495M357 530H495"/>
+<text class="small" x="423" y="566">角を回って渡る</text>
+<path class="sketch" d="M366 297H479M366 292V302M479 292V302"/>
+</svg>
