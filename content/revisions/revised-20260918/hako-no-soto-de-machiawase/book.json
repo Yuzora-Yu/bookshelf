@@ -14,12 +14,12 @@
   ],
   "status": "completed",
   "publishedAt": "2026-09-18",
-  "updatedAt": "2026-09-20",
+  "updatedAt": "2026-09-18",
   "featured": false,
   "featureLabel": "新しく届いた一冊",
   "featureNote": "その荷物を、誰に渡す。",
   "startLabel": "序章から読む",
-  "contentsLabel": "序章・本編25章・終章",
+  "contentsLabel": "序章・本編20章・終章",
   "description": "閉館する小劇場「木曜日」で、引越し屋の折戸歩は荷造りを手伝っていた。衣裳、大道具、返しそびれた借り物。片づけの週末に起きた事件を、歩は皆と過ごした時間からたどり直す。",
   "intro": [
     "「僕が運びました。」刑事の前で、歩は焦げた箱の写真を見つめていた。中を確かめずに運んだ、日曜の荷物だった。",
@@ -27,12 +27,12 @@
     "最後の公演を終えた劇場には、片づけをする人たちが集まっていた。そこへ、一人の調査員が訪れる。"
   ],
   "cover": "cover.svg",
-  "portrait": "characters-pencil-20260920-3.png",
-  "portraitAlt": "小劇場に集う九人の鉛筆画",
-  "portraitCaption": "上段左から：折戸歩、花村小鈴、榊透子。中段左から：椎名都、芦原ルカ、鵜飼凪。下段左から：門脇源、畑野修司、若松サエ。",
+  "portrait": "characters-pencil.png",
+  "portraitAlt": "小劇場に集う八人の鉛筆画",
+  "portraitCaption": "上段左から：折戸歩、榊透子、椎名都、芦原ルカ。下段左から：門脇源、畑野修司、鵜飼凪、若松サエ。",
   "illustrations": [
     {
-      "chapter": 6,
+      "chapter": 4,
       "position": "inline",
       "afterParagraph": "僕はその写真を、日曜の積込みに使うフォルダへ保存した。",
       "file": "cases.svg",
@@ -40,7 +40,7 @@
       "caption": "劇場で使われている二つの長箱。"
     },
     {
-      "chapter": 7,
+      "chapter": 5,
       "position": "inline",
       "afterParagraph": "交互に畳むと、横幅が三分の一になった。",
       "file": "folding-wall.svg",
@@ -53,11 +53,6 @@
       "name": "折戸 歩",
       "reading": "おりと あゆむ",
       "description": "23歳。引越し会社で働き始めて三年。以前は「木曜日」の芝居にも少し出ていた。閉館が決まり、今度は荷造りの手伝いに通っている。"
-    },
-    {
-      "name": "花村 小鈴",
-      "reading": "はなむら こすず",
-      "description": "24歳。催しの司会や受付をしている。「木曜日」でも受付を担当してきた。歩を見つけると、よく練習の客役を頼む。自分で書いた短い話がある。"
     },
     {
       "name": "榊 透子",
@@ -95,8 +90,6 @@
       "description": "68歳。長く劇場の衣裳を作ってきた。閉館に合わせ、預けた布や貸した衣裳を引き取りに来ている。"
     }
   ],
-  "edition": "revised-20260920-3",
-  "editionLabel": "2026年9月20日第三改稿版",
-  "portraitWidth": 1286,
-  "portraitHeight": 1223
+  "edition": "revised-20260918",
+  "editionLabel": "2026年9月18日改稿版"
 }

@@ -25,7 +25,7 @@
     "頼めば手を貸してくれる先輩。字の読みやすさを褒めてくれる先生。二年前の展示をめぐる話が、止まっていた仕事と一緒に動き始める。"
   ],
   "cover": "cover.svg",
-  "portrait": "characters.png",
+  "portrait": "characters-pencil-20260920-3.png",
   "portraitCaption": "上段左から：灯・律・航。下段左から：久住・沙帆・西崎。",
   "illustrations": [
     {
@@ -110,5 +110,6 @@
   "edition": "revised-20260920-3",
   "editionLabel": "2026年9月20日第三改稿版",
   "contentsLabel": "全24章",
-  "startLabel": "第一章から読む"
+  "startLabel": "第一章から読む",
+  "portraitAlt": "灯、律、航、久住、沙帆、西崎の鉛筆画"
 }
