@@ -151,5 +151,28 @@
     "chapters/22_丸を消す.md": "8255edd6ee41ad86cc849e1484aaeb3b41e158708d0dbe1720692dd22e551211",
     "chapters/23_箱を閉める.md": "d744e50fd28cb58c51d4e13b7c22b1a30741b0ebd0ab90e2370e34071519e33a",
     "chapters/24_迎えのない朝.md": "9c530533b080eadbe0836d16ded1200938ffa8b32248528a587e803c2aec4f3b"
+  },
+  "revised-20260920": {
+    "ame-wo-tojikomeru/book.json": "64ee941db22f5987b6123bb0f23521b3daa5d2f9494a20535f6090ea69613474",
+    "ame-wo-tojikomeru/chapters/01_受取人.md": "a2d90fc5533694325cd4453d3ab79c0f2a7a34ea0208cf0a8c7e6168b1288eaa",
+    "ame-wo-tojikomeru/chapters/02_一時間ぶん.md": "d9984ad58c85614ab8f3c1d3e2c49b3eff96c5a6df4e3b9a9df2c133c7c0932c",
+    "ame-wo-tojikomeru/chapters/03_返却日.md": "503cd5d1951e9adc394cd5fa2bd5ab4059c7ef81a8095e55f8733373a59e3204",
+    "ame-wo-tojikomeru/chapters/04_留守の部屋.md": "214f35d615d81826d8e252bd4cfe2c10cfb427e7a175f1c23629a52a2f67bbeb",
+    "ame-wo-tojikomeru/chapters/05_聞いてほしいもの.md": "19551b5d1f05f2774a05fc046e08e7936196512ef6b839fa17ea38d795b10a8f",
+    "ame-wo-tojikomeru/chapters/06_紙の裏.md": "705d22b3a2ac325b4b96922f56e354c994e23f1fda90bcd884a8844b73d5a410",
+    "ame-wo-tojikomeru/chapters/07_靴を脱ぐ.md": "d70de57d9df88d773bd43cd37ab270270b0851b8420e221d1d4097370991c75f",
+    "ame-wo-tojikomeru/chapters/08_誰にかける.md": "f1b3fb6ed97e70200931e5a1acec680b442da92f768fb595c3ad25d37499bc84",
+    "ame-wo-tojikomeru/chapters/09_最後の面会.md": "f34bf075d8e55e1c3ec149a0846aedbe20fee68bb372e571c71c0b65a348ab34",
+    "ame-wo-tojikomeru/chapters/10_抜粋.md": "e1fa1b900bb81288f6f77577d5e423aed6b829a9da5430761ffdb73463f33559",
+    "ame-wo-tojikomeru/chapters/11_原票.md": "cd6059e7da6742d76c88b147763b77993112985321cd19a01af70d7b6ac4e9f6",
+    "ame-wo-tojikomeru/chapters/12_聞き比べ.md": "19839fa3f6fa68523e1d9a1169f33959fa71d8ff0012cdbea355d4dcd4f3515b",
+    "ame-wo-tojikomeru/chapters/13_持ち主.md": "54c39f72124e286c65c59625a59eaea444bbe4e382b317421a983f8c19c22dc2",
+    "ame-wo-tojikomeru/chapters/14_使わなかった音.md": "e78c0bf099e6d58713860afb174cb39f5042394c75b43995baf7f97e8c7a98e8",
+    "ame-wo-tojikomeru/chapters/15_箱に入れた人.md": "29554c17fc054aa3008505d45cf95b4b2cae85f313778cac67d6d83fe749d328",
+    "ame-wo-tojikomeru/chapters/16_雨の間.md": "803f2771afc3e9c61e28976f85488322ae5d8e76ed5fe8571c9600891aff7eb1",
+    "ame-wo-tojikomeru/chapters/17_先に返して.md": "6da135192666460f953f947345373a392b8a7b2c66ee2a25a616d213ff6e377d",
+    "ame-wo-tojikomeru/chapters/18_回収日.md": "968dab34f43cb5aa21526e670f4fba957532725b9168aa8f9e4689741a680956",
+    "ame-wo-tojikomeru/chapters/19_訂正.md": "d86852ce30c9f93e1bc4f3c461597062bd24e778dca4465c28cd9e8c8d112146",
+    "ame-wo-tojikomeru/chapters/20_返却口.md": "87cee1ea1bcc44243ffe0c830a334a7d5cb90b52ce59c5baa736563b960def64"
   }
 }
