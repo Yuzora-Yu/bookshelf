@@ -27,9 +27,9 @@
     "山の斜面に建つ旅館「折返し」。古い建物を見て、お茶を飲んで、あとは風呂と夕食を待つだけだった。宿泊客が倒れているのが見つかり、刑事二人が到着したあと、雨で唯一の車道が崩れる。"
   ],
   "cover": "cover.svg",
-  "portrait": "characters-pencil.png",
-  "portraitAlt": "青凪祐助と友人三人、鷲尾と香坂の人物画",
-  "portraitCaption": "上段左から：青凪祐助、森野亮、池上拓海。下段左から：石動宏和、鷲尾誠一、香坂怜子。",
+  "portrait": "characters-pencil-20260921.png",
+  "portraitAlt": "青凪祐助と友人三人、小鈴、澄、鷲尾、香坂の鉛筆画",
+  "portraitCaption": "上段左から：青凪祐助、森野亮、池上拓海、石動宏和。下段左から：花村小鈴、寒河江澄、鷲尾誠一、香坂怜子。",
   "illustrations": [
     {
       "chapter": 5,
@@ -42,7 +42,7 @@
     {
       "chapter": 6,
       "position": "after",
-      "file": "guests-pencil.png",
+      "file": "guests-pencil-20260921.png",
       "alt": "旅館で出会う人たち",
       "caption": "上段左から：福地篤、庄司賢一、水原芙美、笠原徹。下段左から：間宮梢、辻待しのぶ、朝倉なずな、三輪陶子。"
     }
