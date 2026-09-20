@@ -69,11 +69,11 @@ test("mount paths are explicit and cannot escape the site", () => {
   ])
     assert.throws(() => normalizeBase(invalid));
 });
-test("vol.002 fourth revision is complete and keeps every earlier edition separate", async () => {
+test("vol.002 fifth revision is complete and keeps every earlier edition separate", async () => {
   const book = (await loadBooks(root)).find((b) => b.id === "mukae-no-nai-asa");
   assert.equal(book.number, "002");
   assert.equal(book.status, "completed");
-  assert.equal(book.edition, "revised-20260919-4");
+  assert.equal(book.edition, "revised-20260920-5");
   assert.equal(book.chapters.length, 24);
   assert.match(book.chapters[0].title, /^序章/);
   assert.match(book.chapters[1].title, /^第一章　工具箱/);
@@ -87,6 +87,7 @@ test("vol.002 fourth revision is complete and keeps every earlier edition separa
   assert.match(detail, /序章から読む/);
   assert.match(detail, /序章・本編22章・終章/);
   assert.match(detail, /第四改稿版/);
+  assert.match(detail, /第五改稿版/);
   assert.match(detail, /最新版/);
   assert.match(detail, /第三改稿版/);
   assert.match(detail, /第二改稿版/);
@@ -94,12 +95,14 @@ test("vol.002 fourth revision is complete and keeps every earlier edition separa
   assert.match(detail, /箱二つと、ミシン一台/);
   assert.match(detail, /characters-pencil\.png/);
   assert.match(detail, /人物画は画像生成/);
-  for (const [chapter, asset] of [["04", "studio-interior-revised2-pencil.png"], ["08", "factory-pencil.png"]]) {
+  for (const [chapter, asset] of [["04", "studio-interior-revised2-pencil.png"]]) {
     const html = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/${chapter}.html`), "utf8");
     assert.ok(html.indexOf(asset) > html.indexOf("</article>"));
   }
   const opening = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/01.html`), "utf8");
   assert.ok(!opening.includes("factory-pencil.png"));
+  const factory = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/08.html`), "utf8");
+  assert.ok(!factory.includes("factory-pencil.png"));
 });
 test("vol.003 retains its complete sequence and introduces diagrams only with their prose", async () => {
   const books = await loadBooks(root);
@@ -253,7 +256,7 @@ test("all four originals remain intact and each edition has independent URLs and
   assert.equal(originals.length, 4);
   assert.equal(current.length, 4);
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
-  assert.equal(catalog.length, 12);
+  assert.equal(catalog.length, 13);
   const counts = { "001": [30, 80684], "002": [25, 47840], "003": [22, 31491], "004": [23, 35910] };
   for (const book of originals) {
     assert.deepEqual([book.chapters.length, book.charCount], counts[book.number.padStart(3, "0")]);
@@ -264,9 +267,9 @@ test("all four originals remain intact and each edition has independent URLs and
       assert.equal(crypto.createHash("sha256").update(prose).digest("hex"), hash, book.id + "/" + file);
     }
     const editions = catalog.filter(b => b.id === book.id);
-    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 5 : book.id === "ame-wo-tojikomeru" ? 3 : 2);
+    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 6 : book.id === "ame-wo-tojikomeru" ? 3 : 2);
     const revised = current.find(b => b.id === book.id);
-    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260919-4" : book.id === "ame-wo-tojikomeru" ? "revised-20260920" : "revised-20260918");
+    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260920-5" : book.id === "ame-wo-tojikomeru" ? "revised-20260920" : "revised-20260918");
     assert.notEqual(progressKey(book.id), progressKey(book.id, revised.edition));
     const oldHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read/01.html"), "utf8");
     assert.match(oldHtml, /edition-chip archive">旧版/);
@@ -289,14 +292,16 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
   const firstRevision = archives.find(b => b.id === id && b.edition === "revised-20260918");
   const secondRevision = archives.find(b => b.id === id && b.edition === "revised-20260918-2");
   const thirdRevision = archives.find(b => b.id === id && b.edition === "revised-20260919-3");
+  const fourthRevision = archives.find(b => b.id === id && b.edition === "revised-20260919-4");
   assert.equal(firstRevision.chapters.length, 25);
   assert.equal(secondRevision.chapters.length, 21);
   assert.equal(thirdRevision.chapters.length, 22);
+  assert.equal(fourthRevision.chapters.length, 24);
   const buildInfo = JSON.parse(await fs.readFile(path.join(root, "dist/build-info.json"), "utf8"));
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
   const versions = catalog.filter(b => b.id === id);
-  assert.equal(versions.length, 5);
-  assert.equal(new Set(versions.map(b => progressKey(id, b.edition))).size, 5);
+  assert.equal(versions.length, 6);
+  assert.equal(new Set(versions.map(b => progressKey(id, b.edition))).size, 6);
   const old = versions.find(b => b.edition === firstRevision.edition);
   assert.equal(
     resumeUrl(old, progress({ chapter: 25, anchor: "p004", updatedAt: 1 }, 25)),
@@ -307,7 +312,7 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
     : old.href.replace(/^\/+/, "");
   const detail = await fs.readFile(path.join(root, "dist", detailPath, "index.html"), "utf8");
   assert.ok(detail.includes("最新版へ戻る"));
-  assert.ok(detail.includes("第四改稿版（最新版）"));
+  assert.ok(detail.includes("第五改稿版（最新版）"));
   const firstChapter = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260918/02.html"), "utf8");
   assert.ok(firstChapter.includes("studio-pencil.png"));
   assert.ok(!firstChapter.includes("studio-interior-revised2-pencil.png"));
@@ -316,6 +321,10 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
   const thirdOpening = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260919-3/01.html"), "utf8");
   assert.ok(thirdOpening.includes('data-edition="revised-20260919-3"'));
   assert.ok(thirdOpening.includes("宮下が最初にしたのは、通報ではなかった"));
-  const currentOpening = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260919-4/01.html"), "utf8");
-  assert.ok(currentOpening.includes('data-edition="revised-20260919-4"'));
+  const fourth = versions.find(b => b.edition === fourthRevision.edition);
+  assert.equal(resumeUrl(fourth, progress({ chapter: 20, anchor: "p004", updatedAt: 1 }, 24)), `${buildInfo.base}books/${id}/read/revised-20260919-4/20.html#p004`);
+  const fourthFactory = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260919-4/08.html"), "utf8");
+  assert.ok(fourthFactory.includes("factory-pencil.png"));
+  const currentOpening = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260920-5/01.html"), "utf8");
+  assert.ok(currentOpening.includes('data-edition="revised-20260920-5"'));
 });

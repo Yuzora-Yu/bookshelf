@@ -52,7 +52,7 @@ npm run build
 
 `BASE_PATH` は先頭・末尾の `/` が必須。独立ドメインのルートなら `/`。`SITE_URL` は公開先のオリジン（パスを含めない）で、指定するとcanonical URL・OG URL・sitemap.xmlを生成します。未指定なら誤った公開URLを出しません。配置先を変えたら必ず再ビルドしてください。
 
-GitHub Pages用に手動実行の [Deploy Pages](.github/workflows/pages.yml) も用意しています。リポジトリの Settings → Pages → Source を GitHub Actions に設定し、Actionsから実行します。標準URLは `https://yuzora-yu.github.io/bookshelf/`。カスタムドメインなどで変更する場合は、実行時の入力を変更してください。コミットやpushだけでは公開されません。通常のpush/PRでは検証用CIだけが動きます。
+GitHub Pages用に手動実行の [Deploy Pages](.github/workflows/pages.yml) も用意しています。リポジトリの Settings → Pages → Source を GitHub Actions に設定し、Actionsから実行します。標準URLは `https://yuzora-yu.github.io/bookshelf/`。カスタムドメインなどで変更する場合は、実行時の入力を変更してください。このPagesワークフローはpushでは実行されません。本番CloudflareのGit連携は、これとは別の公開経路です。
 
 参考：[GitHub公式・カスタムワークフローでのPages公開](https://docs.github.com/ja/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
 
@@ -81,7 +81,7 @@ site.config.json     配置先・ポータルURL
 npm run deploy:cloudflare
 ```
 
-構文確認→本番URLでの生成→テスト→Wrangler 4.120.0でのデプロイを実行します。Cloudflareの認証情報はリポジトリに含めません。現在の本番公開はCLI経由です。GitHubへのpushでは検証CIのみ実行され、Cloudflareへの自動公開は接続していません。Pagesのワークフローは別の公開先を使う場合の予備です。
+構文確認→本番URLでの生成→テスト→Wrangler 4.120.0でのデプロイを実行します。Cloudflareの認証情報はリポジトリに含めません。通常の本番公開は、Cloudflare側のGit連携でmainへのpushを起点に実行します。GitHub Actionsの検証CIと、Cloudflare側のビルド・公開は別の処理です。公開完了は本番URLの内容で確認します。Pagesのワークフローは別の公開先を使う場合の予備です。
 
 Workerは公開URLの `/bookshelf` 接頭辞を静的アセット取得時に除きます。章の `.html` URLはそのまま維持し、フォルダーの末尾スラッシュだけを補完します。存在しないページは本棚の404ページを返します。
 
