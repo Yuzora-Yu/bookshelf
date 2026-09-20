@@ -1519,6 +1519,12 @@ html[data-reader] {
   font-size: 10px;
   line-height: 1.2;
 }
+.edition-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
 .edition-links a:hover {
   border-color: currentColor;
 }

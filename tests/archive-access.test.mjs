@@ -133,5 +133,6 @@ test('generated access policy matches current editions and never puts credential
   assert.ok(!body.includes(secrets.ARCHIVE_PASSWORD));
   assert.ok(!body.includes(secrets.ARCHIVE_SESSION_SECRET));
   const html = await fs.readFile(path.join(root, 'dist/books/mukae-no-nai-asa/index.html'), 'utf8');
-  assert.match(html, /要パスワード/);
+  assert.equal((html.match(/旧版の閲覧にはパスワードが必要です。/g) || []).length, 1);
+  assert.doesNotMatch(html, /（要パスワード）/);
 });

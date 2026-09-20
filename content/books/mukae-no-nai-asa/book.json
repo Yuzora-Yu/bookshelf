@@ -27,13 +27,13 @@
     "県警の成瀬千紘と所轄の戸崎岳は、仕事の進め方も目の付けどころも違う。初めて組んだ二人は、死者の仕事をひとつずつ遡っていく。"
   ],
   "cover": "cover.svg",
-  "portrait": "characters-pencil.png",
-  "portraitCaption": "上段左から：成瀬千紘・戸崎岳・広瀬修一。下段左から：新見郁子・宇津木健・宇津木恵。",
+  "portrait": "characters-revised6-pencil.png",
+  "portraitCaption": "上段左から：成瀬千紘・戸崎岳・広瀬修一・新見郁子。下段左から：宇津木健・宇津木恵・北原仁・北原詩乃。",
   "illustrations": [
     {
       "chapter": 4,
       "position": "after",
-      "file": "studio-interior-revised2-pencil.png",
+      "file": "studio-revised6-pencil.png",
       "alt": "旧写真館の撮影室の鉛筆画",
       "caption": "旧写真館の撮影室。"
     }
@@ -81,5 +81,6 @@
     }
   ],
   "edition": "revised-20260920-6",
-  "editionLabel": "2026年9月20日・第六改稿版"
+  "editionLabel": "2026年9月20日・第六改稿版",
+  "portraitAlt": "登場人物八人のモノクロ鉛筆画"
 }

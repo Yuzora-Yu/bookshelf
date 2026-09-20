@@ -82,11 +82,11 @@ const editionSwitcher = (book, compact = false) => {
     .filter((version) => version !== book)
     .map((version) => {
       const targetName = revisionName(version, versions);
-      const suffix = version === latest ? "（最新版）" : "（要パスワード）";
+      const suffix = version === latest ? "（最新版）" : "";
       return `<a href="${bookUrl(version)}"><span>${e(targetName)}${suffix}</span><small>${e(dateLabel(version.updatedAt || version.publishedAt))}</small></a>`;
     })
     .join("");
-  return `<nav class="edition-switcher" id="editions" aria-label="版を選ぶ"><div class="edition-current"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><div><strong>${e(name)}</strong><small>${e(dateLabel(book.updatedAt || book.publishedAt))}</small></div>${book.archived && latest ? `<a class="edition-latest-link" href="${bookUrl(latest)}">最新版へ戻る →</a>` : ""}</div><div class="edition-links"><span>別の版を読む</span>${links}</div>${lock}</nav>`;
+  return `<nav class="edition-switcher" id="editions" aria-label="版を選ぶ"><div class="edition-current"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><div><strong>${e(name)}</strong><small>${e(dateLabel(book.updatedAt || book.publishedAt))}</small></div>${book.archived && latest ? `<a class="edition-latest-link" href="${bookUrl(latest)}">最新版へ戻る →</a>` : ""}</div><div class="edition-links"><span>別の版を読む</span>${links}</div><p class="edition-note">旧版の閲覧にはパスワードが必要です。</p>${lock}</nav>`;
 };
 const footer = () =>
   `<footer class="site-footer wrap"><a class="footer-brand" href="${url("")}">${icon}<span>夕空の本棚<small>YU-ZORA BOOKSHELF</small></span></a><p>日常を少し離れて、物語の中へ。</p><a href="${e(config.portalUrl)}">YU-ZORA PORTAL <span aria-hidden="true">↗</span></a><small>© YU-ZORA · 作品の無断転載はご遠慮ください。</small></footer>`;
