@@ -337,6 +337,8 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
   assert.equal(resumeUrl(fifth, progress({ chapter: 15, anchor: "p004", updatedAt: 1 }, 24)), `${buildInfo.base}books/${id}/read/revised-20260920-5/15.html#p004`);
   const fifthChapter = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260920-5/15.html"), "utf8");
   assert.match(fifthChapter, /第十四章　金曜十時/);
+  const sixth = versions.find(b => b.edition === sixthRevision.edition);
+  assert.equal(resumeUrl(sixth, progress({ chapter: 15, anchor: "p004", updatedAt: 1 }, 25)), `${buildInfo.base}books/${id}/read/revised-20260920-6/15.html#p004`);
   const sixthChapter = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260920-6/15.html"), "utf8");
   assert.match(sixthChapter, /第十四章　片方の補助輪/);
   const newChapter = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260921-7/16.html"), "utf8");
