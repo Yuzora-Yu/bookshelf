@@ -20,3 +20,5 @@
 2026-09-19：Vol.002 の第三改稿版を22編で掲載。直前の第二改稿版21編とメタデータを `content/revisions/revised-20260918-2/mukae-no-nai-asa/` へ保存し、初版・第一改稿版・第二改稿版・第三改稿版の四版でURLとしおりを分離。第二改稿版は `docs/archived-revised-manuscripts.json` のSHA-256で固定し、第三改稿版の版識別子は `revised-20260919-3` とする。
 
 2026-09-21：Vol.004を序章・本編28章・終章の全30編へ改稿。直前の23編とメタデータを content/revisions/revised-20260918/yama-wo-oriru-niwa-mada-hayai/ へ保存。新版は revised-20260921 とし、旧URLと読書位置を分離して保持。館内図は第4章、客の人物画は第5章末に配置。
+
+2026-09-21：Vol.002 の第七改稿版を序章・本編24章・終章の全26編で掲載。直前の第六改稿版25編とメタデータを `content/revisions/revised-20260920-6/mukae-no-nai-asa/` へ保存。新版は `revised-20260921-7` とし、旧URLと読書位置を分離して保持。
