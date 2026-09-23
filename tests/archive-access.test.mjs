@@ -30,7 +30,7 @@ const login = async () => {
 
 test('all archived chapters, details, downloads and exclusive illustrations require authentication', async () => {
   const archives = await loadArchivedBooks(root);
-  assert.equal(archives.length, 14);
+  assert.equal(archives.length, 15);
   let reads = 0;
   const closed = { ...env, ASSETS: { fetch() { reads++; throw new Error('Unauthorized asset read'); } } };
   for (const book of archives) {
