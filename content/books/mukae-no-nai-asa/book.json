@@ -27,17 +27,6 @@
     "前年十一月の引越し。写真館の棚の下見。二人は宇津木を知る人たちを訪ね、最後の仕事へ向かった足取りを追う。"
   ],
   "cover": "cover.svg",
-  "portrait": "characters-revised6-pencil.png",
-  "portraitCaption": "上段左から：成瀬千紘・戸崎岳・広瀬修一・新見郁子。下段左から：宇津木健・宇津木恵・北原仁・北原詩乃。",
-  "illustrations": [
-    {
-      "chapter": 4,
-      "position": "after",
-      "file": "studio-revised6-pencil.png",
-      "alt": "旧写真館の撮影室の鉛筆画",
-      "caption": "旧写真館の撮影室。"
-    }
-  ],
   "characters": [
     {
       "name": "成瀬 千紘",
@@ -81,6 +70,5 @@
     }
   ],
   "edition": "revised-20260923-8",
-  "editionLabel": "2026年9月24日・第八改稿版",
-  "portraitAlt": "登場人物八人のモノクロ鉛筆画"
+  "editionLabel": "2026年9月24日・第八改稿版"
 }

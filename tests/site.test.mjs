@@ -95,11 +95,11 @@ test("vol.002 eighth revision is complete and keeps every earlier edition separa
   assert.match(detail, /第二改稿版/);
   assert.match(detail, /第一改稿版/);
   assert.match(detail, /箱二つと、ミシン一台/);
-  assert.match(detail, /characters-revised6-pencil\.png/);
-  assert.match(detail, /人物画は画像生成/);
-  for (const [chapter, asset] of [["04", "studio-revised6-pencil.png"]]) {
-    const html = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/${chapter}.html`), "utf8");
-    assert.ok(html.indexOf(asset) > html.indexOf("</article>"));
+  assert.doesNotMatch(detail, /characters-revised6-pencil\.png|人物画は画像生成/);
+  for (const chapter of book.chapters) {
+    const number = String(chapter.number).padStart(2, "0");
+    const html = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/${number}.html`), "utf8");
+    assert.doesNotMatch(html, /class="reader-figure/);
   }
   const opening = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/01.html`), "utf8");
   assert.ok(!opening.includes("factory-pencil.png"));
