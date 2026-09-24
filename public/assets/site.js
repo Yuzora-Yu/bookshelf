@@ -5,6 +5,13 @@ import {
   resumeUrl,
   searchable,
 } from "./storage.js";
+const editionSelect = document.querySelector("#edition-select");
+if (editionSelect) {
+  editionSelect.addEventListener("change", () => {
+    if (editionSelect.value) location.assign(editionSelect.value);
+  });
+  addEventListener("pageshow", () => { editionSelect.value = ""; });
+}
 const search = document.querySelector("#search"),
   genre = document.querySelector("#genre");
 if (search && genre) {

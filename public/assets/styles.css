@@ -1469,8 +1469,7 @@ html[data-reader] {
   font-weight: 600;
   letter-spacing: 0.04em;
 }
-.edition-current small,
-.edition-links small {
+.edition-current small {
   color: var(--muted);
   font-size: 9px;
   letter-spacing: 0.05em;
@@ -1498,26 +1497,25 @@ html[data-reader] {
   text-decoration: underline;
   text-underline-offset: 0.25em;
 }
-.edition-links {
+.edition-picker {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
   margin-top: 11px;
 }
-.edition-links > span {
+.edition-picker label {
   color: var(--muted);
   font-size: 10px;
   margin-right: 2px;
 }
-.edition-links a {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 5px;
-  padding: 5px 8px;
+.edition-picker select {
+  max-width: 100%;
+  min-width: 0;
+  padding: 8px 32px 8px 10px;
   border: 1px solid var(--line);
-  font-size: 10px;
-  line-height: 1.2;
+  font-size: 12px;
+  line-height: 1.5;
 }
 .edition-note {
   margin: 10px 0 0;
@@ -1525,7 +1523,7 @@ html[data-reader] {
   font-size: 11px;
   line-height: 1.6;
 }
-.edition-links a:hover {
+.edition-picker select:hover {
   border-color: currentColor;
 }
 .reader-edition {
@@ -1564,16 +1562,16 @@ html[data-theme="night"] .edition-chip.archive { color: #dec4b3; }
     width: 100%;
     margin: 3px 0 0 54px;
   }
-  .edition-links {
+  .edition-picker {
     gap: 6px;
   }
-  .edition-links > span {
+  .edition-picker label {
     width: 100%;
     margin-bottom: 2px;
   }
-  .edition-links a {
-    flex: 1 1 auto;
-    justify-content: space-between;
+  .edition-picker select {
+    width: 100%;
+    font-size: 16px;
   }
   .reader-edition a {
     width: 100%;
