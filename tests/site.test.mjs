@@ -69,28 +69,30 @@ test("mount paths are explicit and cannot escape the site", () => {
   ])
     assert.throws(() => normalizeBase(invalid));
 });
-test("vol.002 eighth revision is complete and keeps every earlier edition separate", async () => {
+test("vol.002 ninth revision is complete and keeps every earlier edition separate", async () => {
   const book = (await loadBooks(root)).find((b) => b.id === "mukae-no-nai-asa");
   assert.equal(book.number, "002");
   assert.equal(book.status, "completed");
-  assert.equal(book.edition, "revised-20260923-8");
-  assert.equal(book.chapters.length, 27);
+  assert.equal(book.edition, "revised-20260925-9");
+  assert.equal(book.chapters.length, 28);
   assert.match(book.chapters[0].title, /^序章/);
   assert.match(book.chapters[1].title, /^第一章　工具箱/);
-  assert.match(book.chapters[2].title, /^第二章　四分/);
+  assert.match(book.chapters[2].title, /^第二章　面識/);
   assert.match(book.chapters[3].title, /^第三章　撮影室/);
   assert.match(book.chapters[14].title, /^第十四章　片方の補助輪/);
   assert.match(book.chapters[15].title, /^第十五章　空の椅子/);
-  assert.match(book.chapters.at(-2).title, /^第二十五章　向かいの席/);
+  assert.match(book.chapters[22].title, /^第二十二章　返す日/);
+  assert.match(book.chapters.at(-2).title, /^第二十六章　向かいの席/);
   assert.match(book.chapters.at(-1).title, /^終章/);
   assert.match(book.chapters.at(-1).body, /次の話を聞いた。$/);
   const detail = await fs.readFile(path.join(root, "dist/books/mukae-no-nai-asa/index.html"), "utf8");
   assert.match(detail, /序章から読む/);
-  assert.match(detail, /序章・本編25章・終章/);
+  assert.match(detail, /序章・本編26章・終章/);
   assert.match(detail, /第四改稿版/);
   assert.match(detail, /第五改稿版/);
   assert.match(detail, /第六改稿版/);
   assert.match(detail, /第七改稿版/);
+  assert.match(detail, /第八改稿版/);
   assert.match(detail, /最新版/);
   assert.match(detail, /第三改稿版/);
   assert.match(detail, /第二改稿版/);
@@ -260,7 +262,7 @@ test("all four originals remain intact and each edition has independent URLs and
   assert.equal(originals.length, 4);
   assert.equal(current.length, 4);
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
-  assert.equal(catalog.length, 19);
+  assert.equal(catalog.length, 20);
   const counts = { "001": [30, 80684], "002": [25, 47840], "003": [22, 31491], "004": [23, 35910] };
   for (const book of originals) {
     assert.deepEqual([book.chapters.length, book.charCount], counts[book.number.padStart(3, "0")]);
@@ -271,9 +273,9 @@ test("all four originals remain intact and each edition has independent URLs and
       assert.equal(crypto.createHash("sha256").update(prose).digest("hex"), hash, book.id + "/" + file);
     }
     const editions = catalog.filter(b => b.id === book.id);
-    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 9 : book.id === "ame-wo-tojikomeru" ? 4 : 3);
+    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 10 : book.id === "ame-wo-tojikomeru" ? 4 : 3);
     const revised = current.find(b => b.id === book.id);
-    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260923-8" : ["ame-wo-tojikomeru", "hako-no-soto-de-machiawase"].includes(book.id) ? "revised-20260920-3" : "revised-20260921");
+    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260925-9" : ["ame-wo-tojikomeru", "hako-no-soto-de-machiawase"].includes(book.id) ? "revised-20260920-3" : "revised-20260921");
     assert.notEqual(progressKey(book.id), progressKey(book.id, revised.edition));
     const oldHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read/01.html"), "utf8");
     assert.match(oldHtml, /edition-chip archive">旧版/);
@@ -299,17 +301,20 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
   const fourthRevision = archives.find(b => b.id === id && b.edition === "revised-20260919-4");
   const fifthRevision = archives.find(b => b.id === id && b.edition === "revised-20260920-5");
   const sixthRevision = archives.find(b => b.id === id && b.edition === "revised-20260920-6");
+  const eighthRevision = archives.find(b => b.id === id && b.edition === "revised-20260923-8");
   assert.equal(firstRevision.chapters.length, 25);
   assert.equal(secondRevision.chapters.length, 21);
   assert.equal(thirdRevision.chapters.length, 22);
   assert.equal(fourthRevision.chapters.length, 24);
   assert.equal(fifthRevision.chapters.length, 24);
   assert.equal(sixthRevision.chapters.length, 25);
+  assert.equal(eighthRevision.chapters.length, 27);
+  assert.match(eighthRevision.chapters[2].title, /^第二章　四分/);
   const buildInfo = JSON.parse(await fs.readFile(path.join(root, "dist/build-info.json"), "utf8"));
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
   const versions = catalog.filter(b => b.id === id);
-  assert.equal(versions.length, 9);
-  assert.equal(new Set(versions.map(b => progressKey(id, b.edition))).size, 9);
+  assert.equal(versions.length, 10);
+  assert.equal(new Set(versions.map(b => progressKey(id, b.edition))).size, 10);
   const old = versions.find(b => b.edition === firstRevision.edition);
   assert.equal(
     resumeUrl(old, progress({ chapter: 25, anchor: "p004", updatedAt: 1 }, 25)),
@@ -320,7 +325,7 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
     : old.href.replace(/^\/+/, "");
   const detail = await fs.readFile(path.join(root, "dist", detailPath, "index.html"), "utf8");
   assert.ok(detail.includes("最新版へ戻る"));
-  assert.ok(detail.includes("第八改稿版（最新版）"));
+  assert.ok(detail.includes("第九改稿版（最新版）"));
   const firstChapter = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260918/02.html"), "utf8");
   assert.ok(firstChapter.includes("studio-pencil.png"));
   assert.ok(!firstChapter.includes("studio-interior-revised2-pencil.png"));
