@@ -50,7 +50,7 @@ $env:SITE_URL='https://yu-zora.com'
 npm run build
 ```
 
-`BASE_PATH` は先頭・末尾の `/` が必須。独立ドメインのルートなら `/`。`SITE_URL` は公開先のオリジン（パスを含めない）で、指定するとcanonical URL・OG URL・sitemap.xmlを生成します。未指定なら誤った公開URLを出しません。配置先を変えたら必ず再ビルドしてください。
+`BASE_PATH` は先頭・末尾の `/` が必須。独立ドメインのルートなら `/`。`SITE_URL` は公開先のオリジン（パスを含めない）で、指定するとcanonical URL・OG URL・sitemap.xmlを生成します。環境変数が未指定の場合は `site.config.json` の `siteUrl` を使います。両方が未指定の場合は公開URLを生成しません。配置先を変えたら必ず再ビルドしてください。
 
 GitHub Pagesへの静的公開ワークフローは使用しません。本番の認証はWorkerの実行が必要です。ローカルの静的プレビューは原稿確認専用です。
 

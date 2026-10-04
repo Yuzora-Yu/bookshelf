@@ -1581,3 +1581,8 @@ html[data-theme="night"] .edition-chip.archive { color: #dec4b3; }
 
 .archive-lock { margin: 12px 0; }
 .archive-lock button { padding: 6px 0; border: 0; background: transparent; color: var(--muted, #626963); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+.book-policy-nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 20px; font-family: var(--sans); font-size: 12px; }
+.book-policy-nav a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 4px; }
+.book-policy-nav a:hover { text-decoration: underline; }
+.reader-policy-footer { max-width: 760px; margin: 24px auto 0; padding: 16px 24px 32px; color: var(--muted); }
