@@ -263,7 +263,7 @@ test("all four originals remain intact and each edition has independent URLs and
   assert.equal(originals.length, 4);
   assert.equal(current.length, 4);
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
-  assert.equal(catalog.length, 30);
+  assert.equal(catalog.length, 31);
   const counts = { "001": [30, 80684], "002": [25, 47840], "003": [22, 31491], "004": [23, 35910] };
   for (const book of originals) {
     assert.deepEqual([book.chapters.length, book.charCount], counts[book.number.padStart(3, "0")]);
@@ -274,9 +274,9 @@ test("all four originals remain intact and each edition has independent URLs and
       assert.equal(crypto.createHash("sha256").update(prose).digest("hex"), hash, book.id + "/" + file);
     }
     const editions = catalog.filter(b => b.id === book.id);
-    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 11 : book.id === "hako-no-soto-de-machiawase" ? 9 : book.id === "ame-wo-tojikomeru" ? 5 : 5);
+    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 11 : book.id === "hako-no-soto-de-machiawase" ? 9 : book.id === "ame-wo-tojikomeru" ? 5 : 6);
     const revised = current.find(b => b.id === book.id);
-    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260930-10" : book.id === "ame-wo-tojikomeru" ? "revised-20261005-5" : book.id === "hako-no-soto-de-machiawase" ? "revised-20261005-9" : "revised-20261005-10");
+    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260930-10" : book.id === "ame-wo-tojikomeru" ? "revised-20261005-5" : book.id === "hako-no-soto-de-machiawase" ? "revised-20261005-9" : "revised-20261005-11");
     assert.notEqual(progressKey(book.id), progressKey(book.id, revised.edition));
     const oldHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read/01.html"), "utf8");
     assert.match(oldHtml, /edition-chip archive">旧版/);
@@ -359,7 +359,7 @@ test("2026-10-05 editions keep complete reading sequences and separate every sav
  for (const [id, edition, count, lastTitle, previous] of [
   ["ame-wo-tojikomeru", "revised-20261005-5", 24, /^第二十四章/, "revised-20260920-3"],
   ["hako-no-soto-de-machiawase", "revised-20261005-9", 19, /^終章/, "revised-20260920-3"],
-  ["yama-wo-oriru-niwa-mada-hayai", "revised-20261005-10", 21, /^終章/, "revised-20260921"],
+  ["yama-wo-oriru-niwa-mada-hayai", "revised-20261005-11", 21, /^終章/, "revised-20260921"],
  ]) {
   const book = books.find(b => b.id === id);
   assert.equal(book.edition, edition);
@@ -401,11 +401,24 @@ test("vol.003 ninth revision retains its eighth revision and every chapter", asy
 });
 
 test("vol.004 tenth revision preserves thirty old chapters and publishes twenty-one chapters", async () => {
- const current=(await loadBooks(root)).find(b=>b.number==="004");
+ const current=(await loadArchivedBooks(root)).find(b=>b.number==="004"&&b.edition==="revised-20261005-10");
  const prior=(await loadArchivedBooks(root)).find(b=>b.id===current.id&&b.edition==="revised-20261005-9");
  assert.equal(current.edition,"revised-20261005-10");assert.equal(current.chapters.length,21);assert.equal(prior.chapters.length,30);
  const detail=await fs.readFile(path.join(root,"dist/books",current.id,"index.html"),"utf8");
- assert.ok(detail.includes('<strong>第十改稿版</strong>'));assert.ok(detail.includes('第九改稿版 · 2026.10.05'));
+ assert.ok(detail.includes('第十改稿版 · 2026.10.05'));assert.ok(detail.includes('第九改稿版 · 2026.10.05'));
  assert.notEqual(progressKey(current.id,current.edition),progressKey(prior.id,prior.edition));
+ for(const book of [current,prior])for(const chapter of book.chapters){const html=await fs.readFile(path.join(root,"dist/books",book.id,"read",book.edition,chapter.key+".html"),"utf8");assert.ok(html.replace(/<p id="p\d+">/g,"<p>").includes(renderMarkdown(chapter.body)));}
+});
+
+test("vol.004 eleventh revision preserves the tenth edition and its reading locations", async () => {
+ const current=(await loadBooks(root)).find(b=>b.number==="004");
+ const prior=(await loadArchivedBooks(root)).find(b=>b.id===current.id&&b.edition==="revised-20261005-10");
+ assert.equal(current.edition,"revised-20261005-11");assert.equal(current.chapters.length,21);assert.equal(prior.chapters.length,21);
+ assert.notEqual(progressKey(current.id,current.edition),progressKey(prior.id,prior.edition));
+ const catalog=JSON.parse(await fs.readFile(path.join(root,"dist/assets/catalog.json"),"utf8"));
+ const old=catalog.find(b=>b.id===current.id&&b.edition===prior.edition);
+ assert.ok(resumeUrl(old,progress({chapter:20,anchor:"p004",updatedAt:1},21)).endsWith("/read/revised-20261005-10/20.html#p004"));
+ const detail=await fs.readFile(path.join(root,"dist/books",current.id,"index.html"),"utf8");
+ assert.ok(detail.includes('<strong>第十一改稿版</strong>'));assert.ok(detail.includes('第十改稿版 · 2026.10.05'));
  for(const book of [current,prior])for(const chapter of book.chapters){const html=await fs.readFile(path.join(root,"dist/books",book.id,"read",book.edition,chapter.key+".html"),"utf8");assert.ok(html.replace(/<p id="p\d+">/g,"<p>").includes(renderMarkdown(chapter.body)));}
 });
