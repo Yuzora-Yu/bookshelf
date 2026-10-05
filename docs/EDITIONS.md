@@ -26,3 +26,5 @@
 2026-10-05：Vol.001を全24章、Vol.003を本編20章・終章、Vol.004を本編29章・終章へ更新。版識別子は順に revised-20261005-5、revised-20261005-4、revised-20261005-9。直前の掲載版を content/revisions/ の各旧版識別子以下へ保存し、改行のみLF正規化した本文・メタデータのSHA-256を archived-revised-manuscripts.json に登録。旧版URLと読書位置を保持。最新本文に合わせた人物紹介を掲載し、旧図の位置・内容を確認できない新版の本文には挿入せず、旧版の画像ファイルと配置を保持。
 
 2026-10-05：Vol.003を本編20章・終章の第六改稿版へ更新。版識別子は revised-20261005-6。直前の第五改稿版の全21章とメタデータを content/revisions/revised-20261005-5/hako-no-soto-de-machiawase/ へ保存し、archived-revised-manuscripts.json にSHA-256を追加登録。既存旧版の本文・メタデータとURL・しおりを保持。紹介文と画像は第五改稿版の掲載内容を継続。
+
+2026-10-05：Vol.003を本編18章・終章の第七改稿版へ更新。版識別子は revised-20261005-7。直前の第六改稿版21編とメタデータを content/revisions/revised-20261005-6/hako-no-soto-de-machiawase/ へ保存し、SHA-256を追加登録。旧版URLと読書位置を保持。
