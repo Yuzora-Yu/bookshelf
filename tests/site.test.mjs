@@ -29,7 +29,7 @@ test("all 30 original chapters and their manuscript are retained as an edition",
   assert.equal(book.status, "completed");
 });
 test("the revised first novel has independent reading progress and correct diagram placement", async () => {
-  const book = (await loadBooks(root)).find((b) => b.id === "ame-wo-tojikomeru");
+  const book = (await loadArchivedBooks(root)).find((b) => b.id === "ame-wo-tojikomeru" && b.edition === "revised-20260920-3");
   assert.equal(book.edition, "revised-20260920-3");
   assert.equal(book.chapters.length, 24);
   assert.match(book.chapters[0].title, /^第一章　返却済み/);
@@ -39,8 +39,8 @@ test("the revised first novel has independent reading progress and correct diagr
   const buildInfo = JSON.parse(await fs.readFile(path.join(root, "dist/build-info.json"), "utf8"));
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
   const versions = catalog.filter((b) => b.id === book.id);
-  assert.equal(versions.length, 4);
-  assert.equal(new Set(versions.map((b) => b.readBase)).size, 4);
+  assert.equal(versions.length, 5);
+  assert.equal(new Set(versions.map((b) => b.readBase)).size, 5);
   const saved = progress({ chapter: 20, anchor: "p004", updatedAt: 123 }, 30);
   const legacy = versions.find((b) => !b.edition);
   assert.equal(
@@ -113,7 +113,7 @@ test("vol.002 tenth revision is complete and keeps every earlier edition separat
 });
 test("vol.003 retains its complete sequence and introduces diagrams only with their prose", async () => {
   const books = await loadBooks(root);
-  const book = books.find((b) => b.id === "hako-no-soto-de-machiawase");
+  const book = (await loadArchivedBooks(root)).find((b) => b.id === "hako-no-soto-de-machiawase" && b.edition === "revised-20260920-3");
   assert.equal(book.number, "003");
   assert.equal(book.edition, "revised-20260920-3");
   assert.equal(book.characters.length, 9);
@@ -126,7 +126,7 @@ test("vol.003 retains its complete sequence and introduces diagrams only with th
   for (const quote of ["「僕が運びました」", "「東倉庫まで。頼まれたとおりに」", "「中は見た？」"])
     assert.ok(book.chapters[19].body.includes(quote));
   assert.equal(books.filter((b) => b.featured).length, 1);
-  assert.ok(books.indexOf(book) < books.findIndex((b) => b.number === "002"));
+  assert.ok(books.findIndex((b) => b.id === book.id) < books.findIndex((b) => b.number === "002"));
   const opening = await fs.readFile(path.join(root, `dist/books/${book.id}/read/${book.edition}/01.html`), "utf8");
   assert.ok(!opening.includes("cases.svg"));
   assert.ok(!opening.includes("folding-wall.svg"));
@@ -141,7 +141,7 @@ test("vol.003 retains its complete sequence and introduces diagrams only with th
 });
 test("vol.004 keeps all thirty chapters and introduces its inn before using its layout", async () => {
   const books = await loadBooks(root);
-  const book = books.find((b) => b.number === "004");
+  const book = (await loadArchivedBooks(root)).find((b) => b.number === "004" && b.edition === "revised-20260921");
   assert.equal(book.id, "yama-wo-oriru-niwa-mada-hayai");
   assert.equal(book.status, "completed");
   assert.equal(book.chapters.length, 30);
@@ -263,7 +263,7 @@ test("all four originals remain intact and each edition has independent URLs and
   assert.equal(originals.length, 4);
   assert.equal(current.length, 4);
   const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
-  assert.equal(catalog.length, 21);
+  assert.equal(catalog.length, 24);
   const counts = { "001": [30, 80684], "002": [25, 47840], "003": [22, 31491], "004": [23, 35910] };
   for (const book of originals) {
     assert.deepEqual([book.chapters.length, book.charCount], counts[book.number.padStart(3, "0")]);
@@ -274,9 +274,9 @@ test("all four originals remain intact and each edition has independent URLs and
       assert.equal(crypto.createHash("sha256").update(prose).digest("hex"), hash, book.id + "/" + file);
     }
     const editions = catalog.filter(b => b.id === book.id);
-    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 11 : book.id === "ame-wo-tojikomeru" ? 4 : 3);
+    assert.equal(new Set(editions.map(b => b.readBase)).size, book.id === "mukae-no-nai-asa" ? 11 : book.id === "ame-wo-tojikomeru" ? 5 : 4);
     const revised = current.find(b => b.id === book.id);
-    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260930-10" : ["ame-wo-tojikomeru", "hako-no-soto-de-machiawase"].includes(book.id) ? "revised-20260920-3" : "revised-20260921");
+    assert.equal(revised.edition, book.id === "mukae-no-nai-asa" ? "revised-20260930-10" : book.id === "ame-wo-tojikomeru" ? "revised-20261005-5" : book.id === "hako-no-soto-de-machiawase" ? "revised-20261005-4" : "revised-20261005-9");
     assert.notEqual(progressKey(book.id), progressKey(book.id, revised.edition));
     const oldHtml = await fs.readFile(path.join(root, "dist/books", book.id, "read/01.html"), "utf8");
     assert.match(oldHtml, /edition-chip archive">旧版/);
@@ -351,4 +351,32 @@ test("archived revisions preserve prose, metadata and saved reading locations", 
   assert.match(newChapter, /第十五章　空の椅子/);
   const currentOpening = await fs.readFile(path.join(root, "dist/books", id, "read/revised-20260921-7/01.html"), "utf8");
   assert.ok(currentOpening.includes('data-edition="revised-20260921-7"'));
+});
+
+test("2026-10-05 editions keep complete reading sequences and separate every saved position", async () => {
+ const books = await loadBooks(root);
+ const catalog = JSON.parse(await fs.readFile(path.join(root, "dist/assets/catalog.json"), "utf8"));
+ for (const [id, edition, count, lastTitle, previous] of [
+  ["ame-wo-tojikomeru", "revised-20261005-5", 24, /^第二十四章/, "revised-20260920-3"],
+  ["hako-no-soto-de-machiawase", "revised-20261005-4", 21, /^終章/, "revised-20260920-3"],
+  ["yama-wo-oriru-niwa-mada-hayai", "revised-20261005-9", 30, /^終章/, "revised-20260921"],
+ ]) {
+  const book = books.find(b => b.id === id);
+  assert.equal(book.edition, edition);
+  assert.equal(book.chapters.length, count);
+  assert.match(book.chapters[0].title, /^第一章/);
+  assert.match(book.chapters.at(-1).title, lastTitle);
+  assert.notEqual(progressKey(id, edition), progressKey(id, previous));
+  const prior = catalog.find(b => b.id === id && b.edition === previous);
+  assert.ok(prior);
+  const detail = await fs.readFile(path.join(root, "dist/books", id, "index.html"), "utf8");
+  assert.match(detail, /本作品は試験的に執筆しており、公開後も改稿を続けています。/);
+  assert.match(detail, /<select/);
+  for (const chapter of book.chapters) {
+   const html = await fs.readFile(path.join(root, "dist/books", id, "read", edition, chapter.key + ".html"), "utf8");
+   assert.ok(html.includes('data-edition="' + edition + '"'));
+   assert.ok(html.replace(/<p id="p\d+">/g, "<p>").includes(renderMarkdown(chapter.body)));
+   assert.doesNotMatch(html, /class="reader-figure/);
+  }
+ }
 });
