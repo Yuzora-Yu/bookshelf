@@ -496,5 +496,27 @@
     "chapters/17_第十七章　返す紙.md": "182d1580b827e2fe25e0d76f63486459264083d0a2a495e914f75f3638166684",
     "chapters/18_第十八章　台を下ろす.md": "330112a98b32871e42c05a5f9a4e4d31909d67da77ccc07be0e98298c944d15b",
     "chapters/19_終章　二回目.md": "644e0d9e9009a515c4a08901579405fa2cc78d44b2d1a19defd49e98799ea860"
+  },
+  "revised-20261005-8/hako-no-soto-de-machiawase": {
+    "book.json": "9efa4c830d4649571641cceba1e3e4e39a95a0baf5e57409c2b9be5c1f4d85b6",
+    "chapters/01_第一章　運んだ箱.md": "98ed57b956381241bde1dc9f5066c61ba98dd4973fc9d2cf330ede7744dadc59",
+    "chapters/02_第二章　三分の役.md": "8535a6dd4669ff548b6f1b201b4b5670d9eaa2611ccf2281e48f4942d5a740c2",
+    "chapters/03_第三章　窓の裏.md": "0dac29d6b6b204aec1b690ea4bc43ba9364b19994d159d60e0d8804e04896fe6",
+    "chapters/04_第四章　帰ってから.md": "cc39cd56ff638626ba3929f216fede57c2f3f2a93412c43bc4bea524ee16e1ba",
+    "chapters/05_第五章　下ろした分.md": "2640a7825542cf3b1a2b17b65601825f55f69e965a126bb06625a2841b476db7",
+    "chapters/06_第六章　受取人の署名.md": "99402e7a169429c69e07c1256a4edac8deca79662e19d969e735db481a3c02e0",
+    "chapters/07_第七章　靴の袋.md": "91ec47a8d37c4b157223e809498cb4d9c24a44e1e119ee6520272895d71a3ab8",
+    "chapters/08_第八章　焦げた角.md": "2e6b0a164fc32fc7fd1894cf9765c1a73972dc86edc464165f0f439a7e5d0cfe",
+    "chapters/09_第九章　聞いていた人.md": "d7c2d63dc6217d1fdb720b90d46a662fc122360ddc64fc05ee9076459edbeffa",
+    "chapters/10_第十章　店の前.md": "c85f9cf715833bcdccb7a4bfad195d3280b6276801f41bcfac766fca4e20f4c1",
+    "chapters/11_第十一章　持ったまま.md": "077e26c5bd9207d15dcdf4c4e087f872b32d600f77b90a5039f019437093f526",
+    "chapters/12_第十二章　二つの水.md": "de4badfb1160d6237ff700484d26ae9447a449ead9f517beb6f02aa8c95a3169",
+    "chapters/13_第十三章　切る方.md": "d65f2043cbd3fd5ad51378473e0eecd15c092fca4d1e2e58310071d5628dd705",
+    "chapters/14_第十四章　見られる客.md": "024f561515d97543780a880cd668a7791cf78051c5524f3275f8dc12cae94b66",
+    "chapters/15_第十五章　聞こえる方.md": "da15945f0587b85fabcea18c2a9ed42cdce4ad580fe18150aad911c75eed8f03",
+    "chapters/16_第十六章　土曜の九時.md": "ac3bcf025497a2d866035f7712999813b56b2fb66a2cb3a72865adccb92583cb",
+    "chapters/17_第十七章　返す紙.md": "971fe4e6bd71cc665fafc2df9908bb955bf8d0ac61af89a43d6bab29b6ad29c8",
+    "chapters/18_第十八章　台を下ろす.md": "330112a98b32871e42c05a5f9a4e4d31909d67da77ccc07be0e98298c944d15b",
+    "chapters/19_終章　二回目.md": "644e0d9e9009a515c4a08901579405fa2cc78d44b2d1a19defd49e98799ea860"
   }
 }

@@ -30,3 +30,5 @@
 2026-10-05：Vol.003を本編18章・終章の第七改稿版へ更新。版識別子は revised-20261005-7。直前の第六改稿版21編とメタデータを content/revisions/revised-20261005-6/hako-no-soto-de-machiawase/ へ保存し、SHA-256を追加登録。旧版URLと読書位置を保持。
 
 2026-10-05：Vol.003を本編18章・終章の第八改稿版へ更新。版識別子は revised-20261005-8。直前の第七改稿版19編とメタデータを content/revisions/revised-20261005-7/hako-no-soto-de-machiawase/ へbyte同一で保存し、SHA-256を追加登録。旧版URLと読書位置を保持。
+
+2026-10-05：Vol.003を本編18章・終章の第九改稿版へ更新。版識別子は revised-20261005-9。直前の第八改稿版19編とメタデータを content/revisions/revised-20261005-8/hako-no-soto-de-machiawase/ へbyte同一で保存し、SHA-256を追加登録。旧版URLと読書位置を保持。
