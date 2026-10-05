@@ -387,6 +387,9 @@ test("vol.003 seventh revision retains its sixth revision and every chapter", as
  assert.equal(current.edition, "revised-20261005-7");
  assert.equal(current.chapters.length, 19);
  assert.equal(previous.chapters.length, 21);
+ const detail = await fs.readFile(path.join(root, "dist/books", current.id, "index.html"), "utf8");
+ assert.match(detail, /<strong>第七改稿版<\/strong>/);
+ assert.match(detail, /第六改稿版 · 2026\.10\.05/);
  assert.notEqual(progressKey(current.id, current.edition), progressKey(previous.id, previous.edition));
  assert.match(current.chapters[15].body, /救急/);
  for (const book of [current, previous]) {

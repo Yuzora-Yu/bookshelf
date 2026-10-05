@@ -63,6 +63,8 @@ const editionOrder = (id) =>
     });
 const revisionName = (book, versions = editionOrder(book.id)) => {
   if (!book.edition) return "初版";
+  const namedRevision = book.editionLabel?.match(/第[一二三四五六七八九十百〇零0-9]+改稿版/u);
+  if (namedRevision) return namedRevision[0];
   const revisions = versions.filter((version) => version.edition);
   const index = revisions.findIndex((version) => version.edition === book.edition);
   const labels = ["第一", "第二", "第三", "第四", "第五", "第六", "第七", "第八", "第九", "第十"];
