@@ -370,7 +370,7 @@ test("2026-10-05 editions keep complete reading sequences and separate every sav
   const prior = catalog.find(b => b.id === id && b.edition === previous);
   assert.ok(prior);
   const detail = await fs.readFile(path.join(root, "dist/books", id, "index.html"), "utf8");
-  assert.match(detail, /本作品は試験的に執筆しており、公開後も改稿を続けています。/);
+  assert.match(detail, /ChatGPTにどこまで本格的なミステリー小説を書かせられるかを検証するため、方向性の異なる4作品を執筆させ、添削・改稿を続けています。/);
   assert.match(detail, /<select/);
   for (const chapter of book.chapters) {
    const html = await fs.readFile(path.join(root, "dist/books", id, "read", edition, chapter.key + ".html"), "utf8");

@@ -13,6 +13,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const config = JSON.parse(
   await fs.readFile(path.join(root, "site.config.json"), "utf8"),
 );
+const projectNotice = "ChatGPTにどこまで本格的なミステリー小説を書かせられるかを検証するため、方向性の異なる4作品を執筆させ、添削・改稿を続けています。";
 const base = normalizeBase(process.env.BASE_PATH || config.basePath);
 const siteUrl = process.env.SITE_URL || config.siteUrl;
 const origin = siteUrl ? new URL(siteUrl).origin : "";
@@ -131,7 +132,7 @@ await write(
   "index.html",
   page({
     title: "オリジナル小説",
-    content: `${header()}<main id="main">${hero}<section class="continue-section wrap" id="continue-reading" hidden aria-label="読みかけの本"><div class="continue-mark" aria-hidden="true">▱</div><div><span class="eyebrow">YOUR BOOKMARK</span><h2 id="continue-title"></h2><p id="continue-position"></p></div><a class="button button-outline" id="continue-link" href="${url("#library")}">続きを読む →</a></section><section class="library wrap" id="library" aria-labelledby="library-title"><div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2 id="library-title">掲載作品<span class="count">${String(books.length).padStart(2, "0")}</span></h2></div><p>タイトル・ジャンルから作品を探せます。</p></div><form class="search-form" role="search"><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input type="search" id="search" name="q" placeholder="タイトル・キーワードで探す" aria-label="タイトル・キーワードで探す" autocomplete="off"><button type="button" id="clear-search" aria-label="検索をクリア" hidden>×</button></label><label class="filter-select"><span>ジャンル</span><select id="genre" name="genre"><option value="">すべて</option>${allGenres.map((g) => `<option>${e(g)}</option>`).join("")}</select></label></form><div class="result-meta"><span id="result-count" role="status" aria-live="polite">${books.length}作品</span><span>すべて無料で読めます</span></div><div class="book-grid">${cards}</div><div class="empty-state" id="empty-state" hidden><h3>該当する作品がありません</h3><p>別のキーワードで探してみてください。</p><button class="button button-outline" id="reset-search" type="button">検索条件をリセット</button></div></section><section class="about-section" id="about"><div class="wrap about-grid"><div><p class="eyebrow">ABOUT THIS SHELF</p><h2>この本棚について</h2></div><div><p>夕空ユウのオリジナル小説を公開しています。作品紹介にあらすじ・登場人物・目次を掲載し、各章をブラウザで読めるようにしています。</p><p class="about-note">作品は無料で読めます。読んだ位置を利用中のブラウザに保存し、続きから読み始められます。読書ページでは文字の大きさと背景色を変更できます。</p></div></div></section></main>${footer()}`,
+    content: `${header()}<main id="main">${hero}<section class="continue-section wrap" id="continue-reading" hidden aria-label="読みかけの本"><div class="continue-mark" aria-hidden="true">▱</div><div><span class="eyebrow">YOUR BOOKMARK</span><h2 id="continue-title"></h2><p id="continue-position"></p></div><a class="button button-outline" id="continue-link" href="${url("#library")}">続きを読む →</a></section><section class="library wrap" id="library" aria-labelledby="library-title"><div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2 id="library-title">掲載作品<span class="count">${String(books.length).padStart(2, "0")}</span></h2></div><p>タイトル・ジャンルから作品を探せます。</p></div><form class="search-form" role="search"><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input type="search" id="search" name="q" placeholder="タイトル・キーワードで探す" aria-label="タイトル・キーワードで探す" autocomplete="off"><button type="button" id="clear-search" aria-label="検索をクリア" hidden>×</button></label><label class="filter-select"><span>ジャンル</span><select id="genre" name="genre"><option value="">すべて</option>${allGenres.map((g) => `<option>${e(g)}</option>`).join("")}</select></label></form><div class="result-meta"><span id="result-count" role="status" aria-live="polite">${books.length}作品</span><span>すべて無料で読めます</span></div><div class="book-grid">${cards}</div><div class="empty-state" id="empty-state" hidden><h3>該当する作品がありません</h3><p>別のキーワードで探してみてください。</p><button class="button button-outline" id="reset-search" type="button">検索条件をリセット</button></div></section><section class="about-section" id="about"><div class="wrap about-grid"><div><p class="eyebrow">ABOUT THIS SHELF</p><h2>この本棚について</h2></div><div><p>夕空ユウのオリジナル小説を公開しています。作品紹介にあらすじ・登場人物・目次を掲載し、各章をブラウザで読めるようにしています。</p><p class="about-note">${e(projectNotice)}</p><p class="about-note">作品は無料で読めます。読んだ位置を利用中のブラウザに保存し、続きから読み始められます。読書ページでは文字の大きさと背景色を変更できます。</p></div></div></section></main>${footer()}`,
     attributes: `data-base="${base}"`,
   }),
 );
@@ -139,7 +140,7 @@ for (const b of allEditions) {
   const editionNotice = editionSwitcher(b);
   const readerEditionNotice = editionSwitcher(b, true);
   const revisionNote = ["001", "002", "003", "004"].includes(b.number)
-    ? "<br>本作品は試験的に執筆しており、公開後も改稿を続けています。"
+    ? `<br>${e(projectNotice)}`
     : "";
   const toc = b.chapters
     .map(
