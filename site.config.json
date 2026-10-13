@@ -1,7 +1,7 @@
 {
   "name": "YU-ZORA BOOKSHELF",
   "title": "夕空の本棚",
-  "description": "夕空ユウのオリジナル小説を掲載しています。作品紹介からあらすじと目次を確認し、各章をブラウザで読めます。",
+  "description": "本文はChatGPTが執筆した試作です。どこまで本格的なミステリー小説を書かせられるかを検証するため、方向性の異なる4作品に添削・改稿を重ねています。",
   "basePath": "/bookshelf/",
   "portalUrl": "https://yu-zora.com/",
   "siteUrl": "https://yu-zora.com"
