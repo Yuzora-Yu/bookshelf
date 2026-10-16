@@ -644,25 +644,31 @@ select {
 }
 .detail-hero {
   display: grid;
-  grid-template-columns: 290px 1fr;
-  gap: 75px;
-  align-items: center;
+  grid-template-columns: 290px minmax(0, 1fr);
+  grid-template-areas: "cover heading" "cover copy";
+  gap: 24px 75px;
+  align-items: start;
   margin: 15px 0 75px;
 }
+.detail-heading { grid-area: heading; min-width: 0; }
+.detail-copy { grid-area: copy; min-width: 0; }
+.detail-reading-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.detail-reading-actions .button { white-space: normal; text-align: center; }
 .detail-cover {
+  grid-area: cover;
   background: #dce3dc;
   padding: 28px;
 }
 .detail-cover img {
   box-shadow: 7px 12px 20px #263c3830;
 }
-.detail-copy h1 {
+.detail-heading h1 {
   font-family: var(--serif);
   font-size: 42px;
   letter-spacing: 0.07em;
   margin: 14px 0;
 }
-.detail-copy .subtitle {
+.detail-heading .subtitle {
   font-family: var(--serif);
   font-size: 18px;
 }
@@ -685,7 +691,7 @@ select {
   font-size: 13px;
 }
 .detail-resume {
-  margin: 8px 0 0 8px;
+  margin: 0;
 }
 .book-keywords {
   display: flex;
@@ -1329,6 +1335,7 @@ legend {
   }
   .detail-hero {
     grid-template-columns: 1fr;
+    grid-template-areas: "heading" "cover" "copy";
     gap: 30px;
     margin: 0 0 45px;
   }
@@ -1337,13 +1344,13 @@ legend {
     margin: auto;
     padding: 20px;
   }
-  .detail-copy h1 {
+  .detail-heading h1 {
     font-size: 32px;
   }
-  .detail-copy .subtitle {
+  .detail-heading .subtitle {
     font-size: 16px;
   }
-  .detail-copy .button {
+  .detail-reading-actions .button {
     font-size: 12px;
     padding-inline: 18px;
     gap: 15px;
