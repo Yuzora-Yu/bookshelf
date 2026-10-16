@@ -5,7 +5,8 @@
   "subtitle": "一泊二日のはずだった。",
   "number": "004",
   "genres": [
-    "ミステリー"
+    "ミステリー",
+    "青春サスペンス"
   ],
   "tags": [
     "大学生",
@@ -16,7 +17,7 @@
   "publishedAt": "2026-09-18",
   "updatedAt": "2026-10-05",
   "featured": true,
-  "featureLabel": "新しく届いた一冊",
+  "featureLabel": "旅先の事件と揺らぐ友情",
   "featureNote": "四人で、帰ろう。",
   "startLabel": "第一章から読む",
   "contentsLabel": "本編20章・終章",
@@ -116,5 +117,10 @@
   "edition": "revised-20261005-11",
   "editionLabel": "2026年10月5日第十一改稿版",
   "portraitWidth": 1536,
-  "portraitHeight": 1024
+  "portraitHeight": 1024,
+  "readingGuide": {
+    "label": "旅先の事件と揺らぐ友情",
+    "focus": "道を断たれた山の旅館で、事件と四人の関係の変化を追う。",
+    "tone": "旅行の気安いやり取りから、友人との距離が変わる緊張へ。一緒に帰りたい四人の物語。"
+  }
 }

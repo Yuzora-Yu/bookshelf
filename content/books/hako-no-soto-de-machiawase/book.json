@@ -5,7 +5,8 @@
   "subtitle": "荷造りの終わらない、週末。",
   "number": "003",
   "genres": [
-    "ミステリー"
+    "ミステリー",
+    "群像劇"
   ],
   "tags": [
     "群像劇",
@@ -16,7 +17,7 @@
   "publishedAt": "2026-09-18",
   "updatedAt": "2026-10-05",
   "featured": false,
-  "featureLabel": "新しく届いた一冊",
+  "featureLabel": "小劇場をめぐる群像ミステリー",
   "featureNote": "その荷物を、誰に渡す。",
   "startLabel": "第一章から読む",
   "contentsLabel": "本編18章・終章",
@@ -81,5 +82,10 @@
   "edition": "revised-20261005-9",
   "editionLabel": "2026年10月5日第九改稿版",
   "portraitWidth": 1286,
-  "portraitHeight": 1223
+  "portraitHeight": 1223,
+  "readingGuide": {
+    "label": "小劇場をめぐる群像ミステリー",
+    "focus": "閉館する劇場で交差する、人の頼み事と荷物の行方。",
+    "tone": "稽古や荷造りの会話の中に、仲間のこれからと事件の手がかりが入り込む。"
+  }
 }
