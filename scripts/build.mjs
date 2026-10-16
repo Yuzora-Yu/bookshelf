@@ -112,11 +112,59 @@ function page({
   route = "",
   reader = false,
   shareBook = null,
+  chapter = null,
+  noindex = Boolean(shareBook?.archived),
   attributes = "",
 }) {
+  const editionLabel = shareBook?.archived ? `（${shareBook.editionLabel || "初版"}）` : "";
+  const finalTitle = `${title}${editionLabel} | YU-ZORA`;
+  const canonical = origin && !noindex ? `${origin}${url(route)}` : "";
+  const structured = canonical ? searchData({ title:finalTitle, description, route, book:shareBook, chapter }) : "";
   const shareImage = `${origin}${url(`assets/social/${shareBook ? shareBook.id : "bookshelf"}.png`)}`;
   const shareAlt = shareBook ? `${shareBook.title} — 夕空の本棚` : "夕空の本棚 — ChatGPTによるミステリー執筆実験";
-  return `<!doctype html><html lang="ja"${reader ? ' data-reader="true"' : ""}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${e(description)}"><meta name="theme-color" content="#111b2c"><title>${e(title)} | 夕空の本棚</title><meta property="og:title" content="${e(title)} | 夕空の本棚"><meta property="og:description" content="${e(description)}"><meta property="og:type" content="${reader ? "article" : "website"}">${origin ? `<link rel="canonical" href="${origin}${url(route)}"><meta property="og:url" content="${origin}${url(route)}">` : ""}<meta property="og:site_name" content="夕空の本棚"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="${e(shareImage)}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${e(shareAlt)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${e(shareImage)}"><meta name="twitter:image:alt" content="${e(shareAlt)}"><link rel="icon" href="${url("assets/favicon.svg")}" type="image/svg+xml">${reader ? `<script>try{const s=JSON.parse(localStorage.getItem('yuzora:bookshelf:preferences:v1')||'{}');if(['paper','white','night'].includes(s.theme))document.documentElement.dataset.theme=s.theme;if([18,20,23,26].includes(s.font))document.documentElement.style.setProperty('--reading-size',s.font+'px')}catch{}</script>` : ""}<link rel="stylesheet" href="${url("assets/styles.css")}"><link rel="stylesheet" href="${url("assets/portal-shell.css")}"><script type="module" src="${url(reader ? "assets/reader.js" : "assets/site.js")}"></script></head><body ${attributes}><a class="skip-link" href="#main">本文へ移動</a>${content}</body></html>`;
+  return `<!doctype html><html lang="ja"${reader ? ' data-reader="true"' : ""}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${e(description)}"><meta name="theme-color" content="#111b2c"><title>${e(finalTitle)}</title><meta name="robots" content="${noindex ? "noindex,follow,noarchive" : "index,follow"}"><meta property="og:title" content="${e(finalTitle)}"><meta property="og:description" content="${e(description)}"><meta property="og:type" content="${reader ? "article" : "website"}">${canonical ? `<link rel="canonical" href="${e(canonical)}"><meta property="og:url" content="${e(canonical)}">` : ""}<meta property="og:site_name" content="YU-ZORA"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="${e(shareImage)}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${e(shareAlt)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(finalTitle)}"><meta name="twitter:description" content="${e(description)}"><meta name="twitter:image" content="${e(shareImage)}"><meta name="twitter:image:alt" content="${e(shareAlt)}"><link rel="icon" href="${url("assets/favicon.svg")}" type="image/svg+xml">${reader ? `<script>try{const s=JSON.parse(localStorage.getItem('yuzora:bookshelf:preferences:v1')||'{}');if(['paper','white','night'].includes(s.theme))document.documentElement.dataset.theme=s.theme;if([18,20,23,26].includes(s.font))document.documentElement.style.setProperty('--reading-size',s.font+'px')}catch{}</script>` : ""}<link rel="stylesheet" href="${url("assets/styles.css")}"><link rel="stylesheet" href="${url("assets/portal-shell.css")}"><script type="module" src="${url(reader ? "assets/reader.js" : "assets/site.js")}"></script>${structured}</head><body ${attributes}><a class="skip-link" href="#main">本文へ移動</a>${content}</body></html>`;
+}
+// Public book data is emitted in the initial HTML; archived manuscripts stay out of search.
+function searchData({ title, description, route, book, chapter }) {
+  const absolute = (route) => `${origin}${url(route)}`;
+  const canonical = absolute(route);
+  const crumbs = [
+    { name:"YU-ZORA", item:config.portalUrl },
+    { name:"夕空の本棚", item:absolute("") },
+    ...(book ? [{ name:book.title, item:absolute(bookPath(book)) }] : []),
+    ...(chapter ? [{ name:chapter.title, item:canonical }] : [])
+  ];
+  const breadcrumb = {
+    "@type":"BreadcrumbList", "@id":`${canonical}#breadcrumb`,
+    itemListElement:crumbs.map((item, index) => ({ "@type":"ListItem", position:index + 1, ...item }))
+  };
+  const graph = [breadcrumb];
+  let entity;
+  if (book) {
+    const bookId = `${absolute(bookPath(book))}#book`;
+    graph.push({
+      "@type":"Book", "@id":bookId, name:book.title, description:book.description,
+      url:absolute(bookPath(book)), image:absolute(`assets/social/${book.id}.png`),
+      inLanguage:"ja", bookFormat:"https://schema.org/EBook", genre:book.genres,
+      datePublished:book.publishedAt, dateModified:book.updatedAt,
+      isAccessibleForFree:true, creditText:projectNotice
+    });
+    entity = bookId;
+    if (chapter) {
+      entity = `${canonical}#chapter`;
+      graph.push({ "@type":"Chapter", "@id":entity, name:chapter.title, position:chapter.number,
+        url:canonical, inLanguage:"ja", isPartOf:{ "@id":bookId }, isAccessibleForFree:true });
+    }
+  } else {
+    entity = `${canonical}#collection`;
+    graph.push({ "@type":"ItemList", "@id":entity, numberOfItems:books.length,
+      itemListElement:books.map((book, index) => ({ "@type":"ListItem", position:index + 1,
+        item:{ "@type":"Book", name:book.title, url:absolute(bookPath(book)), image:absolute(`assets/social/${book.id}.png`) } })) });
+  }
+  graph.push({ "@type":book ? "WebPage" : "CollectionPage", "@id":`${canonical}#webpage`,
+    name:title, description, url:canonical, inLanguage:"ja", breadcrumb:{ "@id":breadcrumb["@id"] },
+    mainEntity:{ "@id":entity }, isPartOf:{ "@id":new URL("#website", config.portalUrl).href } });
+  return `<script type="application/ld+json">${JSON.stringify({ "@context":"https://schema.org", "@graph":graph }).replaceAll("<", "\\u003c")}</script>`;
 }
 async function write(name, text) {
   const f = path.join(dist, name);
@@ -137,7 +185,7 @@ const cards = books
 await write(
   "index.html",
   page({
-    title: "ChatGPTによるミステリー執筆実験",
+    title: "夕空の本棚 - ChatGPTのミステリー執筆実験",
     content: `${header()}<main id="main">${hero}<section class="continue-section wrap" id="continue-reading" hidden aria-label="読みかけの本"><div class="continue-mark" aria-hidden="true">▱</div><div><span class="eyebrow">YOUR BOOKMARK</span><h2 id="continue-title"></h2><p id="continue-position"></p></div><a class="button button-outline" id="continue-link" href="${url("#library")}">続きを読む →</a></section><section class="library wrap" id="library" aria-labelledby="library-title"><div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2 id="library-title">掲載作品<span class="count">${String(books.length).padStart(2, "0")}</span></h2></div><p>記録、捜査、劇場、友情。題材と読み味から、気になる一冊を。</p></div><form class="search-form" role="search"><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input type="search" id="search" name="q" placeholder="タイトル・キーワードで探す" aria-label="タイトル・キーワードで探す" autocomplete="off"><button type="button" id="clear-search" aria-label="検索をクリア" hidden>×</button></label><label class="filter-select"><span>ジャンル</span><select id="genre" name="genre"><option value="">すべて</option>${allGenres.map((g) => `<option>${e(g)}</option>`).join("")}</select></label></form><div class="result-meta"><span id="result-count" role="status" aria-live="polite">${books.length}作品</span><span>すべて無料で読めます</span></div><div class="book-grid">${cards}</div><div class="empty-state" id="empty-state" hidden><h3>該当する作品がありません</h3><p>別のキーワードで探してみてください。</p><button class="button button-outline" id="reset-search" type="button">検索条件をリセット</button></div></section><section class="about-section" id="about"><div class="wrap about-grid"><div><p class="eyebrow">ABOUT THIS SHELF</p><h2>この本棚について</h2></div><div><p>ChatGPTが執筆した4作品の試作を公開しています。各作品の紹介ページにあらすじ・登場人物・目次を掲載し、各章をブラウザで読めるようにしています。</p><p class="about-note">作品は無料で読めます。読んだ位置を利用中のブラウザに保存し、続きから読み始められます。読書ページでは文字の大きさと背景色を変更できます。</p></div></div></section></main>${footer()}`,
     attributes: `data-base="${base}"`,
   }),
@@ -158,8 +206,8 @@ for (const b of allEditions) {
   await write(
     `${bookPath(b)}index.html`,
     page({
-      title: b.title,
-      description: b.description,
+      title: `${b.title} - ${b.genres.includes('ミステリー') ? 'ミステリー小説' : '小説'}`,
+      description: `『${b.title}』の作品紹介・目次。${b.description}`,
       shareBook: b,
       route: bookPath(b),
       content: detail,
@@ -228,8 +276,9 @@ for (const b of allEditions) {
     await write(
       `${readPath(b)}${c.key}.html`,
       page({
-        title: `${c.title} — ${b.title}`,
-        description: `${b.title} ${c.title}`,
+        title: `${c.title} - ${b.title}`,
+        description: `『${b.title}』${c.title}の本文。${b.subtitle || ""} ${b.description}`,
+        chapter: c,
         route: `${readPath(b)}${c.key}.html`,
         content,
         reader: true,
@@ -255,21 +304,25 @@ await write(
 await write(
   "404.html",
   page({
-    title: "ページが見つかりません",
+    title: "ページが見つかりません - 夕空の本棚",
+    description: "指定された作品や章が見つかりません。本棚の作品一覧から読みたい小説をお探しください。",
+    route: "404.html",
+    noindex: true,
     content: `${header()}<main id="main" class="wrap not-found"><p class="eyebrow">404 / PAGE NOT FOUND</p><h1>そのページは、<br>見つかりませんでした。</h1><p>アドレスが変わったか、まだ本棚に並んでいないようです。</p><a href="${url("")}" class="button button-dark">本棚に戻る →</a></main>${footer()}`,
   }),
 );
 if (origin) {
+  const latestDate = books.map(b => b.updatedAt || b.publishedAt).filter(Boolean).sort().at(-1);
   const paths = [
-    "",
+    { route:"", modified:latestDate },
     ...books.flatMap((b) => [
-      `books/${b.id}/`,
-      ...b.chapters.map((c) => `${readPath(b)}${c.key}.html`),
+      { route:bookPath(b), modified:b.updatedAt || b.publishedAt },
+      ...b.chapters.map((c) => ({ route:`${readPath(b)}${c.key}.html`, modified:b.updatedAt || b.publishedAt })),
     ]),
   ];
   await write(
     "sitemap.xml",
-    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map((p) => `<url><loc>${e(origin + url(p))}</loc></url>`).join("")}</urlset>`,
+    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map((p) => `<url><loc>${e(origin + url(p.route))}</loc>${p.modified ? `<lastmod>${e(p.modified.slice(0, 10))}</lastmod>` : ""}</url>`).join("")}</urlset>`,
   );
 }
 await write(
