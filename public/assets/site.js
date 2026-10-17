@@ -71,7 +71,7 @@ async function bookmarks() {
   if (!document.body.dataset.base) return;
   try {
     const response = await fetch(
-      document.body.dataset.base + "assets/catalog.json",
+      document.body.dataset.catalog || document.body.dataset.base + "assets/catalog.json",
     );
     if (!response.ok) return;
     const books = await response.json();

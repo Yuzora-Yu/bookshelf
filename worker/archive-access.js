@@ -46,7 +46,7 @@ async function validSession(request, key) {
   return crypto.subtle.verify('HMAC', key, unhex(match[2]), encoder.encode(`archive:${match[1]}`));
 }
 
-async function readPassword(request) {
+export async function readPassword(request) {
   if (request.headers.get('content-type')?.split(';')[0].trim() !== 'application/x-www-form-urlencoded') return null;
   if (!request.body) return null;
   const reader = request.body.getReader();

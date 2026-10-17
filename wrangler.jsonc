@@ -6,6 +6,7 @@
   "workers_dev": false,
   "preview_urls": false,
   "observability": { "enabled": true, "traces": { "enabled": true } },
+  "ratelimits": [{ "name": "PRIVATE_BOOK_LOGIN_LIMITER", "namespace_id": "734662109", "simple": { "limit": 5, "period": 60 } }],
   "routes": [
     { "pattern": "yu-zora.com/bookshelf", "zone_name": "yu-zora.com" },
     { "pattern": "yu-zora.com/bookshelf/*", "zone_name": "yu-zora.com" }

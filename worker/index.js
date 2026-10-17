@@ -1,5 +1,6 @@
 import policy from './generated/edition-policy.json' with { type: 'json' };
 import { authorizeArchive, protectResponse, logout } from './archive-access.js';
+import { privateBookFor, servePrivateBook, privateLogout } from './private-books.js';
 
 const PREFIX = '/bookshelf';
 export function protectedPath(pathname) {
@@ -29,6 +30,11 @@ export default {
       return Response.redirect(url, 308);
     }
     if (!pathname.startsWith(PREFIX + '/')) return new Response('Not found', { status: 404 });
+    if (pathname === PREFIX + '/_sealed' || pathname.startsWith(PREFIX + '/_sealed/')) return new Response('Not found', { status: 404 });
+    const privateExit = /^\/bookshelf\/private-access\/([a-z0-9-]+)\/logout$/.exec(pathname);
+    if (privateExit) return privateLogout(request, privateExit[1]);
+    const privateId = privateBookFor(pathname);
+    if (privateId) return servePrivateBook(request, env, url, privateId);
     if (pathname === PREFIX + '/archive-access/logout') return logout(request);
     const locked = protectedPath(pathname);
     if (locked) {

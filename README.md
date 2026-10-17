@@ -103,3 +103,15 @@ CloudflareのSecretに `ARCHIVE_PASSWORD` と `ARCHIVE_SESSION_SECRET`（十分�
 ローカル認証確認には `npm ci` 後、Git対象外の `.dev.vars` に二つのSecretを設定し、`npm run dev:worker` を使う。静的プレビューは原稿の確認用であり、公開・認証確認には使わない。認証設定が欠けている場合、旧版は503として閉じ、最新版だけを公開する。
 
 本番のSecret設定は `npx wrangler secret bulk <Git対象外の環境変数ファイル>`。通常のPushによるデプロイは既存Secretを保持する。旧版ページの「旧版の閲覧を終了する」でこのブラウザの認証を解除できる。
+
+## 限定閲覧作品
+
+限定閲覧用の本文はリポジトリ外で管理します。公開本棚には並べず、作品のURLで閲覧パスワードを入力して読みます。紹介、章、全文テキスト、図版、作品別カタログをWorkerで認証・復号します。
+
+リポジトリ外で生成した `dist` を登録するコマンドは次のとおりです。秘密値のファイルもGit対象外に置きます。
+
+```sh
+npm run seal:private -- <private-dist> <book-id> <secret-json-file>
+```
+
+秘密値ファイルには `PRIVATE_BOOK_KEY`（32バイト乱数のBase64）と `PRIVATE_BOOK_PASSWORD` を保存し、同じ値をCloudflare Secretへ設定します。パッケージの暗号化に閲覧パスワードは使いません。更新後は通常の本番ビルド・検証・デプロイを行います。公開リポジトリへ平文の原稿や復号鍵を追加しないでください。
