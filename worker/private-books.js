@@ -1,5 +1,11 @@
 import manifest from './private-books.json' with { type: 'json' };
-import { protectResponse, readPassword } from './archive-access.js';
+import { protectResponse as protectBaseResponse, readPassword } from './archive-access.js';
+
+function protectResponse(response, method = 'GET') {
+  const result = protectBaseResponse(response, method);
+  result.headers.set('Cache-Control', 'private, no-store, no-transform');
+  return result;
+}
 
 const PREFIX = '/bookshelf';
 const SESSION_SECONDS = 8 * 60 * 60;

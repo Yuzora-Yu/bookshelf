@@ -70,7 +70,7 @@ test('password opens authenticated pages and assets without public caches or con
     const opened = await get(route, cookie, { headers: { range: 'bytes=0-4', 'if-none-match': '"cipher"' } });
     assert.equal(opened.status, 200, route);
     assert.equal(opened.headers.get('content-type'), routes[route].contentType);
-    assert.match(opened.headers.get('cache-control'), /private, no-store/);
+    assert.match(opened.headers.get('cache-control'), /private, no-store, no-transform/);
     assert.equal(opened.headers.get('etag'), null);
     assert.equal(opened.headers.get('last-modified'), null);
     assert.equal(await opened.text(), fixture(route).toString());
