@@ -6,12 +6,12 @@
         "/books/cold-sleep/full.txt": {
           "asset": "/_sealed/cold-sleep/d309636dcae0e646ae34e48f870b9d7eccc0b4be83a1e62b9d3700a268092409.bin",
           "contentType": "text/plain; charset=utf-8",
-          "bytes": 336592
+          "bytes": 336543
         },
         "/books/cold-sleep/": {
           "asset": "/_sealed/cold-sleep/e6f5fd6a4ff483ff50b115f138b08f4af8a6d9615ea14c4a9a8a4738dcd62c77.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 13278
+          "bytes": 13364
         },
         "/books/cold-sleep/read/01.html": {
           "asset": "/_sealed/cold-sleep/6a0a3dbea5c96a9646c7f359ff7015c1c94a5905872f1adf1a580e13769ca483.bin",
@@ -21,7 +21,7 @@
         "/books/cold-sleep/read/02.html": {
           "asset": "/_sealed/cold-sleep/c7a6bb5f3ca962f63402e092dae548871dd98e2f19f21d2ba3c13dd318e5ad00.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 24478
+          "bytes": 24427
         },
         "/books/cold-sleep/read/03.html": {
           "asset": "/_sealed/cold-sleep/711c6ee0f1ffc97ffe49befd39725564cf598c2b9d6284a1c9020a301941c4a0.bin",
@@ -36,7 +36,7 @@
         "/books/cold-sleep/read/05.html": {
           "asset": "/_sealed/cold-sleep/8d45b2a4144832d36f416279060710fccf1700e6d38491a3c06035e8ae9e279e.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 24041
+          "bytes": 24004
         },
         "/books/cold-sleep/read/06.html": {
           "asset": "/_sealed/cold-sleep/e59e4550db13949e8592668ec82dcefcee67da6de0d11a0aac04fb4add2bcbf5.bin",
@@ -101,22 +101,22 @@
         "/books/cold-sleep/read/18.html": {
           "asset": "/_sealed/cold-sleep/b7d57a1226219f5996857b12127fb2539b566cb11a3c7fb6fe7c883541b494f2.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 23340
+          "bytes": 23291
         },
         "/books/cold-sleep/read/19.html": {
           "asset": "/_sealed/cold-sleep/0e7b1db2ce8e2cfbb77f78b1aa235427bbcc8bbfc3f005bbb3d9a9f98f7f6d71.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 24163
+          "bytes": 24248
         },
         "/books/cold-sleep/read/20.html": {
           "asset": "/_sealed/cold-sleep/106c5c2418173ffc8067f7f65dc59e938df0088fdcc2aaaae2e5285745bef97f.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 23799
+          "bytes": 24031
         },
         "/books/cold-sleep/read/21.html": {
           "asset": "/_sealed/cold-sleep/f2cf0e9f5ec9c4326fd74a4819b393b1a15c7fe586bbbdfbe20bf2a58ec4c4f5.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 24809
+          "bytes": 24396
         },
         "/books/cold-sleep/read/22.html": {
           "asset": "/_sealed/cold-sleep/9d14afd49e85ba0f899057a105e3cf07615614072015bdb5686b4d401d31acec.bin",
@@ -131,22 +131,22 @@
         "/books/cold-sleep/read/24.html": {
           "asset": "/_sealed/cold-sleep/24a684312a02c18def6aca1435adaf3e67de084e88fc3d9fc8f8823d9a3c2318.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 23221
+          "bytes": 23197
         },
         "/books/cold-sleep/read/25.html": {
           "asset": "/_sealed/cold-sleep/b2e5b8f7060513b8300c9fd882af16b03c77334c0399ee91f72baaa2f455df90.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21279
+          "bytes": 21300
         },
         "/books/cold-sleep/read/26.html": {
           "asset": "/_sealed/cold-sleep/3dae225e9db558e4f3225fda189548dde0fde4725cf77a86139a5ab4fcfd8feb.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 22090
+          "bytes": 22210
         },
         "/books/cold-sleep/read/27.html": {
           "asset": "/_sealed/cold-sleep/b75eef5ecadc6a6d547feba316acfc01175429ac549b698655c3bf9f639ebad6.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21054
+          "bytes": 21051
         },
         "/books/cold-sleep/read/28.html": {
           "asset": "/_sealed/cold-sleep/bc3948d3c1122e5cfc469c3f75efefa5b40821933a1daad7fc1640d7f7167011.bin",
