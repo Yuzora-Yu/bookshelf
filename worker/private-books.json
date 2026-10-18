@@ -6,142 +6,167 @@
         "/books/cold-sleep/full.txt": {
           "asset": "/_sealed/cold-sleep/d309636dcae0e646ae34e48f870b9d7eccc0b4be83a1e62b9d3700a268092409.bin",
           "contentType": "text/plain; charset=utf-8",
-          "bytes": 267923
+          "bytes": 323772
         },
         "/books/cold-sleep/": {
           "asset": "/_sealed/cold-sleep/e6f5fd6a4ff483ff50b115f138b08f4af8a6d9615ea14c4a9a8a4738dcd62c77.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 12304
+          "bytes": 13230
         },
         "/books/cold-sleep/read/01.html": {
           "asset": "/_sealed/cold-sleep/6a0a3dbea5c96a9646c7f359ff7015c1c94a5905872f1adf1a580e13769ca483.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 26108
+          "bytes": 27038
         },
         "/books/cold-sleep/read/02.html": {
           "asset": "/_sealed/cold-sleep/c7a6bb5f3ca962f63402e092dae548871dd98e2f19f21d2ba3c13dd318e5ad00.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 22450
+          "bytes": 23380
         },
         "/books/cold-sleep/read/03.html": {
           "asset": "/_sealed/cold-sleep/711c6ee0f1ffc97ffe49befd39725564cf598c2b9d6284a1c9020a301941c4a0.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 25641
+          "bytes": 27857
         },
         "/books/cold-sleep/read/04.html": {
           "asset": "/_sealed/cold-sleep/65d91d090f8b02c75427e8b054acef0c10070af59c5993d8d94fb7695c8cd72c.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 20835
+          "bytes": 21765
         },
         "/books/cold-sleep/read/05.html": {
           "asset": "/_sealed/cold-sleep/8d45b2a4144832d36f416279060710fccf1700e6d38491a3c06035e8ae9e279e.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 26672
+          "bytes": 27602
         },
         "/books/cold-sleep/read/06.html": {
           "asset": "/_sealed/cold-sleep/e59e4550db13949e8592668ec82dcefcee67da6de0d11a0aac04fb4add2bcbf5.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 29419
+          "bytes": 30622
         },
         "/books/cold-sleep/read/07.html": {
           "asset": "/_sealed/cold-sleep/d8de1172b1eb4e78cf21c4a253907fabdbcdeb55fb50cb029768d17545359a8e.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 22823
+          "bytes": 21450
         },
         "/books/cold-sleep/read/08.html": {
           "asset": "/_sealed/cold-sleep/d0fc9f8c845707de1ffc7d081a7b0167337c8fc7aa73721fedae14f17c57bd03.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 22466
+          "bytes": 23753
         },
         "/books/cold-sleep/read/09.html": {
           "asset": "/_sealed/cold-sleep/96fbef6c97d0ab1e294abd75ce15ca3828b29dbb17a9d859e29c8baa4d6a8514.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 24304
+          "bytes": 24339
         },
         "/books/cold-sleep/read/10.html": {
           "asset": "/_sealed/cold-sleep/4a3139dcdc7f7da6cc5783df0c257c1f6162b66c6bc50145a47705df0d85f2fb.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 24559
+          "bytes": 25948
         },
         "/books/cold-sleep/read/11.html": {
           "asset": "/_sealed/cold-sleep/103c1ccc83110033bed7e23b292201999a4582f0d61e0f0543c874dc8583531c.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 25891
+          "bytes": 25825
         },
         "/books/cold-sleep/read/12.html": {
           "asset": "/_sealed/cold-sleep/43dba51b82db51f674bec130c55b5ca582d5bec5665f5c53557bcccdc7d70227.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 24515
+          "bytes": 27017
         },
         "/books/cold-sleep/read/13.html": {
           "asset": "/_sealed/cold-sleep/b860bd66edd8fc0097d51f7e28c3ed5100424fb5342a49f0d6cf7c41f2b1e9e3.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21029
+          "bytes": 22548
         },
         "/books/cold-sleep/read/14.html": {
           "asset": "/_sealed/cold-sleep/1e13102cce867612334321c34c19796527bdb2be931a482cf14266de94147ada.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 26015
+          "bytes": 28393
         },
         "/books/cold-sleep/read/15.html": {
           "asset": "/_sealed/cold-sleep/dd5ff32938b709dd39be247f47e377df0b2b8c2f3a85199ee53db9086bae1d85.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 25980
+          "bytes": 21959
         },
         "/books/cold-sleep/read/16.html": {
           "asset": "/_sealed/cold-sleep/ff3d9094a5f03f62a0d94199cdaa6037d578ed6e715370212b9d5e690afcab99.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 23886
+          "bytes": 26948
         },
         "/books/cold-sleep/read/17.html": {
           "asset": "/_sealed/cold-sleep/b054a3bfd3996b8721d0ee2363b2c867e5b2638e8822cd3740d5d7d0234fefe9.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21837
+          "bytes": 22647
         },
         "/books/cold-sleep/read/18.html": {
           "asset": "/_sealed/cold-sleep/b7d57a1226219f5996857b12127fb2539b566cb11a3c7fb6fe7c883541b494f2.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21199
+          "bytes": 23082
         },
         "/books/cold-sleep/read/19.html": {
           "asset": "/_sealed/cold-sleep/0e7b1db2ce8e2cfbb77f78b1aa235427bbcc8bbfc3f005bbb3d9a9f98f7f6d71.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21119
+          "bytes": 25450
         },
         "/books/cold-sleep/read/20.html": {
           "asset": "/_sealed/cold-sleep/106c5c2418173ffc8067f7f65dc59e938df0088fdcc2aaaae2e5285745bef97f.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 20699
+          "bytes": 24501
         },
         "/books/cold-sleep/read/21.html": {
           "asset": "/_sealed/cold-sleep/f2cf0e9f5ec9c4326fd74a4819b393b1a15c7fe586bbbdfbe20bf2a58ec4c4f5.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 20065
+          "bytes": 22666
         },
         "/books/cold-sleep/read/22.html": {
           "asset": "/_sealed/cold-sleep/9d14afd49e85ba0f899057a105e3cf07615614072015bdb5686b4d401d31acec.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 19603
+          "bytes": 23405
         },
         "/books/cold-sleep/read/23.html": {
           "asset": "/_sealed/cold-sleep/b4aace52834331d01636c0b06ec4126e27924b7c995b7c0a2084981440f17bbb.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 19367
+          "bytes": 23960
         },
         "/books/cold-sleep/read/24.html": {
           "asset": "/_sealed/cold-sleep/24a684312a02c18def6aca1435adaf3e67de084e88fc3d9fc8f8823d9a3c2318.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 20933
+          "bytes": 21828
         },
         "/books/cold-sleep/read/25.html": {
           "asset": "/_sealed/cold-sleep/b2e5b8f7060513b8300c9fd882af16b03c77334c0399ee91f72baaa2f455df90.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21029
+          "bytes": 21440
         },
         "/books/cold-sleep/read/26.html": {
           "asset": "/_sealed/cold-sleep/3dae225e9db558e4f3225fda189548dde0fde4725cf77a86139a5ab4fcfd8feb.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 21321
+          "bytes": 24727
+        },
+        "/books/cold-sleep/read/27.html": {
+          "asset": "/_sealed/cold-sleep/b75eef5ecadc6a6d547feba316acfc01175429ac549b698655c3bf9f639ebad6.bin",
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 21085
+        },
+        "/books/cold-sleep/read/28.html": {
+          "asset": "/_sealed/cold-sleep/bc3948d3c1122e5cfc469c3f75efefa5b40821933a1daad7fc1640d7f7167011.bin",
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 20297
+        },
+        "/books/cold-sleep/read/29.html": {
+          "asset": "/_sealed/cold-sleep/49df96e5193a96bdd33d7fc65521e986fc77d23231f35c5700ba6e354c49a5e4.bin",
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 22579
+        },
+        "/books/cold-sleep/read/30.html": {
+          "asset": "/_sealed/cold-sleep/3efbe2c808481dcc23ce21316047a61d36f912536487fe9ff4eaaa4d46b3db8f.bin",
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 22088
+        },
+        "/books/cold-sleep/read/31.html": {
+          "asset": "/_sealed/cold-sleep/cef5cf0c24728ec7d313b507ff29a6c352759ca3db83ce257dc386201d311224.bin",
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 22561
         },
         "/assets/books/cold-sleep/cover.svg": {
           "asset": "/_sealed/cold-sleep/e1a49ccaa69a4a50418865cba7839ef551426cdb2ef1f1cac10ae71444715d43.bin",
@@ -151,7 +176,7 @@
         "/books/cold-sleep/catalog.json": {
           "asset": "/_sealed/cold-sleep/74b2cc57b3c2b289295c4877f2102548c54084e5b292c008a86d9f998cfd28fb.bin",
           "contentType": "application/json; charset=utf-8",
-          "bytes": 1738
+          "bytes": 2053
         }
       }
     }
