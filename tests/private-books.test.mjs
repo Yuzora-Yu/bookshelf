@@ -46,8 +46,10 @@ async function login() {
   return response.headers.get('set-cookie').split(';')[0];
 }
 
-test('private details, all 32 chapters, download, catalog and artwork require a session before asset reads', async () => {
-  assert.equal(Object.keys(routes).filter((r) => /read\/\d+\.html$/.test(r)).length, 32);
+test('private details, every chapter, download, catalog and artwork require a session before asset reads', async () => {
+  assert.deepEqual(Object.keys(routes).filter((r) => /read\/\d+\.html$/.test(r)).sort(),
+    Array.from({ length: 26 }, (_, i) => `/books/${id}/read/${String(i + 1).padStart(2, '0')}.html`));
+  assert.equal(Object.keys(routes).length, 30);
   requests.length = 0;
   for (const route of Object.keys(routes)) {
     const response = await get(route);
