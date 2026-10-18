@@ -6,7 +6,7 @@
         "/books/cold-sleep/full.txt": {
           "asset": "/_sealed/cold-sleep/d309636dcae0e646ae34e48f870b9d7eccc0b4be83a1e62b9d3700a268092409.bin",
           "contentType": "text/plain; charset=utf-8",
-          "bytes": 338731
+          "bytes": 338746
         },
         "/books/cold-sleep/": {
           "asset": "/_sealed/cold-sleep/e6f5fd6a4ff483ff50b115f138b08f4af8a6d9615ea14c4a9a8a4738dcd62c77.bin",
@@ -66,7 +66,7 @@
         "/books/cold-sleep/read/11.html": {
           "asset": "/_sealed/cold-sleep/103c1ccc83110033bed7e23b292201999a4582f0d61e0f0543c874dc8583531c.bin",
           "contentType": "text/html; charset=utf-8",
-          "bytes": 26008
+          "bytes": 26023
         },
         "/books/cold-sleep/read/12.html": {
           "asset": "/_sealed/cold-sleep/43dba51b82db51f674bec130c55b5ca582d5bec5665f5c53557bcccdc7d70227.bin",
