@@ -42,6 +42,16 @@ npm test
 
 標準の配置先は `https://yu-zora.com/bookshelf/`。旧版の閲覧認証を行うCloudflare Worker経由で公開します。`dist/` 単体の静的ホスティングは認証を実行できないため、公開先には使用しません。ヘッダーのポータルリンクは `site.config.json` の `portalUrl` で設定します。
 
+### ポータル向け更新フィード
+
+ビルド時に `/bookshelf/activity.json` を自動生成します。`content/books/` の公開中の本を列挙し、件数・初回公開日・最終改稿日と書籍ごとの `contentHash`（SHA-256）を配信します。章本文そのものや旧版・限定閲覧作品は含めません。新しい本を追加すると、レジストリの手動修正なしで反映されます。
+
+`publishedAt` は初回公開日、`updatedAt` は本文の最終改稿日として維持してください。`contentHash` は章題・本文・紹介文・登場人物・書籍固有の図版から生成するため、日付の更新を忘れた修正もポータル側で差分を検出できます。日付、版名、掲載順、ナビゲーション、CSS、ビルド時刻だけの変更ではハッシュは変わりません。
+
+フィードの `schemaVersion` は `1`、`hashScope` は `book-content-v1` です。`latestPublishedAt` と `latestUpdatedAt` は公開対象のメタデータから集約します。ハッシュ変更を初めて観測した日時は、ポータル側で保存します。フィードに生成時刻は含めず、変更のないビルドでは同じJSONになります。
+
+未来の `publishedAt`、`archived`、`published: false`、`draft: true`、`private: true`、`unlisted: true`、非公開の `visibility` はフィード対象外です。これは公開フィードの抽出条件であり、非公開原稿を通常の `content/books/` に配置してよいという意味ではありません。非公開作品は引き続き既存の暗号化・認証付き配信で管理してください。
+
 PowerShellで本番用に生成する例：
 
 ```powershell

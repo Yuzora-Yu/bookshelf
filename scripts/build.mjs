@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildActivity } from "./activity.mjs";
 import {
   escape as e,
   loadBooks,
@@ -300,6 +301,10 @@ await write(
       readBase: url(readPath(b)),
     })),
   ),
+);
+await write(
+  "activity.json",
+  JSON.stringify(await buildActivity(books, { root, base, siteUrl }), null, 2) + "\n",
 );
 await write(
   "404.html",
