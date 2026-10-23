@@ -32,10 +32,10 @@ const books = (await loadBooks(root)).filter((book) => isPublicBook(book, today)
 const archivedBooks = await loadArchivedBooks(root);
 const allEditions = [...books, ...archivedBooks];
 const currentImages = new Set(books.flatMap((b) =>
-  [b.cover, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
+  [b.cover, b.featuredBanner, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
     .filter(Boolean).map((name) => `/assets/books/${b.id}/${name}`)));
 const archiveImages = [...new Set(archivedBooks.flatMap((b) =>
-  [b.cover, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
+  [b.cover, b.featuredBanner, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
     .filter(Boolean).map((name) => `/assets/books/${b.id}/${name}`)))];
 await fs.mkdir(path.join(root, "worker/generated"), { recursive: true });
 await fs.writeFile(path.join(root, "worker/generated/edition-policy.json"), JSON.stringify({
@@ -178,10 +178,11 @@ async function write(name, text) {
 const featured = books.find((b) => b.featured) || books[0];
 const allGenres = [...new Set(books.flatMap((b) => b.genres))];
 const hero = featured
-  ? `<section class="hero wrap" id="featured-book" data-book="${featured.id}" aria-labelledby="featured-title"><div class="hero-copy"><p class="eyebrow">FEATURED BOOK</p><div class="hero-book-meta"><span data-featured="label">${e(featured.featureLabel || "小説")}</span><i></i><span data-featured="number">VOL. ${e(featured.number || "01")}</span></div><h2 id="featured-title" data-featured="title">${e(featured.title)}</h2><p class="hero-description" data-featured="description">${e(featured.description)}</p><div class="hero-actions"><a class="button button-dark" data-featured="read" href="${readUrl(featured)}">物語を読む <span aria-hidden="true">→</span></a><a class="text-link" data-featured="detail" href="${bookUrl(featured)}">作品について</a></div><p class="micro-meta" data-featured="meta">${status(featured)} ／ ${contentsLabel(featured)} ／ 約${(featured.charCount / 10000).toFixed(1)}万字</p></div><a class="hero-art" data-featured="art" href="${bookUrl(featured)}" aria-label="${e(featured.title)}の作品紹介"><span class="vertical-note" data-featured="note">${e(featured.featureNote || "作品紹介・目次")}</span><div class="book-object"><img data-featured="cover" src="${asset(featured, featured.cover)}" width="480" height="680" alt="${e(featured.title)}の表紙" fetchpriority="high"></div><div class="art-caption"><span>BOOKS</span><span data-featured="number">VOL. ${e(featured.number || "01")}</span></div></a></section><script type="application/json" id="featured-books-data">${JSON.stringify(books.map((book) => ({
+  ? `<section class="hero wrap" id="featured-book" data-book="${featured.id}" aria-labelledby="featured-title"><div class="hero-copy"><p class="eyebrow">FEATURED BOOK</p><div class="hero-book-meta"><span data-featured="label">${e(featured.featureLabel || "小説")}</span><i></i><span data-featured="number">VOL. ${e(featured.number || "01")}</span></div><h2 id="featured-title" data-featured="title">${e(featured.title)}</h2><p class="hero-description" data-featured="description">${e(featured.description)}</p><div class="hero-actions"><a class="button button-dark" data-featured="read" href="${readUrl(featured)}">物語を読む <span aria-hidden="true">→</span></a><a class="text-link" data-featured="detail" href="${bookUrl(featured)}">作品について</a></div><p class="micro-meta" data-featured="meta">${status(featured)} ／ ${contentsLabel(featured)} ／ 約${(featured.charCount / 10000).toFixed(1)}万字</p></div><a class="hero-art" data-featured="art" data-artwork="${featured.featuredBanner ? "banner" : "cover"}" href="${bookUrl(featured)}" aria-label="${e(featured.title)}の作品紹介"><span class="vertical-note" data-featured="note">${e(featured.featureNote || "作品紹介・目次")}</span><div class="book-object"><img data-featured="cover" src="${asset(featured, featured.featuredBanner || featured.cover)}" width="${featured.featuredBanner ? 1200 : 480}" height="${featured.featuredBanner ? 630 : 680}" alt="${e(featured.title)}の${featured.featuredBanner ? "紹介イラスト" : "表紙"}" fetchpriority="high"></div><div class="art-caption"><span>BOOKS</span><span data-featured="number">VOL. ${e(featured.number || "01")}</span></div></a></section><script type="application/json" id="featured-books-data">${JSON.stringify(books.map((book) => ({
     id: book.id, title: book.title, description: book.description, publishedAt: book.publishedAt,
     label: book.featureLabel || "小説", number: `VOL. ${book.number || "01"}`,
     note: book.featureNote || "作品紹介・目次", cover: asset(book, book.cover),
+    banner: book.featuredBanner ? asset(book, book.featuredBanner) : null,
     read: readUrl(book), detail: bookUrl(book),
     meta: `${status(book)} ／ ${book.contentsLabel || `全${book.chapters.length}章`} ／ 約${(book.charCount / 10000).toFixed(1)}万字`,
   }))).replaceAll("<", "\\u003c")}</script>`

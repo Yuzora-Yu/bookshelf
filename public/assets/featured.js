@@ -21,9 +21,12 @@ export function applyFeaturedBook(section, book) {
   const art = section.querySelector('[data-featured="art"]');
   art.setAttribute("href", book.detail);
   art.setAttribute("aria-label", `${book.title}の作品紹介`);
+  art.setAttribute("data-artwork", book.banner ? "banner" : "cover");
   const cover = section.querySelector('[data-featured="cover"]');
-  cover.setAttribute("src", book.cover);
-  cover.setAttribute("alt", `${book.title}の表紙`);
+  cover.setAttribute("src", book.banner || book.cover);
+  cover.setAttribute("alt", `${book.title}の${book.banner ? "紹介イラスト" : "表紙"}`);
+  cover.setAttribute("width", book.banner ? "1200" : "480");
+  cover.setAttribute("height", book.banner ? "630" : "680");
   section.dataset.book = book.id;
 }
 

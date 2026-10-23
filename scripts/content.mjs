@@ -104,6 +104,7 @@ export async function loadBooks(root, collection = "content/books") {
     );
     for (const image of [
       book.cover,
+      book.featuredBanner,
       book.portrait,
       ...(book.illustrations || []).map((i) => i.file),
     ].filter(Boolean)) {

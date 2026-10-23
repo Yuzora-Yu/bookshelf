@@ -19,6 +19,10 @@ html:not([data-reader]) main [id] { scroll-margin-top:92px; }
 .hero-description { font-size:14px;line-height:1.95;min-height:6em; }
 .hero-art { min-height:440px;background:#dfe7e1;background-image:none; }
 .book-object { width:52%; }
+.hero-art[data-artwork="banner"] { min-height:0;aspect-ratio:40/21;background:transparent; }
+.hero-art[data-artwork="banner"] .book-object { width:100%;transform:none;box-shadow:none; }
+.hero-art[data-artwork="banner"] .book-object img { display:block;width:100%;height:auto; }
+.hero-art[data-artwork="banner"] .vertical-note,.hero-art[data-artwork="banner"] .art-caption { display:none; }
 html[data-reader] .portal-header { position:relative; }
 @media(max-width:760px) {
  .portal-header-inner { width:calc(100% - 40px);min-height:108px;padding:14px 0 8px;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px; }
@@ -42,6 +46,7 @@ html[data-reader] .portal-header { position:relative; }
 @media print {
  .portal-header,.bookshelf-subnav { display:none; }
  .hero { grid-template-columns:1fr 170px;gap:24px;padding-block:12px 24px;break-inside:avoid; }
+ .hero:has(.hero-art[data-artwork="banner"]) { grid-template-columns:1fr 1fr; }
  .hero-art { grid-row:auto;min-height:0;background:none;overflow:visible; }
  .book-object { width:150px;transform:none;box-shadow:none; }
  .hero-description { min-height:0; }

@@ -56,6 +56,7 @@ test("only reader-facing content changes its stable hash, not dates, edition lab
   assert.equal(await hash({ ...book, updatedAt: "2026-10-22", edition: "new-edition", featured: true }), original);
   assert.equal(await hash({ ...book, readingGuide: { tone: "B", focus: "A" }, chapters: [{ number: 1, title: "First", body: "Text\r\nMore text" }] }), original);
   assert.equal(await hash({ ...book, buildTime: "2026-10-23", navigation: "TOOLS", styles: "new.css" }), original);
+  assert.equal(await hash({ ...book, featuredBanner: "featured-banner.webp" }), original);
   assert.notEqual(await hash({ ...book, chapters: [{ ...book.chapters[0], body: "Revised text" }] }), original);
   assert.notEqual(await hash({ ...book, description: "Revised introduction" }), original);
   assert.notEqual(await hash({ ...book, chapters: [...book.chapters, { number: 2, title: "Second", body: "Next" }] }), original);

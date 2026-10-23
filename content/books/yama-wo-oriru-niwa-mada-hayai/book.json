@@ -17,7 +17,7 @@
   "publishedAt": "2026-09-18",
   "updatedAt": "2026-10-05",
   "featured": true,
-  "featureLabel": "旅先の事件と揺らぐ友情",
+  "featureLabel": "旅先の事件",
   "featureNote": "四人で、帰ろう。",
   "startLabel": "第一章から読む",
   "contentsLabel": "本編20章・終章",
@@ -28,6 +28,7 @@
     "午後、宿泊客の一人が倒れているのが見つかる。刑事二人が到着したあと、雨で唯一の車道が崩れた。"
   ],
   "cover": "cover.svg",
+  "featuredBanner": "featured-banner-20261023.webp",
   "portrait": "characters-pencil-20260921.png",
   "portraitAlt": "青凪祐助と友人三人、小鈴、澄、鷲尾、香坂の鉛筆画",
   "portraitCaption": "上段左から：青凪祐助、森野亮、池上拓海、石動宏和。下段左から：花村小鈴、寒河江澄、鷲尾誠一、香坂怜子。",
@@ -119,8 +120,8 @@
   "portraitWidth": 1536,
   "portraitHeight": 1024,
   "readingGuide": {
-    "label": "旅先の事件と揺らぐ友情",
-    "focus": "道を断たれた山の旅館で、事件と四人の関係の変化を追う。",
-    "tone": "旅行の気安いやり取りから、友人との距離が変わる緊張へ。一緒に帰りたい四人の物語。"
+    "label": "旅先の事件",
+    "focus": "道を断たれた山の旅館で、祐助と友人三人が事件に向き合う。",
+    "tone": "友人たちの気安いやり取りと、旅先で起こる事件。一緒に帰りたい四人の物語。"
   }
 }
