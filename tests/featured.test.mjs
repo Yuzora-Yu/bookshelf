@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { chooseFeaturedBook, applyFeaturedBook } from "../public/assets/featured.js";
+import { chooseFeaturedBook, applyFeaturedBook, initializeFeaturedBook } from "../public/assets/featured.js";
 import { loadBooks } from "../scripts/content.mjs";
 
 const now = new Date("2026-10-23T03:00:00Z");
@@ -26,6 +26,12 @@ test("random selection excludes future, archived and nonpublic works", () => {
     .map((flags, index) => ({ ...books[0], id: `hidden-${index}`, ...flags }));
   assert.equal(chooseFeaturedBook([...hidden, books[2]], () => 0, now).id, "third");
   assert.equal(chooseFeaturedBook(hidden, () => 0.99, now), null);
+});
+
+test("the browser never replaces a server-selected featured book", () => {
+  const section = { dataset: { featuredSource: "server" } };
+  const source = { get textContent() { throw new Error("Client selection must not run"); } };
+  assert.doesNotThrow(() => initializeFeaturedBook({ querySelector: selector => selector === "#featured-book" ? section : source }));
 });
 
 test("cover, title, copy, alt and all actions always belong to one selected book", () => {

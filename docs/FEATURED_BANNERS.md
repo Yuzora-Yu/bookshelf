@@ -1,7 +1,11 @@
 # Featured Book Banners
 
-The home page randomly selects a public book and updates its introduction,
-reading links and artwork together. The four approved introduction banners were
+The Worker selects a public book for each home-page HTML response and streams its
+complete introduction, reading links and artwork into the document using
+HTMLRewriter. The browser retains that selection instead of shuffling it again.
+Home HTML is not cached or conditionally reused; image and script caching is
+unchanged. Static-only previews retain a client-side fallback. The four approved
+introduction banners were
 installed on 2026-10-23. Only the featured artwork uses these images: library
 cards, individual book pages, reader pages and social cards retain their covers.
 

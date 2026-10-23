@@ -1,6 +1,7 @@
 import policy from './generated/edition-policy.json' with { type: 'json' };
 import { authorizeArchive, protectResponse, logout } from './archive-access.js';
 import { privateBookFor, servePrivateBook, privateLogout } from './private-books.js';
+import { featuredHomeResponse } from './featured-home.js';
 
 const PREFIX = '/bookshelf';
 export function protectedPath(pathname) {
@@ -37,6 +38,7 @@ export default {
     if (privateId) return servePrivateBook(request, env, url, privateId);
     if (pathname === PREFIX + '/archive-access/logout') return logout(request);
     const locked = protectedPath(pathname);
+    const home = pathname === PREFIX + '/' || pathname === PREFIX + '/index.html';
     if (locked) {
       const result = await authorizeArchive(request, env, url);
       if (result) return result;
@@ -48,14 +50,18 @@ export default {
     assetUrl.pathname = pathname.slice(PREFIX.length);
     if (assetUrl.pathname.endsWith('/')) assetUrl.pathname += 'index.html';
     const headers = new Headers(request.headers);
-    if (locked) {
+    if (locked || home) {
       headers.delete('if-none-match');
       headers.delete('if-modified-since');
+    }
+    if (home) {
+      headers.delete('range');
+      headers.delete('if-range');
     }
     const assetRequest = (target) => new Request(target, { method: request.method, headers });
     const finish = (response) => locked ? protectResponse(response, request.method) : response;
     const response = await env.ASSETS.fetch(assetRequest(assetUrl));
-    if (response.status !== 404) return finish(response);
+    if (response.status !== 404) return home ? featuredHomeResponse(response, request.method) : finish(response);
     if (!pathname.endsWith('/') && !pathname.split('/').pop().includes('.')) {
       const directoryUrl = new URL(assetUrl);
       directoryUrl.pathname += '/index.html';

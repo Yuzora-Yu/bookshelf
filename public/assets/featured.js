@@ -34,6 +34,7 @@ export function initializeFeaturedBook(root = document) {
   const section = root.querySelector("#featured-book");
   const source = root.querySelector("#featured-books-data");
   if (!section || !source) return;
+  if (section.dataset.featuredSource === "server") return;
   try {
     const books = JSON.parse(source.textContent);
     if (!Array.isArray(books)) return;
