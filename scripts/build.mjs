@@ -96,8 +96,8 @@ const editionSwitcher = (book, compact = false) => {
   return `<nav class="edition-switcher" id="editions" aria-label="版を選ぶ"><div class="edition-current"><span class="edition-chip ${book.archived ? "archive" : "latest"}">${book.archived ? "旧版" : "最新版"}</span><div><strong>${e(name)}</strong><small>${e(dateLabel(book.updatedAt || book.publishedAt))}</small></div>${book.archived && latest ? `<a class="edition-latest-link" href="${bookUrl(latest)}">最新版へ戻る →</a>` : ""}</div><div class="edition-picker"><label for="edition-select">別の版を読む</label><select id="edition-select" aria-describedby="edition-note"><option value="">版を選択して移動</option>${options}</select></div><p class="edition-note" id="edition-note">旧版の閲覧にはパスワードが必要です。</p>${lock}</nav>`;
 };
 const portalLinks = ({ includeHome = true } = {}) => [
-  ['', 'YU-ZORAトップ'], ['games/', 'GAMES'], ['bookshelf/', 'BOOKS'],
-  ['tools/', 'TOOLS'], ['project_sixth/', 'PROJECT SIXTH'], ['about/', 'ABOUT'],
+  ['', 'YU-ZORAトップ'], ['games/', 'GAMES'], ['tools/', 'TOOLS'],
+  ['bookshelf/', 'BOOKS'], ['others/', 'OTHERS'], ['about/', 'ABOUT'],
 ].filter(([route]) => includeHome || route).map(([route, label]) => `<a href="${e(new URL(route, config.portalUrl).href)}"${route === 'bookshelf/' ? ' aria-current="location"' : ''}>${label}</a>`).join('');
 const portalHeader = () => `<header class="portal-header"><div class="portal-header-inner"><a class="portal-brand" href="${e(config.portalUrl)}" aria-label="YU-ZORAトップ"><span class="portal-brand-dot" aria-hidden="true"></span>YU-ZORA</a><nav class="portal-nav" aria-label="メインナビゲーション">${portalLinks({ includeHome:false })}</nav></div></header>`;
 const policyNav = (className = 'book-policy-nav') => `<nav class="${className}" aria-label="運営情報・ポリシー">${[['about/', '運営者情報'], ['privacy/', 'プライバシー'], ['terms/', '利用規約'], ['disclaimer/', '免責事項'], ['contact/', 'お問い合わせ']].map(([route, label]) => `<a href="${e(new URL(route, config.portalUrl).href)}">${label}</a>`).join('')}</nav>`;

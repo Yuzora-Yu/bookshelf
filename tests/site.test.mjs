@@ -18,6 +18,24 @@ import {
   searchable,
 } from "../public/assets/storage.js";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+test("portal navigation keeps the same category order on library, detail, reader and 404", async () => {
+  const book = (await loadBooks(root))[0];
+  const pages = ["index.html", "404.html", `books/${book.id}/index.html`,
+    `books/${book.id}/read/${book.edition ? `${book.edition}/` : ""}01.html`];
+  const expected = ["GAMES", "TOOLS", "BOOKS", "OTHERS", "ABOUT"];
+  for (const file of pages) {
+    const html = await fs.readFile(path.join(root, "dist", file), "utf8");
+    const menus = [...html.matchAll(/<nav class="(?:portal-nav|book-site-nav)"[^>]*>([\s\S]*?)<\/nav>/g)];
+    assert.equal(menus.length, 2, file);
+    for (const [, menu] of menus) {
+      const labels = [...menu.matchAll(/<a\b[^>]*>([^<]*)<\/a>/g)]
+        .map(([, label]) => label).filter((label) => label !== "YU-ZORAトップ");
+      assert.deepEqual(labels, expected, file);
+      assert.match(menu, /href="https:\/\/yu-zora\.com\/others\/"/);
+      assert.doesNotMatch(menu, /project_sixth|others\/review/);
+    }
+  }
+});
 test("all 30 original chapters and their manuscript are retained as an edition", async () => {
   const book = (await loadBooks(root, "content/editions")).find(
     (b) => b.id === "ame-wo-tojikomeru",
