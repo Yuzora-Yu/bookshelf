@@ -12,9 +12,7 @@
 .bookshelf-subnav .wrap>div { display:flex;gap:24px;align-items:center; }
 .bookshelf-subnav a { display:inline-flex;align-items:center;min-height:40px; }
 html:not([data-reader]) main [id] { scroll-margin-top:92px; }
-.books-heading { padding-block:38px 20px; }
-.books-heading h1 { font-family:var(--sans);font-size:36px;line-height:1.3;letter-spacing:0;margin:0 0 12px; }
-.books-heading p { max-width:48em;font-size:14px;line-height:1.9;color:var(--muted);margin:0; }
+.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
 .hero { gap:48px;padding-block:20px 52px; }
 .hero-copy>.eyebrow { margin-bottom:24px;letter-spacing:0; }
 .hero h2 { font-size:30px;line-height:1.5;letter-spacing:0;min-height:1.5em;margin-block:10px 16px; }
@@ -30,8 +28,6 @@ html[data-reader] .portal-header { position:relative; }
  .bookshelf-subnav .wrap>div { gap:16px; }
  .bookshelf-title { font-size:15px; }
  .bookshelf-subnav a { font-size:11px; }
- .books-heading { padding-block:28px 18px; }
- .books-heading h1 { font-size:32px; }
  .hero { grid-template-columns:1fr;gap:28px;padding-block:12px 40px; }
  .hero h2 { font-size:25px; }
  .hero-description { font-size:13px;min-height:0; }
@@ -45,7 +41,6 @@ html[data-reader] .portal-header { position:relative; }
 }
 @media print {
  .portal-header,.bookshelf-subnav { display:none; }
- .books-heading { padding-block:0 16px; }
  .hero { grid-template-columns:1fr 170px;gap:24px;padding-block:12px 24px;break-inside:avoid; }
  .hero-art { grid-row:auto;min-height:0;background:none;overflow:visible; }
  .book-object { width:150px;transform:none;box-shadow:none; }
