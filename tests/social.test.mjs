@@ -39,8 +39,17 @@ test('current book details offer reading before edition selection and share the 
     assert(actions.includes(`data-resume="${book.id}:${book.edition || ''}"`));
     assert(actions.includes(' hidden>続きから読む'));
     assert(html.indexOf('detail-reading-actions') < html.indexOf('id="editions"'));
-    assert(html.includes(`/assets/social/${book.id}.png`));
+    assert(html.includes(`/assets/social/${book.socialImage || `${book.id}.png`}`));
     const firstChapter = await fs.readFile(path.join(dist, `books/${book.id}/read/${book.edition ? book.edition + '/' : ''}01.html`), 'utf8');
-    assert(firstChapter.includes(`/assets/social/${book.id}.png`));
+    assert(firstChapter.includes(`/assets/social/${book.socialImage || `${book.id}.png`}`));
+    const graph = JSON.parse(html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/)[1])['@graph'];
+    assert(graph.find(entity => entity['@type'] === 'Book').image.endsWith(`/assets/social/${book.socialImage || `${book.id}.png`}`));
   }
+});
+
+test('the library shares all four banners using a stable image independent of the random feature', async () => {
+  const html = await fs.readFile(path.join(dist, 'index.html'), 'utf8');
+  assert(html.includes('/assets/social/bookshelf-banners-20261023.png'));
+  assert(html.includes('property="og:image:alt" content="小説の紹介バナー"'));
+  assert.equal((html.match(/property="og:image"/g) || []).length, 1);
 });

@@ -51,6 +51,7 @@ const readPath = (b) => `books/${b.id}/read/${b.edition ? b.edition + "/" : ""}`
 const readUrl = (b, n = 1) =>
   url(`${readPath(b)}${String(n).padStart(2, "0")}.html`);
 const asset = (b, name) => url(`assets/books/${b.id}/${name}`);
+const socialImagePath = (book) => `assets/social/${book?.socialImage || (book ? `${book.id}.png` : config.socialImage || "bookshelf.png")}`;
 const status = (b) => (b.status === "completed" ? "完結" : "連載中");
 const contentsLabel = (b) => e(b.contentsLabel || `全${b.chapters.length}章`);
 const icon =
@@ -124,8 +125,8 @@ function page({
   const finalTitle = `${title}${editionLabel} | YU-ZORA`;
   const canonical = origin && !noindex ? `${origin}${url(route)}` : "";
   const structured = canonical ? searchData({ title:finalTitle, description, route, book:shareBook, chapter }) : "";
-  const shareImage = `${origin}${url(`assets/social/${shareBook ? shareBook.id : "bookshelf"}.png`)}`;
-  const shareAlt = shareBook ? `${shareBook.title} — BOOKS` : "BOOKS — ChatGPTによるミステリー執筆実験";
+  const shareImage = `${origin}${url(socialImagePath(shareBook))}`;
+  const shareAlt = shareBook ? `${shareBook.title}の${shareBook.socialImage ? "紹介イラスト" : "表紙"}` : "小説の紹介バナー";
   return `<!doctype html><html lang="ja"${reader ? ' data-reader="true"' : ""}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${e(description)}"><meta name="theme-color" content="#111b2c"><title>${e(finalTitle)}</title><meta name="robots" content="${noindex ? "noindex,follow,noarchive" : "index,follow"}"><meta property="og:title" content="${e(finalTitle)}"><meta property="og:description" content="${e(description)}"><meta property="og:type" content="${reader ? "article" : "website"}">${canonical ? `<link rel="canonical" href="${e(canonical)}"><meta property="og:url" content="${e(canonical)}">` : ""}<meta property="og:site_name" content="YU-ZORA"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="${e(shareImage)}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${e(shareAlt)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(finalTitle)}"><meta name="twitter:description" content="${e(description)}"><meta name="twitter:image" content="${e(shareImage)}"><meta name="twitter:image:alt" content="${e(shareAlt)}"><link rel="icon" href="${url("assets/favicon.svg")}" type="image/svg+xml">${reader ? `<script>try{const s=JSON.parse(localStorage.getItem('yuzora:bookshelf:preferences:v1')||'{}');if(['paper','white','night'].includes(s.theme))document.documentElement.dataset.theme=s.theme;if([18,20,23,26].includes(s.font))document.documentElement.style.setProperty('--reading-size',s.font+'px')}catch{}</script>` : ""}<link rel="stylesheet" href="${url("assets/styles.css")}"><link rel="stylesheet" href="${url("assets/portal-shell.css")}"><script type="module" src="${url(reader ? "assets/reader.js" : "assets/site.js")}"></script>${structured}</head><body ${attributes}><a class="skip-link" href="#main">本文へ移動</a>${content}</body></html>`;
 }
 // Public book data is emitted in the initial HTML; archived manuscripts stay out of search.
@@ -148,7 +149,7 @@ function searchData({ title, description, route, book, chapter }) {
     const bookId = `${absolute(bookPath(book))}#book`;
     graph.push({
       "@type":"Book", "@id":bookId, name:book.title, description:book.description,
-      url:absolute(bookPath(book)), image:absolute(`assets/social/${book.id}.png`),
+      url:absolute(bookPath(book)), image:absolute(socialImagePath(book)),
       inLanguage:"ja", bookFormat:"https://schema.org/EBook", genre:book.genres,
       datePublished:book.publishedAt, dateModified:book.updatedAt,
       isAccessibleForFree:true, creditText:projectNotice
@@ -163,7 +164,7 @@ function searchData({ title, description, route, book, chapter }) {
     entity = `${canonical}#collection`;
     graph.push({ "@type":"ItemList", "@id":entity, numberOfItems:books.length,
       itemListElement:books.map((book, index) => ({ "@type":"ListItem", position:index + 1,
-        item:{ "@type":"Book", name:book.title, url:absolute(bookPath(book)), image:absolute(`assets/social/${book.id}.png`) } })) });
+        item:{ "@type":"Book", name:book.title, url:absolute(bookPath(book)), image:absolute(socialImagePath(book)) } })) });
   }
   graph.push({ "@type":book ? "WebPage" : "CollectionPage", "@id":`${canonical}#webpage`,
     name:title, description, url:canonical, inLanguage:"ja", breadcrumb:{ "@id":breadcrumb["@id"] },

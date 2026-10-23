@@ -115,6 +115,11 @@ export async function loadBooks(root, collection = "content/books") {
     for (const figure of book.illustrations || [])
       if (!book.chapters[figure.chapter - 1])
         throw new Error("Invalid illustration chapter");
+    if (book.socialImage) {
+      if (path.basename(book.socialImage) !== book.socialImage)
+        throw new Error("Social image file must not contain a path");
+      await fs.access(path.join(root, "public/assets/social", book.socialImage));
+    }
     book.characters ||= [];
     book.intro ||= [book.description];
     book.charCount = [
