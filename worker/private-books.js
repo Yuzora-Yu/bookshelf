@@ -25,7 +25,7 @@ export function privateBookFor(pathname) {
 
 function gate(request, status, message = '') {
   const form = status !== 503 ? `<form method="post"><label for="password">閲覧パスワード</label><input id="password" name="password" type="password" autocomplete="current-password" maxlength="128" required autofocus><button type="submit">作品を読む</button></form><p class="note">このブラウザでは、8時間は再入力せずに読めます。</p>` : '';
-  const body = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,noarchive"><title>作品の閲覧 | 夕空の本棚</title><link rel="stylesheet" href="/bookshelf/assets/archive-access.css"></head><body><main><p class="brand">YU-ZORA BOOKSHELF</p><h1>限定閲覧</h1><p>作品を読むには、閲覧パスワードを入力してください。</p>${message ? `<p class="message" role="alert">${escape(message)}</p>` : ''}${form}<a href="/bookshelf/">本棚へ戻る →</a></main></body></html>`;
+  const body = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,noarchive"><title>作品の閲覧 | BOOKS</title><link rel="stylesheet" href="/bookshelf/assets/archive-access.css"></head><body><main><p class="brand">YU-ZORA BOOKS</p><h1>限定閲覧</h1><p>作品を読むには、閲覧パスワードを入力してください。</p>${message ? `<p class="message" role="alert">${escape(message)}</p>` : ''}${form}<a href="/bookshelf/">BOOKSへ戻る →</a></main></body></html>`;
   const response = new Response(body, { status, headers: {
     'Content-Type': 'text/html; charset=utf-8',
     'Content-Security-Policy': "default-src 'none'; style-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",

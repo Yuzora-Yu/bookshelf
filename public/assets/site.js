@@ -5,6 +5,8 @@ import {
   resumeUrl,
   searchable,
 } from "./storage.js";
+import { initializeFeaturedBook } from "./featured.js";
+initializeFeaturedBook();
 const editionSelect = document.querySelector("#edition-select");
 if (editionSelect) {
   editionSelect.addEventListener("change", () => {

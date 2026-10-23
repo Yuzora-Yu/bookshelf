@@ -1,7 +1,7 @@
 {
-  "name": "YU-ZORA BOOKSHELF",
-  "title": "夕空の本棚",
-  "description": "本文はChatGPTが執筆した試作です。どこまで本格的なミステリー小説を書かせられるかを検証するため、方向性の異なる4作品に添削・改稿を重ねています。",
+  "name": "YU-ZORA BOOKS",
+  "title": "BOOKS",
+  "description": "ChatGPTで執筆し、添削・改稿を重ねた小説を公開しています。ミステリーを中心に、気になる作品からお読みください。",
   "basePath": "/bookshelf/",
   "portalUrl": "https://yu-zora.com/",
   "siteUrl": "https://yu-zora.com"

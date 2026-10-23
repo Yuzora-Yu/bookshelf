@@ -18,7 +18,7 @@ const stable = (value) => {
   );
   return value;
 };
-const isPublic = (book, today) =>
+export const isPublicBook = (book, today) =>
   !book.archived && !book.private && !book.draft && !book.unlisted &&
   book.published !== false && (!book.visibility || book.visibility === "public") &&
   ["completed", "ongoing"].includes(book.status) &&
@@ -29,7 +29,7 @@ export async function buildActivity(books, { root, base, siteUrl, now = new Date
     timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit",
   }).format(now);
   const entries = [];
-  for (const book of books.filter((item) => isPublic(item, today))) {
+  for (const book of books.filter((item) => isPublicBook(item, today))) {
     const filenames = [...new Set([
       book.cover, book.portrait, ...(book.illustrations || []).map((item) => item.file),
     ].filter(Boolean))].sort();
