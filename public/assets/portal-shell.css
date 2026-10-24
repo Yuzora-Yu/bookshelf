@@ -7,6 +7,7 @@
 .portal-nav a:hover,.portal-nav a[aria-current] { color:#fff;border-bottom-color:#e7b18d; }
 .portal-header a:focus-visible { outline:2px solid #e7b18d;outline-offset:4px; }
 .bookshelf-subnav { border-bottom:1px solid var(--line);font-size:12px; }
+.home-trial-notice { margin-block:12px 0;color:#b42318;font-size:13px;line-height:1.7;overflow-wrap:anywhere; }
 .bookshelf-subnav>.wrap { display:flex;justify-content:space-between;align-items:center;gap:24px;min-height:56px;padding-block:6px; }
 .bookshelf-title { font-family:var(--sans);font-size:16px;font-weight:700;letter-spacing:0; }
 .bookshelf-subnav .wrap>div { display:flex;gap:24px;align-items:center; }

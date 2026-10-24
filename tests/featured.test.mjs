@@ -66,7 +66,7 @@ test("cover, title, copy, alt and all actions always belong to one selected book
 
 test("BOOKS initial HTML remains a complete reading entry without JavaScript", async () => {
   const html = await fs.readFile(new URL("../dist/index.html", import.meta.url), "utf8");
-  assert.match(html, /<main id="main"><h1 class="sr-only">BOOKS<\/h1><section class="hero wrap"/);
+  assert.match(html, /<main id="main"><h1 class="sr-only">BOOKS<\/h1><p class="home-trial-notice wrap">[^<]+<\/p><section class="hero wrap"/);
   assert.doesNotMatch(html, /books-heading/);
   assert.match(html, /<title>BOOKS - 小説・読みもの \| YU-ZORA<\/title>/);
   assert.doesNotMatch(html, /夕空の本棚/);

@@ -36,6 +36,18 @@ test("portal navigation keeps the same category order on library, detail, reader
     }
   }
 });
+test("the supplied trial notice appears below the subnavigation on the home page only", async () => {
+  const notice = "※AIに自分を驚かせる小説を書かせたかったのですが、まだまだ試作段階です。";
+  const home = await fs.readFile(path.join(root, "dist/index.html"), "utf8");
+  assert.ok(home.includes(`<p class="home-trial-notice wrap">${notice}</p>`));
+  assert.ok(home.indexOf('class="bookshelf-subnav"') < home.indexOf(notice));
+  assert.ok(home.indexOf(notice) < home.indexOf('id="featured-book"'));
+  const book = (await loadBooks(root))[0];
+  for (const file of ["404.html", `books/${book.id}/index.html`, `books/${book.id}/read/${book.edition ? book.edition + "/" : ""}01.html`]) {
+    assert.ok(!(await fs.readFile(path.join(root, "dist", file), "utf8")).includes(notice), file);
+  }
+});
+
 test("all 30 original chapters and their manuscript are retained as an edition", async () => {
   const book = (await loadBooks(root, "content/editions")).find(
     (b) => b.id === "ame-wo-tojikomeru",
