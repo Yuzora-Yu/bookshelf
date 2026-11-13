@@ -66,7 +66,10 @@ export default {
     if (response.status !== 404) {
       const page = home ? featuredHomeResponse(response, request.method) : finish(response);
       if (!portalPage) return page;
-      return withPortalFooter(page, env, { selector: 'footer.site-footer, footer.reader-policy-footer', method: request.method });
+      return withPortalFooter(page, env, {
+        selector: 'footer.site-footer, footer.reader-policy-footer', method: request.method,
+        section: 'books', headerSelector: home ? 'body > header.portal-header' : undefined,
+      });
     }
     if (!pathname.endsWith('/') && !pathname.split('/').pop().includes('.')) {
       const directoryUrl = new URL(assetUrl);

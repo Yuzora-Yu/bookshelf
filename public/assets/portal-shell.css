@@ -7,7 +7,11 @@
 .portal-nav a:hover,.portal-nav a[aria-current] { color:#fff;border-bottom-color:#e7b18d; }
 .portal-header a:focus-visible { outline:2px solid #e7b18d;outline-offset:4px; }
 .bookshelf-subnav { border-bottom:1px solid var(--line);font-size:12px; }
-.home-trial-notice { margin-block:12px 0;color:#b42318;font-size:13px;line-height:1.7;overflow-wrap:anywhere; }
+.books-index-page { --section-title:var(--ink); --section-muted:var(--muted); --section-accent:#9a5846; --section-rule:var(--line); }
+.home-trial-notice { background:#f0ddd1;color:#62352a;border-bottom:1px solid #dfbca9; }
+.home-trial-notice .yu-section-frame { display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 18px;padding-block:10px;font-size:14px;line-height:1.65; }
+.home-trial-notice p { margin:0;overflow-wrap:anywhere; }
+.book-authorship { margin:8px 0;color:var(--muted);font:650 13px/1.6 var(--sans); }
 .bookshelf-subnav>.wrap { display:flex;justify-content:space-between;align-items:center;gap:24px;min-height:56px;padding-block:6px; }
 .bookshelf-title { font-family:var(--sans);font-size:16px;font-weight:700;letter-spacing:0; }
 .bookshelf-subnav .wrap>div { display:flex;gap:24px;align-items:center; }
@@ -15,6 +19,7 @@
 html:not([data-reader]) main [id] { scroll-margin-top:92px; }
 .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
 .hero { gap:48px;padding-block:20px 52px; }
+.books-index-page .hero { padding-top:28px; }
 .hero-copy>.eyebrow { margin-bottom:24px;letter-spacing:0; }
 .hero h2 { font-size:30px;line-height:1.5;letter-spacing:0;min-height:1.5em;margin-block:10px 16px; }
 .hero-description { font-size:14px;line-height:1.95;min-height:6em; }
@@ -33,6 +38,7 @@ html[data-reader] .portal-header { position:relative; }
  .bookshelf-subnav .wrap>div { gap:16px; }
  .bookshelf-title { font-size:15px; }
  .bookshelf-subnav a { font-size:11px; }
+ .home-trial-notice .yu-section-frame { font-size:13px; }
  .hero { grid-template-columns:1fr;gap:28px;padding-block:12px 40px; }
  .hero h2 { font-size:25px; }
  .hero-description { font-size:13px;min-height:0; }

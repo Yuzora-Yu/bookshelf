@@ -36,15 +36,19 @@ test("portal navigation keeps the same category order on library, detail, reader
     }
   }
 });
-test("the supplied trial notice appears below the subnavigation on the home page only", async () => {
+test("the supplied trial notice appears in the home banner above the BOOKS title", async () => {
   const notice = "※AIに自分を驚かせる小説を書かせたかったのですが、まだまだ試作段階です。";
   const home = await fs.readFile(path.join(root, "dist/index.html"), "utf8");
-  assert.ok(home.includes(`<p class="home-trial-notice wrap">${notice}</p>`));
-  assert.ok(home.indexOf('class="bookshelf-subnav"') < home.indexOf(notice));
+  assert.ok(home.includes(`<strong>小説の本文はChatGPTが執筆しています。</strong><p>${notice}</p>`));
+  assert.ok(home.indexOf('class="portal-header"') < home.indexOf('class="home-trial-notice"'));
+  assert.ok(home.indexOf(notice) < home.indexOf('<h1 class="yu-section-title">BOOKS</h1>'));
+  assert.ok(home.indexOf(notice) < home.indexOf('aria-label="BOOKS内のナビゲーション"'));
   assert.ok(home.indexOf(notice) < home.indexOf('id="featured-book"'));
   const book = (await loadBooks(root))[0];
   for (const file of ["404.html", `books/${book.id}/index.html`, `books/${book.id}/read/${book.edition ? book.edition + "/" : ""}01.html`]) {
-    assert.ok(!(await fs.readFile(path.join(root, "dist", file), "utf8")).includes(notice), file);
+    const html = await fs.readFile(path.join(root, "dist", file), "utf8");
+    assert.ok(!html.includes(notice), file);
+    if (file !== "404.html") assert.ok(html.includes('<p class="book-authorship">小説の本文はChatGPTが執筆しています。</p>'), file);
   }
 });
 
