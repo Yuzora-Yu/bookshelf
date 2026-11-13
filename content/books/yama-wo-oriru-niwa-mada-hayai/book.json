@@ -30,96 +30,171 @@
   "cover": "cover.svg",
   "featuredBanner": "featured-banner-20261023.webp",
   "socialImage": "yama-wo-oriru-niwa-mada-hayai-banner-20261023.png",
-  "portrait": "characters-pencil-20260921.png",
-  "portraitAlt": "神野優と友人三人、小鈴、澄、鷲尾、香坂の鉛筆画",
-  "portraitCaption": "上段左から：神野優、森野亮、池上拓海、石動宏和。下段左から：花村小鈴、寒河江澄、鷲尾誠一、香坂怜子。",
   "illustrations": [],
   "characters": [
     {
       "name": "神野 優",
       "reading": "じんの ゆう",
-      "description": "20歳、大学二年生。趣味はクイズで、高校生クイズの決勝に残ったことがある。今回は、久しぶりに予定の合った友人三人と旅行に来た。"
+      "description": "20歳、大学二年生。趣味はクイズで、高校生クイズの決勝に残ったことがある。今回は、久しぶりに予定の合った友人三人と旅行に来た。",
+      "portrait": {
+        "file": "jinno-yu.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "森野 亮",
       "reading": "もりの りょう",
-      "description": "20歳、大学二年生。優とは高校からの友人で、今もよく一緒に食事をする。サバイバルゲームが好きで、道具の話になると長い。"
+      "description": "20歳、大学二年生。優とは高校からの友人で、今もよく一緒に食事をする。サバイバルゲームが好きで、道具の話になると長い。",
+      "portrait": {
+        "file": "morino-ryo.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "池上 拓海",
       "reading": "いけがみ たくみ",
-      "description": "20歳。高校を中退したあと、独学で司法書士試験に合格。登録を済ませ、事務所に勤めている。三人とは学校をやめてからも会ってきた。"
+      "description": "20歳。高校を中退したあと、独学で司法書士試験に合格。登録を済ませ、事務所に勤めている。三人とは学校をやめてからも会ってきた。",
+      "portrait": {
+        "file": "ikegami-takumi.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "石動 宏和",
       "reading": "いするぎ ひろかず",
-      "description": "20歳、建築学部の二年生。今回の宿を選んだ。親は地主で、実家の用事もよく頼まれている。旅行の手配をしているうちに、運転の順番まで決めていた。"
+      "description": "20歳、建築学部の二年生。今回の宿を選んだ。親は地主で、実家の用事もよく頼まれている。旅行の手配をしているうちに、運転の順番まで決めていた。",
+      "portrait": {
+        "file": "isurugi-hirokazu.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "花村 小鈴",
       "reading": "はなむら こすず",
-      "description": "24歳。催しの司会や受付をしている。今回は澄と二人旅。菓子を開けると、近くにいる人にも声をかける。"
+      "description": "24歳。催しの司会や受付をしている。今回は澄と二人旅。菓子を開けると、近くにいる人にも声をかける。",
+      "portrait": {
+        "file": "hanamura-kosuzu.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "寒河江 澄",
       "reading": "さがえ すみ",
-      "description": "25歳。問題集の編集者。鞄には図書館の本を入れてきた。小鈴に誘われて見学へ行くが、本を読む時間も欲しい。"
+      "description": "25歳。問題集の編集者。鞄には図書館の本を入れてきた。小鈴に誘われて見学へ行くが、本を読む時間も欲しい。",
+      "portrait": {
+        "file": "sagae-sumi.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "鷲尾 誠一",
       "reading": "わしお せいいち",
-      "description": "槙沢署刑事課の警部補、49歳。香坂とともに旅館へ駆けつける。話の途中でも、気になるところがあると聞き返す。"
+      "description": "槙沢署刑事課の警部補、49歳。香坂とともに旅館へ駆けつける。話の途中でも、気になるところがあると聞き返す。",
+      "portrait": {
+        "file": "washio-seiichi.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "香坂 怜子",
       "reading": "こうさか れいこ",
-      "description": "槙沢署刑事課の巡査部長、31歳。鷲尾と捜査に当たる。宿の人々から話を聞きながら、救援との連絡も取り続ける。"
+      "description": "槙沢署刑事課の巡査部長、31歳。鷲尾と捜査に当たる。宿の人々から話を聞きながら、救援との連絡も取り続ける。",
+      "portrait": {
+        "file": "kosaka-reiko.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "福地 篤",
       "reading": "ふくち あつし",
-      "description": "近くの駐在所に勤務する巡査部長。女将とは顔見知りで、この日も防犯の掲示物を届けに来ていた。"
+      "description": "近くの駐在所に勤務する巡査部長。女将とは顔見知りで、この日も防犯の掲示物を届けに来ていた。",
+      "portrait": {
+        "file": "fukuchi-atsushi.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "庄司 賢一",
       "reading": "しょうじ けんいち",
-      "description": "かつて地元の警察署長を務めた宿泊客。旧館の読書室で、水原と資料を広げている。"
+      "description": "かつて地元の警察署長を務めた宿泊客。旧館の読書室で、水原と資料を広げている。",
+      "portrait": {
+        "file": "shoji-kenichi.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "水原 芙美",
       "reading": "みずはら ふみ",
-      "description": "取材のために宿を訪れた記者。昔書いた記事について、改めて関係者の話を聞こうとしている。"
+      "description": "取材のために宿を訪れた記者。昔書いた記事について、改めて関係者の話を聞こうとしている。",
+      "portrait": {
+        "file": "mizuhara-fumi.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "川原 徹",
       "reading": "かわはら とおる",
-      "description": "「折返し」の料理を長く作ってきた。旧館に残る紙や写真の整理も手伝っている。"
+      "description": "「折返し」の料理を長く作ってきた。旧館に残る紙や写真の整理も手伝っている。",
+      "portrait": {
+        "file": "kawahara-toru.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "間宮 梢",
       "reading": "まみや こずえ",
-      "description": "旅館「折返し」の女将。宿の切り盛りをしながら、旧館の片づけを進めている。"
+      "description": "旅館「折返し」の女将。宿の切り盛りをしながら、旧館の片づけを進めている。",
+      "portrait": {
+        "file": "mamiya-kozue.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "辻待 しのぶ",
       "reading": "つじまち しのぶ",
-      "description": "占いを仕事にしている宿泊客。テレビで見た優の顔を覚えていた。"
+      "description": "占いを仕事にしている宿泊客。テレビで見た優の顔を覚えていた。",
+      "portrait": {
+        "file": "tsujimachi-shinobu.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "朝倉 なずな",
       "reading": "あさくら なずな",
-      "description": "陶子と旅行に来た。山の怪談を集めた本を持ち歩き、宿でゆっくり読むつもりでいる。"
+      "description": "陶子と旅行に来た。山の怪談を集めた本を持ち歩き、宿でゆっくり読むつもりでいる。",
+      "portrait": {
+        "file": "asakura-nazuna.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "三輪 陶子",
       "reading": "みわ とうこ",
-      "description": "なずなの恋人。怪談も古い建物も好きだが、何でも怖がってはくれないと、なずなには言われている。"
+      "description": "なずなの恋人。怪談も古い建物も好きだが、何でも怖がってはくれないと、なずなには言われている。",
+      "portrait": {
+        "file": "miwa-toko.webp",
+        "width": 1024,
+        "height": 1536
+      }
     }
   ],
   "edition": "revised-20261005-11",
   "editionLabel": "2026年10月5日第十一改稿版",
-  "portraitWidth": 1536,
-  "portraitHeight": 1024,
   "readingGuide": {
     "label": "旅先の事件",
     "focus": "道を断たれた山の旅館で、優と友人三人が事件に向き合う。",
