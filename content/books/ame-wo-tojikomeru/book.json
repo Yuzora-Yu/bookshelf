@@ -28,78 +28,133 @@
   "cover": "cover.svg",
   "featuredBanner": "featured-banner-20261023.webp",
   "socialImage": "ame-wo-tojikomeru-banner-20261023.png",
-  "portrait": "characters-pencil-20260920-3.png",
-  "portraitCaption": "上段左から：灯・律・航。下段左から：久住・沙帆・西崎。",
   "illustrations": [],
   "characters": [
     {
       "name": "宮原 灯",
       "reading": "みやはら あかり",
-      "description": "社会学部三年。資料整理のアルバイトをしている。断る理由を考えているうちに、たいてい引き受けてしまう。律との買物は少し楽しみ。"
+      "description": "社会学部三年。資料整理のアルバイトをしている。断る理由を考えているうちに、たいてい引き受けてしまう。律との買物は少し楽しみ。",
+      "portrait": {
+        "file": "miyahara-akari.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "早瀬 律",
       "reading": "はやせ りつ",
-      "description": "文学部四年。図書館で働き、写真も撮る。人を撮るときは迷わないが、自分の服はなかなか選べない。航とは恋人同士。"
+      "description": "文学部四年。図書館で働き、写真も撮る。人を撮るときは迷わないが、自分の服はなかなか選べない。航とは恋人同士。",
+      "portrait": {
+        "file": "hayase-ritsu.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "蒼井 航",
       "reading": "あおい わたる",
-      "description": "芸術系の四年生。分室の仲間をよく遊びや食事に誘う。律の恋人。姉の澪とは、進路の話になるとぶつかる。"
+      "description": "芸術系の四年生。分室の仲間をよく遊びや食事に誘う。律の恋人。姉の澪とは、進路の話になるとぶつかる。",
+      "portrait": {
+        "file": "aoi-wataru.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "久住 颯太",
       "reading": "くすみ そうた",
-      "description": "工学部二年。高校の頃から公開講座に通い、機械を触ってきた。修理の相談なら先輩にも遠慮しない。勝負で手を抜かれるのは嫌い。"
+      "description": "工学部二年。高校の頃から公開講座に通い、機械を触ってきた。修理の相談なら先輩にも遠慮しない。勝負で手を抜かれるのは嫌い。",
+      "portrait": {
+        "file": "kusumi-sota.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "小野寺 沙帆",
       "reading": "おのでら さほ",
-      "description": "音楽系三年。録音を聞ける形に移す仕事を担当。小劇場の求人に応募しようとしている。店の注文は早い。"
+      "description": "音楽系三年。録音を聞ける形に移す仕事を担当。小劇場の求人に応募しようとしている。店の注文は早い。",
+      "portrait": {
+        "file": "onodera-saho.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "西崎 要",
       "reading": "にしざき かなめ",
-      "description": "大学院生。資料事業の事務と支払いを担う。学生には口うるさいが、店員に何か頼むときは妙に腰が低い。"
+      "description": "大学院生。資料事業の事務と支払いを担う。学生には口うるさいが、店員に何か頼むときは妙に腰が低い。",
+      "portrait": {
+        "file": "nishizaki-kaname.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "真壁 敦史",
       "reading": "まかべ あつし",
-      "description": "地域の音声記録を集めてきた教員。学生の話を面白がって聞き、食事の席も盛り上げる。事業の終了を前に、資料の返却を進めている。"
+      "description": "地域の音声記録を集めてきた教員。学生の話を面白がって聞き、食事の席も盛り上げる。事業の終了を前に、資料の返却を進めている。",
+      "portrait": {
+        "file": "makabe-atsushi.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "田辺 依子",
       "reading": "たなべ よりこ",
-      "description": "資料の貸し借りや持ち主への連絡を手伝ってきた。電話交渉がうまく、学生に食べ物を持ってくる。三輪幸枝の姉。"
+      "description": "資料の貸し借りや持ち主への連絡を手伝ってきた。電話交渉がうまく、学生に食べ物を持ってくる。三輪幸枝の姉。",
+      "portrait": {
+        "file": "tanabe-yoriko.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "瀬川 直子",
       "reading": "せがわ なおこ",
-      "description": "事件を担当する刑事。旧分室に出入りしていた人たちを訪ね、その日のことを聞いていく。"
+      "description": "事件を担当する刑事。旧分室に出入りしていた人たちを訪ね、その日のことを聞いていく。",
+      "portrait": {
+        "file": "segawa-naoko.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "蒼井 澪",
       "reading": "あおい みお",
-      "description": "航の姉。大学を離れ、印刷店で働いている。沙帆がときどき店に顔を出す。弟からは、大学に戻らないかと勧められている。"
+      "description": "航の姉。大学を離れ、印刷店で働いている。沙帆がときどき店に顔を出す。弟からは、大学に戻らないかと勧められている。",
+      "portrait": {
+        "file": "aoi-mio.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "三輪 幸枝",
       "reading": "みわ ゆきえ",
-      "description": "夫を水害で亡くした。大学へ貸したカセットを返してほしいと電話をかけてくる。姉と会うと、遠慮のない言い合いになる。"
+      "description": "夫を水害で亡くした。大学へ貸したカセットを返してほしいと電話をかけてくる。姉と会うと、遠慮のない言い合いになる。",
+      "portrait": {
+        "file": "miwa-yukie.webp",
+        "width": 1024,
+        "height": 1536
+      }
     },
     {
       "name": "ほたる",
       "reading": "",
-      "description": "灯のオンラインゲーム仲間。本名も、どこに住んでいるかも知らない。負けたときの言い訳は、互いによく知っている。"
+      "description": "灯のオンラインゲーム仲間。本名も、どこに住んでいるかも知らない。負けたときの言い訳は、互いによく知っている。",
+      "portrait": {
+        "file": "hotaru.webp",
+        "width": 1024,
+        "height": 1536
+      }
     }
   ],
   "edition": "revised-20261005-5",
   "editionLabel": "2026年10月5日第五改稿版",
   "contentsLabel": "全24章",
   "startLabel": "第一章から読む",
-  "portraitAlt": "灯、律、航、久住、沙帆、西崎の鉛筆画",
-  "portraitWidth": 1536,
-  "portraitHeight": 1024,
   "readingGuide": {
     "label": "記録と責任のミステリー",
     "focus": "録音や写真の食い違いから、見過ごしていた出来事をたどる。",
