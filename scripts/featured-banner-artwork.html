@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<title>YU-ZORA BOOKS 特集バナーの原稿</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .banner {
+    --paper: #eae2d5;
+    --ink: #343833;
+    --accent: #694f41;
+    --rule: #8d786563;
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif;
+  }
+  .banner[data-book="ame-wo-tojikomeru"] {
+    --paper: #223c49;
+    --ink: #f3ebda;
+    --accent: #dfcfac;
+    --rule: #a8c0c06b;
+  }
+  .banner[data-book="mukae-no-nai-asa"] {
+    --paper: #3c3039;
+    --ink: #f0e9dc;
+    --accent: #e0bcaa;
+    --rule: #bf9e9175;
+  }
+  .banner[data-book="yama-wo-oriru-niwa-mada-hayai"] {
+    --paper: #e4dfcd;
+    --ink: #35372f;
+    --accent: #4d563f;
+    --rule: #666b5363;
+  }
+  .frame {
+    position: absolute;
+    inset: 34px;
+    border: 1px solid var(--rule);
+  }
+  .copy {
+    position: absolute;
+    inset: 82px auto 83px 83px;
+    width: 560px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .series {
+    position: absolute;
+    inset: 0 0 auto;
+    color: var(--accent);
+    font: 600 16px/1 Georgia, serif;
+    letter-spacing: .19em;
+  }
+  .series span + span {
+    border-left: 1px solid var(--rule);
+    margin-left: 15px;
+    padding-left: 16px;
+  }
+  h1 {
+    margin: 14px 0 0;
+    font-size: 76px;
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: .055em;
+  }
+  h1 span { display: block; white-space: nowrap; }
+  .subtitle {
+    margin: 32px 0 0;
+    padding-top: 19px;
+    position: relative;
+    color: var(--accent);
+    font-size: 27px;
+    letter-spacing: .07em;
+  }
+  .subtitle::before {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 40px;
+    height: 1px;
+    background: currentColor;
+    content: "";
+  }
+  .art {
+    position: absolute;
+    inset: 68px 68px 68px auto;
+    width: 454px;
+    height: 494px;
+    overflow: hidden;
+  }
+  .art::after { position: absolute; inset: 0; border: 1px solid var(--rule); content: ""; }
+  .art img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+  .banner[data-book="hako-no-soto-de-machiawase"] .art img { object-position: center 88%; }
+  .art [hidden] { display: none; }
+</style>
+<main class="banner">
+  <div class="frame" aria-hidden="true"></div>
+  <header class="copy">
+    <div class="series"><span>YU-ZORA BOOKS</span><span id="volume"></span></div>
+    <h1><span id="title-start"></span><span id="title-end"></span></h1>
+    <p class="subtitle"></p>
+  </header>
+  <div class="art" aria-hidden="true">
+    <canvas width="454" height="494" hidden></canvas>
+    <img alt="" hidden>
+  </div>
+</main>
+<script>
+  function drawRain(ctx) {
+    ctx.fillStyle = '#1a303a';
+    ctx.fillRect(0, 0, 454, 494);
+    ctx.strokeStyle = '#849ea533';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let row = 0; row < 13; row++) {
+      for (let column = 0; column < 13; column++) {
+        const x = column * 42 + (row * 17 % 37) - 13;
+        const y = row * 42 + (column * 13 % 23) - 20;
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - 8, y + 24);
+      }
+    }
+    ctx.stroke();
+    ctx.strokeStyle = '#8fa6ab76';
+    ctx.strokeRect(39, 110, 376, 215);
+    ctx.strokeRect(47, 118, 360, 199);
+    ctx.strokeRect(60, 135, 134, 118);
+    ctx.strokeRect(259, 135, 134, 118);
+    ctx.strokeRect(203, 136, 47, 181);
+    ctx.fillStyle = '#d9c8a0';
+    ctx.fillRect(217, 145, 11, 172);
+    fillShape(ctx, '#dbca9e16', 'M217 317h11l29 177H155Z');
+    ctx.strokeStyle = '#8fa6ab53';
+    ctx.stroke(new Path2D('M27 326h400M61 328l-35 54M394 328l35 54'));
+
+    ctx.save();
+    ctx.translate(282, 370);
+    ctx.rotate(-.12);
+    ctx.beginPath();
+    ctx.roundRect(0, 0, 112, 69, 4);
+    ctx.fillStyle = '#243b45';
+    ctx.fill();
+    ctx.strokeStyle = '#d9c8a0';
+    ctx.stroke();
+    ctx.strokeRect(10, 11, 92, 29);
+    ctx.stroke(new Path2D('M23 62l7-14h52l7 14Z'));
+    ctx.beginPath();
+    ctx.arc(32, 25, 8, 0, 2 * Math.PI);
+    ctx.moveTo(88, 25);
+    ctx.arc(80, 25, 8, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function fillShape(ctx, color, outline) {
+    ctx.fillStyle = color;
+    ctx.fill(new Path2D(outline));
+  }
+
+  function drawDetectives(ctx) {
+    ctx.fillStyle = '#2e262f';
+    ctx.fillRect(0, 0, 454, 494);
+    const dawn = ctx.createLinearGradient(0, 45, 0, 406);
+    dawn.addColorStop(0, '#b0867a');
+    dawn.addColorStop(.62, '#d0a996');
+    dawn.addColorStop(1, '#edcfaa');
+    ctx.fillStyle = dawn;
+    ctx.fillRect(73, 54, 308, 353);
+    ctx.strokeStyle = '#bca194';
+    ctx.strokeRect(62.5, 43.5, 329, 363);
+    fillShape(ctx, '#422f3a', 'M73 54l53 38v302l-53 13Z');
+    fillShape(ctx, '#c8a58d42', 'M73 407h308l58 87H18Z');
+
+    // Tosaki faces left. The coat collar and jaw stay distinct in silhouette.
+    fillShape(ctx, '#29232d', `
+      M48 494 C57 459 62 418 66 368 C70 328 94 311 130 298
+      L151 285 L154 265 C152 257 149 253 144 252
+      L127 250 Q120 248 122 238 L123 229 L114 227
+      Q109 225 113 219 L128 197 C127 189 127 183 131 176
+      C128 162 138 144 153 135 C178 120 208 131 220 148
+      C236 165 233 186 224 204 C215 224 213 244 216 273
+      L226 292 C240 310 239 333 234 359 L222 494 Z
+    `);
+    fillShape(ctx, '#4a3945', 'M131 299l19-20 29 19 34-25 11 18-41 46Z');
+    fillShape(ctx, '#bb8f7a76', 'M150 286l28 14-16 11Z');
+
+    // Naruse faces right, with a low ponytail and a tailored jacket.
+    fillShape(ctx, '#443341', `
+      M224 494 C229 456 229 424 222 389 C216 358 220 331 232 313
+      L249 295 L251 278 C247 271 244 264 241 255
+      C226 277 215 283 206 278 C213 265 215 255 218 241
+      C221 229 225 222 237 219 C237 194 254 177 278 174
+      C304 171 321 185 325 201 Q329 212 328 221 L344 239
+      Q347 244 342 246 L333 248 L334 261 Q333 269 324 271
+      L310 272 Q304 274 304 287 L307 298 C337 311 363 329 371 363
+      C383 407 385 454 404 494 Z
+    `);
+    fillShape(ctx, '#302732', 'M249 290l29 20 29-16 17 12-27 34-18-22-21 21-23-27Z');
+    fillShape(ctx, '#c499864e', 'M228 311c-13 24-14 56-6 91 5 30 5 62 0 92h3c5-31 5-62 0-93-7-36-6-66 5-91Z');
+  }
+
+  async function renderBanner({ id, number, firstLine, secondLine, subtitle, coverArt }) {
+    document.querySelector('.banner').dataset.book = id;
+    document.querySelector('#volume').textContent = 'VOL. ' + number;
+    document.querySelector('#title-start').textContent = firstLine;
+    document.querySelector('#title-end').textContent = secondLine;
+    document.querySelector('.subtitle').textContent = subtitle;
+    const canvas = document.querySelector('canvas');
+    const draw = {
+      'ame-wo-tojikomeru': drawRain,
+      'mukae-no-nai-asa': drawDetectives,
+    }[id];
+    if (draw) {
+      draw(canvas.getContext('2d'));
+      canvas.hidden = false;
+    } else {
+      const image = document.querySelector('.art img');
+      image.src = coverArt;
+      await image.decode();
+      image.hidden = false;
+    }
+    await document.fonts.ready;
+  }
+</script>

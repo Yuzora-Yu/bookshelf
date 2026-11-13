@@ -3,11 +3,9 @@
 The Worker selects a public book for each home-page HTML response and streams its
 complete introduction, reading links and artwork into the document using
 HTMLRewriter. The browser retains that selection instead of shuffling it again.
-Home HTML is not cached or conditionally reused; image and script caching is
-unchanged. Static-only previews retain a client-side fallback. The four approved
-introduction banners were
-installed on 2026-10-23. Only the featured artwork uses these images: library
-cards, individual book pages, reader pages and social cards retain their covers.
+Home HTML is not cached or conditionally reused. Static-only previews retain a
+client-side fallback. These images appear in the featured slot. Library cards,
+individual book pages, reader pages and social cards use their own artwork.
 
 ## Assets
 
@@ -16,23 +14,18 @@ Each current book's `book.json` may set `featuredBanner` to a filename under
 path components. A book without this field uses its usual cover and book layout,
 so a newly published book joins the random selection without needing a banner.
 
-The current banners are `featured-banner-20261023.webp` (1200 x 630). They are
-displayed in full, with no rotation, cover mockup or cropping. Artwork files were
-generated with the built-in image_gen tool and exported to WebP using Sharp.
+The current banners are 1200 × 630 WebP images and display in full.
+The four designs were updated on 2026-11-13 in place at their existing URLs.
+[The HTML artwork](../scripts/featured-banner-artwork.html) defines the shared
+layout and the Canvas drawings for 雨を閉じこめる and 迎えのない朝. The other
+two designs use the original illustrations embedded in their covers.
 
-Approved source images:
+Run `node scripts/render-featured-banners.mjs <existing-preview-directory>` to
+review new exports. Omit the directory to write the four files named in
+`book.json`. The exporter needs Chrome, Yu Mincho for the original typography,
+and Playwright available to Node. Set `FEATURED_BANNER_PLAYWRIGHT` to the path
+to a Playwright package installed elsewhere if needed. The site build uses the
+committed WebP files directly.
 
-| Book | Source |
-| --- | --- |
-| ame-wo-tojikomeru | workspace `output/book-banner-previews/001-ame-wo-tojikomeru.png` |
-| mukae-no-nai-asa | workspace `output/book-banner-previews/002-mukae-no-nai-asa-v3.png` |
-| hako-no-soto-de-machiawase | generated image `exec-329b96b3-e7b4-4ccb-ae83-930f7fc82e8e.png` |
-| yama-wo-oriru-niwa-mada-hayai | workspace `output/book-banner-previews/004-yama-wo-oriru-niwa-mada-hayai-v2.png` |
-
-Prompt records are retained in workspace `output/book-banner-previews/PROMPTS.md`,
-`PROMPTS-v2.md` and `PROMPTS-v3.md`. The third book's original record is also in
-the main portal repository's `docs/BOOKS_ANNOUNCEMENT_ARTWORK.md`.
-
-Changing a featured-only banner is presentation work, not a manuscript revision:
-`featuredBanner` is excluded from the book-content activity hash. Usual cover,
+The book-content activity hash excludes `featuredBanner`. Usual cover,
 illustration and manuscript changes continue to be detected by the activity feed.

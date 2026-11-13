@@ -8,6 +8,8 @@
 .portal-header a:focus-visible { outline:2px solid #e7b18d;outline-offset:4px; }
 .bookshelf-subnav { border-bottom:1px solid var(--line);font-size:12px; }
 .books-index-page { --section-title:var(--ink); --section-muted:var(--muted); --section-accent:#9a5846; --section-rule:var(--line); }
+.books-index-page { --sans:var(--yu-portal-font, system-ui, sans-serif); --serif:var(--sans); font-family:var(--sans); }
+.books-index-page .yu-section-title { font-weight:750; }
 .home-trial-notice { background:#f0ddd1;color:#62352a;border-bottom:1px solid #dfbca9; }
 .home-trial-notice .yu-section-frame { display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 18px;padding-block:10px;font-size:14px;line-height:1.65; }
 .home-trial-notice p { margin:0;overflow-wrap:anywhere; }
