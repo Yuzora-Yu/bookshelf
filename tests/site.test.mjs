@@ -134,7 +134,13 @@ test("vol.002 tenth revision is complete and keeps every earlier edition separat
   assert.match(detail, /第一改稿版/);
   assert.match(detail, /箱二つと、ミシン一台/);
   assert.doesNotMatch(detail, /characters-revised6-pencil\.png/);
-  assert.match(detail, /characters-revised8-20260924\.png/);
+  assert.doesNotMatch(detail, /characters-revised8-20260924\.png/);
+  assert.equal(book.characters.length, 15);
+  for (const { name, portrait } of book.characters) {
+    assert.ok(portrait, name);
+    assert.ok(detail.includes(`/assets/books/${book.id}/${portrait.file}" width="${portrait.width}" height="${portrait.height}"`), name);
+    assert.ok(detail.includes(`aria-label="${name}の人物画を拡大`), name);
+  }
   for (const chapter of book.chapters) {
     const number = String(chapter.number).padStart(2, "0");
     const html = await fs.readFile(path.join(root, `dist/books/mukae-no-nai-asa/read/${book.edition}/${number}.html`), "utf8");
