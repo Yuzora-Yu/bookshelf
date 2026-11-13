@@ -764,6 +764,34 @@ figcaption {
   margin: 8px 0 0;
   font-size: 12px;
 }
+.cast-entry--illustrated {
+  display: grid;
+  grid-template-columns: clamp(86px, 26%, 148px) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(12px, 3vw, 24px);
+}
+.cast-entry--illustrated dt,
+.cast-entry--illustrated .cast-description { grid-column: 2; }
+.cast-entry--illustrated dt small {
+  display: block;
+  margin: 2px 0 0;
+}
+.cast-entry--illustrated .cast-portrait {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin: 0;
+  align-self: start;
+}
+.cast-portrait a {
+  display: block;
+  border: 1px solid var(--line);
+  background: white;
+}
+.cast-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .fiction-note {
   font-size: 10px;
   color: var(--muted);

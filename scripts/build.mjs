@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildActivity, isPublicBook } from "./activity.mjs";
 import {
+  bookArtwork,
   escape as e,
   loadBooks,
   loadArchivedBooks,
@@ -32,12 +33,9 @@ const today = new Intl.DateTimeFormat("en-CA", {
 const books = (await loadBooks(root)).filter((book) => isPublicBook(book, today));
 const archivedBooks = await loadArchivedBooks(root);
 const allEditions = [...books, ...archivedBooks];
-const currentImages = new Set(books.flatMap((b) =>
-  [b.cover, b.featuredBanner, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
-    .filter(Boolean).map((name) => `/assets/books/${b.id}/${name}`)));
-const archiveImages = [...new Set(archivedBooks.flatMap((b) =>
-  [b.cover, b.featuredBanner, b.portrait, ...(b.illustrations || []).map((f) => f.file)]
-    .filter(Boolean).map((name) => `/assets/books/${b.id}/${name}`)))];
+const imagePaths = (book) => bookArtwork(book).map((name) => `/assets/books/${book.id}/${name}`);
+const currentImages = new Set(books.flatMap(imagePaths));
+const archiveImages = [...new Set(archivedBooks.flatMap(imagePaths))];
 await fs.mkdir(path.join(root, "worker/generated"), { recursive: true });
 await fs.writeFile(path.join(root, "worker/generated/edition-policy.json"), JSON.stringify({
   latestReadPrefixes: books.map((b) => `/books/${b.id}/read/${b.edition ? b.edition + "/" : ""}`),
@@ -52,6 +50,19 @@ const readPath = (b) => `books/${b.id}/read/${b.edition ? b.edition + "/" : ""}`
 const readUrl = (b, n = 1) =>
   url(`${readPath(b)}${String(n).padStart(2, "0")}.html`);
 const asset = (b, name) => url(`assets/books/${b.id}/${name}`);
+function renderCast(book) {
+  const groupPortrait = book.portrait
+    ? `<figure><img src="${e(asset(book, book.portrait))}" width="${e(book.portraitWidth || 1536)}" height="${e(book.portraitHeight || 1024)}" alt="${e(book.portraitAlt || "登場人物のモノクロ線画")}" loading="lazy"><figcaption>${e(book.portraitCaption)} <a href="${e(asset(book, book.portrait))}" target="_blank" rel="noopener">大きな画像を開く ↗</a></figcaption></figure>`
+    : "";
+  const cast = book.characters.map(({ name, reading, description, portrait }) => {
+    const portraitUrl = portrait ? e(asset(book, portrait.file)) : "";
+    const image = portrait
+      ? `<dd class="cast-portrait"><a href="${portraitUrl}" target="_blank" rel="noopener" aria-label="${e(name)}の人物画を拡大（新しいタブ）"><img src="${portraitUrl}" width="${portrait.width}" height="${portrait.height}" alt="" loading="lazy"></a></dd>`
+      : "";
+    return `<div${portrait ? ' class="cast-entry--illustrated"' : ""}><dt>${e(name)}<small>${e(reading)}</small></dt><dd class="cast-description">${e(description)}</dd>${image}</div>`;
+  }).join("");
+  return `<section class="cast-section"><details><summary>登場人物を見る<span>ネタバレなし ＋</span></summary>${groupPortrait}<dl class="cast-list">${cast}</dl></details></section>`;
+}
 const socialImagePath = (book) => `assets/social/${book?.socialImage || (book ? `${book.id}.png` : config.socialImage || "bookshelf.png")}`;
 const status = (b) => (b.status === "completed" ? "完結" : "連載中");
 const contentsLabel = (b) => e(b.contentsLabel || `全${b.chapters.length}章`);
@@ -225,7 +236,7 @@ for (const b of allEditions) {
         `<li><a href="${readUrl(b, c.number)}"><span class="toc-number">${c.key}</span><span>${e(c.title.replace(/^第.+?章　/, ""))}</span><span aria-hidden="true">→</span></a></li>`,
     )
     .join("");
-  const detail = `${header()}<main id="main" class="wrap detail-main"><nav class="breadcrumb" aria-label="パンくず"><a href="${url("")}">BOOKS</a><span aria-hidden="true">／</span><span>${e(b.title)}</span></nav><section class="detail-hero"><div class="detail-cover"><img src="${asset(b, b.cover)}" width="480" height="680" alt="${e(b.title)}の表紙"></div><div class="detail-heading"><p class="eyebrow">VOLUME ${e(b.number || "")} · CHATGPT EXPERIMENT</p><div class="tags">${tags(b)}</div><h1>${e(b.title)}</h1><p class="subtitle">${e(b.subtitle || "")}</p>${credit}<div class="detail-reading-actions"><a class="button button-dark" href="${readUrl(b)}">${e(b.startLabel || "はじめから読む")} <span aria-hidden="true">→</span></a><a class="button button-outline detail-resume" data-resume="${b.id}:${b.edition || ""}" href="${readUrl(b)}" hidden>続きから読む →</a></div></div><div class="detail-copy">${editionNotice}<p>${e(b.description)}</p>${readingGuide(b)}<dl class="book-facts"><div><dt>長さ</dt><dd>${b.charCount.toLocaleString("ja-JP")}字</dd></div><div><dt>収録</dt><dd>${contentsLabel(b)}</dd></div><div><dt>初回掲載</dt><dd><time datetime="${b.publishedAt}">${dateLabel(b.publishedAt)}</time></dd></div>${b.updatedAt !== b.publishedAt ? `<div><dt>最終更新</dt><dd><time datetime="${b.updatedAt}">${dateLabel(b.updatedAt)}</time></dd></div>` : ""}</dl><div class="book-keywords">${b.tags.map((t) => `<span>#${e(t)}</span>`).join("")}</div></div></section><div class="detail-columns"><div><section class="synopsis"><p class="eyebrow">STORY</p><h2>この物語について</h2>${b.intro.map((p) => `<p>${e(p)}</p>`).join("")}</section><section class="cast-section"><details><summary>登場人物を見る<span>ネタバレなし ＋</span></summary>${b.portrait ? `<figure><img src="${asset(b, b.portrait)}" width="${e(b.portraitWidth || 1536)}" height="${e(b.portraitHeight || 1024)}" alt="${e(b.portraitAlt || "登場人物六人のモノクロ線画")}" loading="lazy"><figcaption>${e(b.portraitCaption)} <a href="${asset(b, b.portrait)}" target="_blank" rel="noopener">大きな画像を開く ↗</a></figcaption></figure>` : ""}<dl class="cast-list">${b.characters.map((c) => `<div><dt>${e(c.name)}<small>${e(c.reading)}</small></dt><dd>${e(c.description)}</dd></div>`).join("")}</dl></details></section><p class="fiction-note">本作はフィクションです。人物・団体・事件は架空です。${b.portrait ? "<br>人物画は画像生成を使用しています。" : ""}${revisionNote}</p><a class="download-link" href="${bookUrl(b)}full.txt" download>全文をテキストで保存 ↓</a></div><section class="detail-toc" aria-labelledby="toc-title"><div class="section-heading"><h2 id="toc-title">目次</h2><span>${contentsLabel(b)}</span></div><ol class="toc-list">${toc}</ol></section></div></main>${footer()}`;
+  const detail = `${header()}<main id="main" class="wrap detail-main"><nav class="breadcrumb" aria-label="パンくず"><a href="${url("")}">BOOKS</a><span aria-hidden="true">／</span><span>${e(b.title)}</span></nav><section class="detail-hero"><div class="detail-cover"><img src="${asset(b, b.cover)}" width="480" height="680" alt="${e(b.title)}の表紙"></div><div class="detail-heading"><p class="eyebrow">VOLUME ${e(b.number || "")} · CHATGPT EXPERIMENT</p><div class="tags">${tags(b)}</div><h1>${e(b.title)}</h1><p class="subtitle">${e(b.subtitle || "")}</p>${credit}<div class="detail-reading-actions"><a class="button button-dark" href="${readUrl(b)}">${e(b.startLabel || "はじめから読む")} <span aria-hidden="true">→</span></a><a class="button button-outline detail-resume" data-resume="${b.id}:${b.edition || ""}" href="${readUrl(b)}" hidden>続きから読む →</a></div></div><div class="detail-copy">${editionNotice}<p>${e(b.description)}</p>${readingGuide(b)}<dl class="book-facts"><div><dt>長さ</dt><dd>${b.charCount.toLocaleString("ja-JP")}字</dd></div><div><dt>収録</dt><dd>${contentsLabel(b)}</dd></div><div><dt>初回掲載</dt><dd><time datetime="${b.publishedAt}">${dateLabel(b.publishedAt)}</time></dd></div>${b.updatedAt !== b.publishedAt ? `<div><dt>最終更新</dt><dd><time datetime="${b.updatedAt}">${dateLabel(b.updatedAt)}</time></dd></div>` : ""}</dl><div class="book-keywords">${b.tags.map((t) => `<span>#${e(t)}</span>`).join("")}</div></div></section><div class="detail-columns"><div><section class="synopsis"><p class="eyebrow">STORY</p><h2>この物語について</h2>${b.intro.map((p) => `<p>${e(p)}</p>`).join("")}</section>${renderCast(b)}<p class="fiction-note">本作はフィクションです。人物・団体・事件は架空です。${b.portrait || b.characters.some((c) => c.portrait) ? "<br>人物画は画像生成を使用しています。" : ""}${revisionNote}</p><a class="download-link" href="${bookUrl(b)}full.txt" download>全文をテキストで保存 ↓</a></div><section class="detail-toc" aria-labelledby="toc-title"><div class="section-heading"><h2 id="toc-title">目次</h2><span>${contentsLabel(b)}</span></div><ol class="toc-list">${toc}</ol></section></div></main>${footer()}`;
   await write(
     `${bookPath(b)}index.html`,
     page({

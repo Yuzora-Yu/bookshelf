@@ -148,6 +148,19 @@ test("vol.002 tenth revision is complete and keeps every earlier edition separat
 test("vol.003 retains its complete sequence and introduces diagrams only with their prose", async () => {
   const books = await loadBooks(root);
   const book = (await loadArchivedBooks(root)).find((b) => b.id === "hako-no-soto-de-machiawase" && b.edition === "revised-20260920-3");
+  const current = books.find((b) => b.id === book.id);
+  const currentDetail = await fs.readFile(path.join(root, "dist/books", book.id, "index.html"), "utf8");
+  assert.equal(current.characters.length, 9);
+  assert.doesNotMatch(currentDetail, /characters-pencil-20260920-3\.png/);
+  assert.match(currentDetail, /人物画は画像生成を使用しています。/);
+  for (const { name, portrait } of current.characters) {
+    assert.ok(portrait, name);
+    const src = `/assets/books/${book.id}/${portrait.file}`;
+    assert.ok(currentDetail.includes(`${src}" width="${portrait.width}" height="${portrait.height}"`), name);
+    assert.ok(currentDetail.includes(`aria-label="${name}の人物画を拡大`), name);
+  }
+  const policy = JSON.parse(await fs.readFile(path.join(root, "worker/generated/edition-policy.json"), "utf8"));
+  assert.ok(policy.protectedAssets.includes(`/assets/books/${book.id}/${book.portrait}`));
   assert.equal(book.number, "003");
   assert.equal(book.edition, "revised-20260920-3");
   assert.equal(book.characters.length, 9);
@@ -170,7 +183,7 @@ test("vol.003 retains its complete sequence and introduces diagrams only with th
     assert.ok(html.indexOf(file) < html.indexOf("</article>"));
     assert.match(html, /class="reader-figure inline-figure" open/);
   }
-  const detail = await fs.readFile(path.join(root, `dist/books/${book.id}/index.html`), "utf8");
+  const detail = await fs.readFile(path.join(root, `dist/books/${book.id}/editions/${book.edition}/index.html`), "utf8");
   assert.match(detail, /小劇場に集う九人の鉛筆画/);
 });
 test("vol.004 keeps all thirty chapters and introduces its inn before using its layout", async () => {

@@ -32,6 +32,16 @@ export function renderMarkdown(text) {
     })
     .join("\n");
 }
+export function bookArtwork(book, { includeFeatured = true } = {}) {
+  return [
+    book.cover,
+    includeFeatured ? book.featuredBanner : null,
+    book.portrait,
+    ...(book.characters || []).map((character) => character.portrait?.file),
+    ...(book.illustrations || []).map((illustration) => illustration.file),
+  ].filter(Boolean);
+}
+
 export async function loadBooks(root, collection = "content/books") {
   const entries = await fs.readdir(path.join(root, collection), {
     withFileTypes: true,
@@ -102,12 +112,16 @@ export async function loadBooks(root, collection = "content/books") {
         };
       }),
     );
-    for (const image of [
-      book.cover,
-      book.featuredBanner,
-      book.portrait,
-      ...(book.illustrations || []).map((i) => i.file),
-    ].filter(Boolean)) {
+    book.characters ||= [];
+    for (const { name, portrait } of book.characters) {
+      if (portrait === undefined) continue;
+      if (
+        !portrait || typeof portrait.file !== "string" ||
+        !/^[a-z0-9][a-z0-9.-]*\.(?:webp|png|jpe?g)$/i.test(portrait.file) ||
+        ![portrait.width, portrait.height].every((size) => Number.isSafeInteger(size) && size > 0)
+      ) throw new Error(`${book.id}: invalid character portrait for ${name}`);
+    }
+    for (const image of new Set(bookArtwork(book))) {
       if (path.basename(image) !== image)
         throw new Error("Image file must not contain a path");
       await fs.access(path.join(root, "public/assets/books", book.id, image));
@@ -120,7 +134,6 @@ export async function loadBooks(root, collection = "content/books") {
         throw new Error("Social image file must not contain a path");
       await fs.access(path.join(root, "public/assets/social", book.socialImage));
     }
-    book.characters ||= [];
     book.intro ||= [book.description];
     book.charCount = [
       ...book.chapters

@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
+import { bookArtwork } from "./content.mjs";
 
 const contentFields = [
   "title", "reading", "subtitle", "description", "intro", "genres", "tags",
@@ -30,9 +31,7 @@ export async function buildActivity(books, { root, base, siteUrl, now = new Date
   }).format(now);
   const entries = [];
   for (const book of books.filter((item) => isPublicBook(item, today))) {
-    const filenames = [...new Set([
-      book.cover, book.portrait, ...(book.illustrations || []).map((item) => item.file),
-    ].filter(Boolean))].sort();
+    const filenames = [...new Set(bookArtwork(book, { includeFeatured: false }))].sort();
     const artwork = [];
     for (const file of filenames) {
       if (path.basename(file) !== file) throw new Error("Invalid book artwork path");
